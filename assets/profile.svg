@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="Sukrut Dusane profile illustration">
+  <rect width="600" height="600" fill="#FFB3D1"/>
+  <path d="M76 432C116 350 188 310 300 310s184 40 224 122v92H76z" fill="#B892FF" stroke="#111" stroke-width="18"/>
+  <circle cx="300" cy="226" r="126" fill="#F7F3EC" stroke="#111" stroke-width="18"/>
+  <path d="M183 208c28-78 96-116 180-90 48 15 79 48 94 98-60-18-117-21-171-9-37 8-71 8-103 1z" fill="#111"/>
+  <circle cx="252" cy="236" r="14" fill="#111"/>
+  <circle cx="348" cy="236" r="14" fill="#111"/>
+  <path d="M252 294c32 24 64 24 96 0" fill="none" stroke="#111" stroke-width="15" stroke-linecap="round"/>
+  <rect x="48" y="48" width="504" height="504" fill="none" stroke="#111" stroke-width="18"/>
+  <text x="300" y="548" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="800" fill="#111">SD</text>
+</svg>

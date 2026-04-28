@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio, the neo-brutalist portfolio home of Sukrut Dusane." />
+  <title>Portfolio | Sukrut Dusane</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="home">
+  <header class="navbar" aria-label="Primary navigation">
+    <a class="brand" href="index.html" aria-label="Portfolio home">Portfolio</a>
+    <nav class="menu-bar" aria-label="Portfolio pages">
+      <a href="index.html" data-nav="home">Home</a>
+      <a href="about.html" data-nav="about">About</a>
+      <a href="projects.html" data-nav="projects">Projects</a>
+      <a href="skills.html" data-nav="skills">Skills</a>
+      <a href="certifications.html" data-nav="certifications">Certifications</a>
+      <a href="participations.html" data-nav="participations">Participations</a>
+      <a href="qualifications.html" data-nav="qualifications">Qualifications</a>
+      <a href="contact.html" data-nav="contact">Contact</a>
+    </nav>
+    <button class="touch-button" type="button" data-open-modal>Get in Touch</button>
+  </header>
+
+  <main class="page-shell home-grid profile-first-grid" aria-label="Portfolio home dashboard">
+    <section class="card hero-card profile-hero-card reveal" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">Dynamic Portfolio Dashboard</div>
+        <h1 id="hero-title">Sukrut Dusane</h1>
+        <p class="hero-role">
+          <span class="role-prefix">I build as an</span>
+          <span class="role-placard" id="role-placard">AI/ML Engineer</span>
+        </p>
+      </div>
+
+      <div class="hero-stats-container" style="margin: 32px 0;">
+        <div class="hero-stats"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px;">
+          <div class="hero-stat-box" style="background: var(--lime);">
+            <div style="font-size: 2.6rem; font-weight: 700; line-height: 1;">10+</div>
+            <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-top: 8px;">Projects</div>
+          </div>
+          <div class="hero-stat-box" style="background: var(--pink);">
+            <div style="font-size: 2.6rem; font-weight: 700; line-height: 1;">5</div>
+            <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-top: 8px;">Hackathons
+            </div>
+          </div>
+          <div class="hero-stat-box" style="background: var(--white);">
+            <div style="font-size: 2.6rem; font-weight: 700; line-height: 1;">10</div>
+            <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-top: 8px;">Certifications
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-actions" style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
+          <a href="projects.html" class="cta-button" style="font-size: 1.05rem; padding: 12px 20px;">Explore
+            Projects</a>
+          <a href="assets/resume.png" target="_blank" class="ghost-button"
+            style="font-size: 1.05rem; padding: 12px 20px; background: var(--white);">Checkout Resume</a>
+          <a href="https://www.linkedin.com/in/sukrut-dusane-b44813386/" target="_blank" class="ghost-button"
+            style="font-size: 1.05rem; padding: 12px 20px; background: var(--purple); color: var(--white);">LinkedIn</a>
+        </div>
+      </div>
+
+      <p class="hero-copy">
+        A technical portfolio focused on intelligent systems, machine learning,
+        developer tooling, data workflows, and intelligent systems architecture.
+      </p>
+    </section>
+
+    <aside class="card profile-card dynamic-profile reveal" aria-labelledby="profile-title">
+      <span class="panel-label">CSE AIML UNDERGRAD</span>
+      <span class="profile-frame">
+        <img src="assets/profile.png" alt="Sukrut Dusane" />
+        <span class="profile-fallback" aria-hidden="true">SD</span>
+      </span>
+      <h2 id="profile-title" class="profile-name">Sukrut Dusane</h2>
+      <p class="profile-tag" id="profile-tagline">AI Engineer | Developer | Intelligent Systems Enthusiast</p>
+      <div class="profile-meter" aria-label="Current focus">
+        <span id="profile-status">Training intelligent ideas</span>
+        <strong id="profile-score">94%</strong>
+      </div>
+      <div class="hero-strip" aria-label="Focus areas">
+        <span>AI</span>
+        <span>ML</span>
+        <span>Agents</span>
+        <span>Systems</span>
+      </div>
+    </aside>
+
+    <a class="card route-card accent-lime reveal" href="projects.html">
+      <span class="panel-label">GitHub</span>
+      <h2>Projects</h2>
+      <p>Live repository cards, stars, descriptions, and expandable details.</p>
+    </a>
+
+    <a class="card route-card accent-pink reveal" href="certifications.html">
+      <span class="panel-label">Proof</span>
+      <h2>Certifications</h2>
+      <p>Machine learning, Python, and data analytics credentials.</p>
+    </a>
+
+    <a class="card route-card accent-purple reveal" href="participations.html">
+      <span class="panel-label">Events</span>
+      <h2>Participations</h2>
+      <p>A track record of hackathons and coding competitions.</p>
+    </a>
+
+    <a class="card route-card accent-white reveal" href="about.html">
+      <span class="panel-label">About</span>
+      <h2>Complex systems, clean builds.</h2>
+      <p>Read the short story behind the portfolio and Sukrut's technical direction.</p>
+    </a>
+  </main>
+
+  <div class="modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel" tabindex="-1">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close contact modal">×</button>
+      <span class="panel-label">Signal</span>
+      <h2 id="modal-title">Let's build something intelligent.</h2>
+      <p>Reach out for AI prototypes, machine learning experiments, dashboards, or complex systems ideas.</p>
+      <div class="modal-actions" style="display: flex; flex-direction: column; gap: 12px; align-items: stretch;">
+        <a href="mailto:sukrutdusane@gmail.com" class="cta-button"
+          style="justify-content: space-between; display: flex; background: var(--lime);">
+          <span>Email Sukrut</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/sukrut-dusane-b44813386/" target="_blank" rel="noreferrer"
+          class="ghost-button"
+          style="justify-content: space-between; display: flex; background: var(--purple); color: var(--white);">
+          <span>LinkedIn</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+          </svg>
+        </a>
+        <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="ghost-button"
+          style="justify-content: space-between; display: flex; background: #333; color: var(--white);">
+          <span>GitHub</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+            </path>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/sukrut.xo/" target="_blank" rel="noreferrer" class="ghost-button"
+          style="justify-content: space-between; display: flex; background: var(--pink);">
+          <span>Instagram</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="tel:9175117543" class="ghost-button"
+          style="justify-content: space-between; display: flex; background: var(--white);">
+          <span>+91 91751 17543</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+            </path>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
