@@ -261,24 +261,18 @@ function setupCursorEffects() {
 
   document.body.append(trail);
 
+  let active = false;
+  let queued = false;
   let pointerX = window.innerWidth / 2;
   let pointerY = window.innerHeight / 2;
-  let active = false;
 
-  const animate = () => {
-    let followX = pointerX;
-    let followY = pointerY;
-
-    dots.forEach((dot, index) => {
-      const easing = 0.34 - index * 0.04;
-      dot.x += (followX - dot.x) * easing;
-      dot.y += (followY - dot.y) * easing;
+  const moveTrail = () => {
+    queued = false;
+    dots.forEach((dot) => {
+      dot.x = pointerX;
+      dot.y = pointerY;
       dot.element.style.transform = `translate(${dot.x}px, ${dot.y}px) translate(-50%, -50%)`;
-      followX = dot.x;
-      followY = dot.y;
     });
-
-    window.requestAnimationFrame(animate);
   };
 
   window.addEventListener("pointermove", (event) => {
@@ -288,9 +282,25 @@ function setupCursorEffects() {
       active = true;
       trail.classList.add("active");
     }
+    if (!queued) {
+      queued = true;
+      window.requestAnimationFrame(moveTrail);
+    }
   });
+}
 
-  window.requestAnimationFrame(animate);
+function setupImagePerformance() {
+  document.querySelectorAll("img").forEach((image, index) => {
+    image.decoding = "async";
+
+    if (index > 3) {
+      image.loading = "lazy";
+      image.fetchPriority = "low";
+    } else {
+      image.loading = "eager";
+      image.fetchPriority = "high";
+    }
+  });
 }
 
 function setupRevealAnimations() {
@@ -335,6 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAboutJump();
   setupDynamicProfile();
   setupCursorEffects();
+  setupImagePerformance();
   setupRevealAnimations();
   setupImageFallback();
   loadProjects();
