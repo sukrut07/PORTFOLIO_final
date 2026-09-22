@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects | Portfolio</title>
+    <meta name="description" content="Featured engineering projects by Sukrut Dusane: Sentinel AI, SANCHAY, Paperloop, SML-Code-Optimiser, Gravity, and HealthGuard." />
+    <meta name="author" content="Sukrut Dusane" />
+    <meta property="og:title" content="Projects | Sukrut Dusane" />
+    <meta property="og:description" content="AI/ML, full-stack, and computer vision projects with architectural breakdowns and live repositories." />
+    <meta property="og:image" content="assets/profile.png" />
+    <title>Projects | Sukrut Dusane</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -27,32 +32,90 @@
 
     <main class="page-shell cert-page-grid">
       <section class="card page-hero project-page-hero reveal">
-        <span class="panel-label">GitHub</span>
+        <span class="panel-label">Engineering Portfolio</span>
         <h1>Projects</h1>
-        <p>A clean repository board for live GitHub projects. More hand-picked project case studies can be added here later.</p>
+        <p>A curated showcase of intelligent systems, practical full-stack architectures, computer vision tools, and hackathon prototypes built from first principles.</p>
+        
+        <div class="filter-bar" aria-label="Project category filter">
+          <button type="button" class="filter-pill active" data-category-filter="all">All Projects</button>
+          <button type="button" class="filter-pill" data-category-filter="ai-ml">AI / ML</button>
+          <button type="button" class="filter-pill" data-category-filter="full-stack">Full Stack</button>
+          <button type="button" class="filter-pill" data-category-filter="computer-vision">Computer Vision</button>
+          <button type="button" class="filter-pill" data-category-filter="tools">Developer Tools</button>
+        </div>
       </section>
-      <section class="card projects-page-card accent-lime reveal" aria-labelledby="projects-title">
+
+      <!-- Featured Projects Section -->
+      <section class="featured-section" aria-label="Featured Projects">
+        <h2 class="section-headline">
+          <span style="font-size: 1.5rem;">⭐</span> Featured Systems & Prototypes
+        </h2>
+        <div id="featured-projects-container" class="featured-grid" aria-live="polite">
+          <!-- Populated dynamically by script.js using projects-data.js -->
+        </div>
+      </section>
+
+      <!-- More Projects Section -->
+      <section class="card projects-page-card accent-lime reveal" aria-labelledby="more-projects-title">
         <div class="card-header">
           <div>
-            <span class="panel-label">Live Repos</span>
-            <h2 id="projects-title">Repository board</h2>
+            <span class="panel-label">Code Repositories</span>
+            <h2 id="more-projects-title">More Projects & Prototypes</h2>
           </div>
-          <a class="mini-link" href="https://github.com/sukrut07" target="_blank" rel="noreferrer">View all</a>
+          <a class="mini-link" href="https://github.com/sukrut07" target="_blank" rel="noreferrer">View all on GitHub</a>
         </div>
-        <div id="project-list" class="project-list project-list-large" aria-live="polite">
-          <article class="project-skeleton"><span></span><span></span><span></span></article>
+        <div id="more-project-list" class="project-list project-list-large" aria-live="polite">
+          <!-- Populated dynamically by script.js -->
         </div>
       </section>
     </main>
 
-    <div class="modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <!-- Case Study & Architecture Modal -->
+    <div class="modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="case-study-title" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <section class="modal-panel project-modal-panel" tabindex="-1">
+        <button class="modal-close" type="button" data-close-modal aria-label="Close project modal">×</button>
+        <div id="case-study-badge" class="case-study-badge"></div>
+        <h2 id="case-study-title" class="case-study-title">Project Title</h2>
+        <p id="case-study-tagline" class="case-study-tagline">Project Tagline</p>
+
+        <div class="case-study-section">
+          <h4>Problem Statement</h4>
+          <p id="case-study-problem">Problem description.</p>
+        </div>
+
+        <div class="case-study-section">
+          <h4>Engineered Solution</h4>
+          <p id="case-study-solution">Solution overview.</p>
+        </div>
+
+        <div class="case-study-section">
+          <h4>Architecture & Data Pipeline</h4>
+          <ul id="case-study-architecture" class="case-study-list">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+
+        <div class="case-study-section">
+          <h4>Technologies & Frameworks</h4>
+          <div id="case-study-stack" class="tech-pills" style="margin-bottom: 0;"></div>
+        </div>
+
+        <div id="case-study-actions" class="project-actions" style="margin-top: 20px;">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" hidden>
       <div class="modal-backdrop" data-close-modal></div>
       <section class="modal-panel" tabindex="-1">
         <button class="modal-close" type="button" data-close-modal aria-label="Close contact modal">×</button>
         <span class="panel-label">Signal</span>
-        <h2 id="modal-title">Let's build something intelligent.</h2>
-        <p>Reach out for AI prototypes, machine learning experiments, dashboards, or complex systems ideas.</p>
-                                <div class="modal-actions" style="display: flex; flex-direction: column; gap: 12px; align-items: stretch;">
+        <h2 id="contact-modal-title">Let's build something intelligent.</h2>
+        <p>Reach out for AI/ML engineering, full-stack systems, computer vision prototypes, or hackathon collaborations.</p>
+        <div class="modal-actions" style="display: flex; flex-direction: column; gap: 12px; align-items: stretch;">
           <a href="mailto:sukrutdusane@gmail.com" class="cta-button" style="justify-content: space-between; display: flex; background: var(--lime);">
             <span>Email Sukrut</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -61,7 +124,7 @@
             <span>LinkedIn</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
           </a>
-          <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="ghost-button" style="justify-content: space-between; display: flex; background: #333; color: var(--white);">
+          <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="ghost-button" style="justify-content: space-between; display: flex; background: #222; color: var(--white);">
             <span>GitHub</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           </a>
@@ -77,6 +140,7 @@
       </section>
     </div>
 
+    <script src="projects-data.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,49 +1,137 @@
 const githubUser = "sukrut07";
-const projectList = document.querySelector("#project-list");
-const modal = document.querySelector("#contact-modal");
-const modalPanel = modal?.querySelector(".modal-panel");
+const featuredProjectContainer = document.querySelector("#featured-projects-container");
+const moreProjectList = document.querySelector("#more-project-list") || document.querySelector("#project-list");
+const contactModal = document.querySelector("#contact-modal");
+const projectModal = document.querySelector("#project-modal");
 let lastFocusedElement = null;
 
-const fallbackProjects = [
+// Use projectsData if loaded from projects-data.js, otherwise provide core verified fallback
+const portfolioProjects = typeof projectsData !== "undefined" ? projectsData : [
   {
-    name: "AI Portfolio Lab",
-    description: "A dashboard-style portfolio space for experiments, projects, and technical notes.",
-    stargazers_count: 0,
-    html_url: "https://github.com/sukrut07",
+    id: "sentinel-ai",
+    title: "Sentinel AI",
+    tagline: "AI-powered fraud detection and risk intelligence platform.",
+    category: "ai-ml",
+    categoryLabel: "AI / Machine Learning",
+    featured: true,
+    achievementBadge: "🥇 1st Place — GirlScript Pune Datathon 2026",
+    shortDescription: "An intelligent fraud detection and investigation platform built to detect complex financial anomalies and provide automated decision support.",
+    problem: "Financial workflows face sophisticated fraudulent schemes and anomalous behavioral patterns that static rules miss.",
+    solution: "End-to-end fraud pipeline combining unsupervised anomaly detection with supervised risk scoring and explainable factors.",
+    architecture: ["Data Ingestion with schema validation", "Feature extraction & behavioral embeddings", "Isolation Forest & XGBoost risk ensemble", "Investigator dashboard with explainable factor scoring"],
+    technologies: ["Python", "Scikit-learn", "Anomaly Detection", "XGBoost", "FastAPI", "Pandas", "NumPy"],
+    githubUrl: "https://github.com/sukrut07",
+    liveUrl: null,
+    badgeColor: "var(--lime)"
   },
   {
-    name: "Machine Learning Experiments",
-    description: "Modeling, notebooks, and applied ML explorations across data-heavy problems.",
-    stargazers_count: 0,
-    html_url: "https://github.com/sukrut07",
-  },
-  {
-    name: "Chaos Systems",
-    description: "Creative coding and complex-system simulations inspired by fractals and nonlinear behavior.",
-    stargazers_count: 0,
-    html_url: "https://github.com/sukrut07",
-  },
+    id: "sanchay",
+    title: "SANCHAY",
+    tagline: "AI-powered MPLADS Risk Intelligence & Audit Platform.",
+    category: "ai-ml",
+    categoryLabel: "AI / Multi-Agent Systems",
+    featured: true,
+    achievementBadge: "🚀 SIH Internal Rounds Selection — Team Agastya",
+    shortDescription: "An AI-powered public governance audit platform detecting financial anomalies, procurement irregularities, and duplicate works in MPLADS projects.",
+    problem: "MPLADS fund allocations across disparate works make identifying duplicate projects and procurement irregularities difficult manually.",
+    solution: "Multi-agent audit system combining LangGraph, RAG, and geospatial cross-referencing to inspect project documentation transparently.",
+    architecture: ["Multi-modal DPR and sanction order ingestion", "Specialized AI agents for compliance, finance, and geospatial validation", "RAG pipeline with regulatory clauses", "Audit scorecard with verifiable evidence"],
+    technologies: ["Python", "LangChain", "LangGraph", "RAG", "Multi-Agent Systems", "NLP", "FastAPI", "React"],
+    githubUrl: "https://github.com/sukrut07",
+    liveUrl: null,
+    badgeColor: "var(--purple)"
+  }
 ];
 
-function createProjectCard(repo, index) {
+let activeCategory = "all";
+
+function createFeaturedCard(project) {
+  const card = document.createElement("article");
+  card.className = "featured-card reveal visible";
+  card.dataset.category = project.category;
+
+  const badgeHtml = project.achievementBadge
+    ? `<span class="achievement-tag" style="background: ${project.badgeColor || 'var(--lime)'};">${project.achievementBadge}</span>`
+    : "";
+
+  const categoryHtml = project.categoryLabel
+    ? `<span class="category-tag">${project.categoryLabel}</span>`
+    : "";
+
+  const techPillsHtml = (project.technologies || [])
+    .slice(0, 6)
+    .map((tech) => `<span class="tech-pill">${tech}</span>`)
+    .join("");
+
+  card.innerHTML = `
+    <div>
+      <div class="badge-row">
+        ${badgeHtml}
+        ${categoryHtml}
+      </div>
+      <h3>${project.title}</h3>
+      <p class="tagline">${project.tagline}</p>
+      <p class="summary">${project.shortDescription}</p>
+      <div class="tech-pills">${techPillsHtml}</div>
+    </div>
+    <div class="project-actions">
+      <button type="button" class="btn-action btn-primary" data-open-casestudy="${project.id}">
+        <span>Case Study & Architecture</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+      ${project.githubUrl ? `
+        <a href="${project.githubUrl}" target="_blank" rel="noreferrer" class="btn-action btn-secondary">
+          <span>GitHub Code</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        </a>` : ""}
+      ${project.liveUrl ? `
+        <a href="${project.liveUrl}" target="_blank" rel="noreferrer" class="btn-action btn-dark">
+          <span>Live App</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>` : ""}
+    </div>
+  `;
+
+  card.querySelector("[data-open-casestudy]")?.addEventListener("click", () => {
+    openCaseStudyModal(project);
+  });
+
+  return card;
+}
+
+function createMoreProjectCard(project) {
   const item = document.createElement("article");
   item.className = "project-item";
+  item.dataset.category = project.category;
 
   const button = document.createElement("button");
   button.className = "project-toggle";
   button.type = "button";
   button.setAttribute("aria-expanded", "false");
-  button.innerHTML = `<span>${repo.name}</span><span>+</span>`;
+  button.innerHTML = `<span>${project.title}</span><span>+</span>`;
 
   const body = document.createElement("div");
   body.className = "project-body";
+  
+  const techPills = (project.technologies || [])
+    .slice(0, 5)
+    .map((t) => `<span class="tech-pill" style="font-size: 0.72rem; padding: 2px 6px;">${t}</span>`)
+    .join(" ");
+
+  const badgeSpan = project.achievementBadge
+    ? `<span style="font-size: 0.75rem; font-weight: 700; border: 2px solid var(--black); padding: 0.15rem 0.5rem; border-radius: 4px; background: ${project.badgeColor || 'var(--lime)'}; color: var(--black);">${project.achievementBadge}</span>`
+    : "";
+
   body.innerHTML = `
     <div class="project-inner">
-      <p>${repo.description || "No description yet, but the code is ready to be inspected."}</p>
+      <p style="font-weight: 600; margin-bottom: 6px;">${project.tagline || ""}</p>
+      <p>${project.shortDescription || project.description || "Production-ready engineering repository."}</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 4px; margin: 10px 0;">${techPills}</div>
       <div class="project-meta">
-        <span>${repo.stargazers_count ?? 0} stars</span>
-        ${repo.isContributor ? '<span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; border: 2px solid var(--text-color); padding: 0.1rem 0.4rem; border-radius: 4px; background: var(--lime); color: var(--text-color);">Contributor</span>' : ''}
-        <a href="${repo.html_url}" target="_blank" rel="noreferrer">Repo link</a>
+        ${badgeSpan}
+        ${project.categoryLabel ? `<span style="font-size: 0.75rem; font-weight: 700; color: var(--black);">${project.categoryLabel}</span>` : ""}
+        ${project.githubUrl ? `<a href="${project.githubUrl}" target="_blank" rel="noreferrer">Repo link</a>` : ""}
+        ${project.liveUrl ? `<a href="${project.liveUrl}" target="_blank" rel="noreferrer" style="background: var(--lime); color: var(--black); padding: 2px 6px; border: 2px solid var(--black); border-radius: 4px;">Live App</a>` : ""}
       </div>
     </div>
   `;
@@ -58,59 +146,129 @@ function createProjectCard(repo, index) {
   return item;
 }
 
-function renderProjects(repos) {
-  if (!projectList) return;
-  const visibleRepos = repos.slice(0, 8);
-  projectList.replaceChildren(...visibleRepos.map(createProjectCard));
+function openCaseStudyModal(project) {
+  if (!projectModal) return;
+  lastFocusedElement = document.activeElement;
+
+  const titleEl = projectModal.querySelector("#case-study-title");
+  const taglineEl = projectModal.querySelector("#case-study-tagline");
+  const badgeEl = projectModal.querySelector("#case-study-badge");
+  const problemEl = projectModal.querySelector("#case-study-problem");
+  const solutionEl = projectModal.querySelector("#case-study-solution");
+  const architectureListEl = projectModal.querySelector("#case-study-architecture");
+  const stackListEl = projectModal.querySelector("#case-study-stack");
+  const actionsEl = projectModal.querySelector("#case-study-actions");
+
+  if (titleEl) titleEl.textContent = project.title;
+  if (taglineEl) taglineEl.textContent = project.tagline;
+
+  if (badgeEl) {
+    badgeEl.innerHTML = `
+      ${project.achievementBadge ? `<span class="achievement-tag" style="background: ${project.badgeColor || 'var(--lime)'};">${project.achievementBadge}</span>` : ""}
+      ${project.categoryLabel ? `<span class="category-tag">${project.categoryLabel}</span>` : ""}
+    `;
+  }
+
+  if (problemEl) problemEl.textContent = project.problem || project.shortDescription;
+  if (solutionEl) solutionEl.textContent = project.solution || project.shortDescription;
+
+  if (architectureListEl) {
+    architectureListEl.innerHTML = "";
+    const steps = project.architecture && project.architecture.length
+      ? project.architecture
+      : [
+          "Data Ingestion & Verification: Pre-processing input parameters and streaming data.",
+          "Core Computational Pipeline: High-performance inference and logic execution.",
+          "Output Visualization: Responsive user feedback and telemetry presentation."
+        ];
+    steps.forEach((step) => {
+      const li = document.createElement("li");
+      li.textContent = step;
+      architectureListEl.appendChild(li);
+    });
+  }
+
+  if (stackListEl) {
+    stackListEl.innerHTML = (project.technologies || [])
+      .map((tech) => `<span class="tech-pill">${tech}</span>`)
+      .join("");
+  }
+
+  if (actionsEl) {
+    actionsEl.innerHTML = `
+      ${project.githubUrl ? `
+        <a href="${project.githubUrl}" target="_blank" rel="noreferrer" class="btn-action btn-secondary" style="font-size: 0.95rem; padding: 10px 18px;">
+          <span>Explore GitHub Repository</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        </a>` : ""}
+      ${project.liveUrl ? `
+        <a href="${project.liveUrl}" target="_blank" rel="noreferrer" class="btn-action btn-primary" style="font-size: 0.95rem; padding: 10px 18px;">
+          <span>Open Live Application</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>` : ""}
+    `;
+  }
+
+  projectModal.hidden = false;
+  document.body.classList.add("modal-open");
+  const modalPanel = projectModal.querySelector(".modal-panel");
+  modalPanel?.focus();
 }
 
-async function loadProjects() {
-  if (!projectList) return;
+function closeProjectModal() {
+  if (!projectModal) return;
+  projectModal.hidden = true;
+  document.body.classList.remove("modal-open");
+  lastFocusedElement?.focus?.();
+}
 
-  try {
-    const response = await fetch(
-      `https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=8`
+function filterAndRenderProjects() {
+  const featured = portfolioProjects.filter((p) => p.featured);
+  const more = portfolioProjects.filter((p) => !p.featured);
+
+  if (featuredProjectContainer) {
+    const filteredFeatured = activeCategory === "all"
+      ? featured
+      : featured.filter((p) => p.category === activeCategory);
+
+    featuredProjectContainer.replaceChildren(
+      ...filteredFeatured.map(createFeaturedCard)
     );
 
-    if (!response.ok) {
-      throw new Error(`GitHub responded with ${response.status}`);
+    const featuredSection = featuredProjectContainer.closest(".featured-section");
+    if (featuredSection) {
+      featuredSection.style.display = filteredFeatured.length ? "block" : "none";
     }
-
-    const repos = await response.json();
-    let curatedRepos = repos
-      .filter((repo) => !repo.fork && repo.name.toLowerCase() !== "vertex-assignment");
-
-    try {
-      const extResponse = await fetch('https://api.github.com/repos/imjayeshjadhav/the-debuggers');
-      if (extResponse.ok) {
-        const extRepo = await extResponse.json();
-        extRepo.isContributor = true;
-        curatedRepos.push(extRepo);
-      }
-      
-      const extResponse2 = await fetch('https://api.github.com/repos/sukrut07/Attendance-management-system-demo');
-      if (extResponse2.ok) {
-        const extRepo2 = await extResponse2.json();
-        if (!curatedRepos.find(r => r.id === extRepo2.id)) {
-          curatedRepos.push(extRepo2);
-        }
-      }
-    } catch (e) {
-      console.warn('Failed to fetch external repo', e);
-    }
-
-    curatedRepos.sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at));
-
-    renderProjects(curatedRepos.length ? curatedRepos : fallbackProjects);
-  } catch (error) {
-    renderProjects(fallbackProjects);
   }
+
+  if (moreProjectList) {
+    const filteredMore = activeCategory === "all"
+      ? more
+      : more.filter((p) => p.category === activeCategory);
+
+    moreProjectList.replaceChildren(
+      ...filteredMore.map(createMoreProjectCard)
+    );
+  }
+}
+
+function setupCategoryFilters() {
+  const filterButtons = document.querySelectorAll("[data-category-filter]");
+  if (!filterButtons.length) return;
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeCategory = btn.dataset.categoryFilter;
+      filterAndRenderProjects();
+    });
+  });
 }
 
 function setupAccordions() {
   document.querySelectorAll("[data-accordion] .accordion-item").forEach((item) => {
     const button = item.querySelector("button");
-
     button.addEventListener("click", () => {
       const isOpen = item.classList.toggle("open");
       button.setAttribute("aria-expanded", String(isOpen));
@@ -132,32 +290,36 @@ function setupAccordions() {
 }
 
 function openModal() {
-  if (!modal) return;
+  if (!contactModal) return;
   lastFocusedElement = document.activeElement;
-  modal.hidden = false;
+  contactModal.hidden = false;
   document.body.classList.add("modal-open");
-  modalPanel?.focus();
+  contactModal.querySelector(".modal-panel")?.focus();
 }
 
 function closeModal() {
-  if (!modal) return;
-  modal.hidden = true;
+  if (!contactModal) return;
+  contactModal.hidden = true;
   document.body.classList.remove("modal-open");
   lastFocusedElement?.focus?.();
 }
 
-function setupModal() {
+function setupModals() {
   document.querySelectorAll("[data-open-modal]").forEach((button) => {
     button.addEventListener("click", openModal);
   });
 
   document.querySelectorAll("[data-close-modal]").forEach((button) => {
-    button.addEventListener("click", closeModal);
+    button.addEventListener("click", () => {
+      closeModal();
+      closeProjectModal();
+    });
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !modal?.hidden) {
-      closeModal();
+    if (event.key === "Escape") {
+      if (contactModal && !contactModal.hidden) closeModal();
+      if (projectModal && !projectModal.hidden) closeProjectModal();
     }
   });
 }
@@ -170,7 +332,6 @@ function setupAboutJump() {
 
 function setupActiveNavigation() {
   const currentPage = document.body.dataset.page;
-
   document.querySelectorAll("[data-nav]").forEach((link) => {
     if (link.dataset.nav === currentPage) {
       link.classList.add("active");
@@ -188,11 +349,11 @@ function setupDynamicProfile() {
   if (!status || !score) return;
 
   const states = [
-    ["AI/ML Engineer", "Training intelligent ideas", "94%", "AI Engineer | Model Builder | Developer"],
-    ["Machine Learning Engineer", "Tuning learning systems", "92%", "Python | Scikit-learn | Neural Networks"],
-    ["Data Systems Developer", "Structuring messy signals", "89%", "Pandas | NumPy | Dashboards"],
-    ["Intelligent Systems Enthusiast", "Building intelligent systems", "91%", "AI Agents | Automation | Architecture"],
-    ["Full-Stack Builder", "Shipping useful prototypes", "97%", "HTML | CSS | JavaScript | APIs"],
+    ["AI/ML Engineer", "Training intelligent systems", "96%", "Python | Scikit-learn | PyTorch | Anomaly Detection"],
+    ["Full-Stack Developer", "Shipping production workflows", "95%", "Next.js | React | TypeScript | Node.js | REST APIs"],
+    ["Computer Vision & Agents", "Bridging perception to action", "93%", "OpenCV | MediaPipe | LangGraph | Multi-Agent AI"],
+    ["Competitive Builder", "Winning Datathons & Hackathons", "98%", "1st Place Datathon 2026 | PVG Ignition Runner-Up | SIH"],
+    ["Software Engineer", "Engineering clean architectures", "94%", "FastAPI | Express | MongoDB | Microservices"]
   ];
 
   let index = 0;
@@ -202,10 +363,10 @@ function setupDynamicProfile() {
     [rolePlacard, status, score, tagline].forEach((element) => element?.classList.add("changing"));
 
     window.setTimeout(() => {
-      rolePlacard.textContent = states[index][0];
-      status.textContent = states[index][1];
-      score.textContent = states[index][2];
-      tagline.textContent = states[index][3];
+      if (rolePlacard) rolePlacard.textContent = states[index][0];
+      if (status) status.textContent = states[index][1];
+      if (score) score.textContent = states[index][2];
+      if (tagline) tagline.textContent = states[index][3];
     }, 150);
 
     window.setTimeout(() => {
@@ -242,22 +403,14 @@ function setupThemeToggle() {
 function setupCursorEffects() {
   if (window.matchMedia("(pointer: coarse)").matches) return;
 
-  // Global Cursor Trail
   const trail = document.createElement("div");
   trail.className = "cursor-trail";
 
-  const dots = Array.from({ length: 1 }, (_, index) => {
-    const dot = document.createElement("span");
-    dot.className = "cursor-trail-dot";
-    dot.style.width = `${20 - index * 3}px`;
-    dot.style.height = `${20 - index * 3}px`;
-    trail.append(dot);
-    return {
-      element: dot,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    };
-  });
+  const dot = document.createElement("span");
+  dot.className = "cursor-trail-dot";
+  dot.style.width = "18px";
+  dot.style.height = "18px";
+  trail.append(dot);
 
   document.body.append(trail);
 
@@ -268,11 +421,7 @@ function setupCursorEffects() {
 
   const moveTrail = () => {
     queued = false;
-    dots.forEach((dot) => {
-      dot.x = pointerX;
-      dot.y = pointerY;
-      dot.element.style.transform = `translate(${dot.x}px, ${dot.y}px) translate(-50%, -50%)`;
-    });
+    dot.style.transform = `translate(${pointerX}px, ${pointerY}px) translate(-50%, -50%)`;
   };
 
   window.addEventListener("pointermove", (event) => {
@@ -292,7 +441,6 @@ function setupCursorEffects() {
 function setupImagePerformance() {
   document.querySelectorAll("img").forEach((image, index) => {
     image.decoding = "async";
-
     if (index > 3) {
       image.loading = "lazy";
       image.fetchPriority = "low";
@@ -305,7 +453,6 @@ function setupImagePerformance() {
 
 function setupRevealAnimations() {
   const cards = document.querySelectorAll(".reveal");
-
   if (!("IntersectionObserver" in window)) {
     cards.forEach((card) => card.classList.add("visible"));
     return;
@@ -320,18 +467,17 @@ function setupRevealAnimations() {
         }
       });
     },
-    { threshold: 0.16 }
+    { threshold: 0.14 }
   );
 
   cards.forEach((card, index) => {
-    card.style.transitionDelay = `${index * 70}ms`;
+    card.style.transitionDelay = `${(index % 8) * 60}ms`;
     observer.observe(card);
   });
 }
 
 function setupImageFallback() {
   const profileImage = document.querySelector(".profile-frame img");
-
   profileImage?.addEventListener("error", () => {
     profileImage.style.display = "none";
   });
@@ -341,12 +487,13 @@ document.addEventListener("DOMContentLoaded", () => {
   setupThemeToggle();
   setupActiveNavigation();
   setupAccordions();
-  setupModal();
+  setupModals();
   setupAboutJump();
   setupDynamicProfile();
   setupCursorEffects();
   setupImagePerformance();
   setupRevealAnimations();
   setupImageFallback();
-  loadProjects();
+  setupCategoryFilters();
+  filterAndRenderProjects();
 });
