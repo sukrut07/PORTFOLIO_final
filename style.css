@@ -1368,6 +1368,87 @@ body[data-page="about"] .mini-link:nth-child(6n) {
   padding-left: 22px;
 }
 
+/* ── Core Principles KPI Section ────────────────────────────── */
+.principles-section {
+  grid-column: 1 / -1;
+  padding: 0;
+}
+
+.principles-label {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.principles-card {
+  border: 4px solid var(--black);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--black);
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.principles-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--black);
+}
+
+.principles-card.accent-lime  { background: var(--lime); }
+.principles-card.accent-purple { background: var(--purple); }
+.principles-card.accent-pink   { background: var(--pink); }
+.principles-card.accent-cyan   { background: var(--cyan); }
+
+.principles-num {
+  font-size: 2.4rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: var(--black);
+  opacity: 0.18;
+  display: block;
+}
+
+.principles-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--black);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.principles-desc {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--black);
+  margin: 0;
+  opacity: 0.82;
+}
+
+@media (max-width: 1023px) {
+  .principles-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 .contact-detail-card {
   justify-content: space-between;
 }

@@ -18,7 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3" />
+  <link rel="icon" type="image/png" href="favicon.png?v=3" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -102,15 +103,36 @@
       </div>
     </section>
 
-    <section class="card about-lab accent-lime reveal">
-      <span class="panel-label">Core Principles</span>
-      <h2>Build, measure, refine, explain.</h2>
-      <ul class="brutal-list">
-        <li><strong>Learn by shipping:</strong> Test ideas through functioning prototypes, hackathons, and open repos.</li>
-        <li><strong>Architect for clarity:</strong> Prioritize clean separation of concerns, robust APIs, and deterministic schemas.</li>
-        <li><strong>Honest metrics:</strong> Verify ML performance through proper validation without fabricated claims or inflated numbers.</li>
-        <li><strong>End-to-end perspective:</strong> Connect model inference pipelines with robust web interfaces and real databases.</li>
-      </ul>
+    <!-- Core Principles — 4 KPI Cards (full width) -->
+    <section class="principles-section reveal">
+      <span class="panel-label principles-label">Core Principles</span>
+      <div class="principles-grid">
+
+        <article class="principles-card accent-lime">
+          <span class="principles-num">01</span>
+          <h3 class="principles-title">Learn by Shipping</h3>
+          <p class="principles-desc">Test ideas through functioning prototypes, hackathons, and open repos.</p>
+        </article>
+
+        <article class="principles-card accent-purple">
+          <span class="principles-num">02</span>
+          <h3 class="principles-title">Architect for Clarity</h3>
+          <p class="principles-desc">Prioritize clean separation of concerns, robust APIs, and deterministic schemas.</p>
+        </article>
+
+        <article class="principles-card accent-pink">
+          <span class="principles-num">03</span>
+          <h3 class="principles-title">Honest Metrics</h3>
+          <p class="principles-desc">Verify ML performance through proper validation — no fabricated claims or inflated numbers.</p>
+        </article>
+
+        <article class="principles-card accent-cyan">
+          <span class="principles-num">04</span>
+          <h3 class="principles-title">End-to-End Perspective</h3>
+          <p class="principles-desc">Connect model inference pipelines with robust web interfaces and real databases.</p>
+        </article>
+
+      </div>
     </section>
   </main>
 
