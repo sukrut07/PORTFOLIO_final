@@ -225,7 +225,7 @@ function openCaseStudyModal(project) {
     if (!project.githubUrl && !project.liveUrl) {
       actionButtons += `
         <span class="project-notice">
-          🏛️ Internal Institutional Build • Team Agastya • Smart India Hackathon
+          🏛️ Institutional Research Prototype • Team Agastya
         </span>
       `;
     }

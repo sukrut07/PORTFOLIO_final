@@ -2473,7 +2473,8 @@ body[data-page="about"] .mini-link:nth-child(6n) {
   font-weight: 600;
   opacity: 0.75;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   flex-wrap: wrap;
   gap: 8px;
 }
