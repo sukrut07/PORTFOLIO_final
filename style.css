@@ -2584,3 +2584,48 @@ body[data-page="about"] .mini-link:nth-child(6n) {
   background: var(--cyan);
 }
 
+/* Card Visual Architecture Flow */
+.card-visual-flow {
+  margin: 14px 0 16px;
+  padding: 10px 12px;
+  background: var(--gray);
+  border: 2px solid var(--black);
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 var(--black);
+}
+
+.flow-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+  color: var(--black);
+  opacity: 0.8;
+}
+
+.flow-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.flow-tag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  background: var(--white);
+  border: 1.5px solid var(--black);
+  border-radius: 4px;
+  color: var(--black);
+}
+
+.flow-sep {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--black);
+  opacity: 0.6;
+}
+

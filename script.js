@@ -54,6 +54,16 @@ function createFeaturedCard(project) {
     `;
   }
 
+  const pipelineSteps = getPipelineForProject(project.id);
+  const visualFlowHtml = `
+    <div class="card-visual-flow" aria-hidden="true">
+      <span class="flow-label">Architecture Pipeline</span>
+      <div class="flow-tags">
+        ${pipelineSteps.map((s, idx) => `<span class="flow-tag">${s.title}</span>${idx < pipelineSteps.length - 1 ? '<span class="flow-sep">➔</span>' : ''}`).join("")}
+      </div>
+    </div>
+  `;
+
   card.innerHTML = `
     <div>
       <div class="badge-row">
@@ -63,6 +73,7 @@ function createFeaturedCard(project) {
       <h3>${project.title}</h3>
       <p class="tagline">${project.tagline}</p>
       <p class="summary">${project.shortDescription}</p>
+      ${visualFlowHtml}
       <div class="tech-pills">${techPillsHtml}</div>
     </div>
     <div class="project-actions">
