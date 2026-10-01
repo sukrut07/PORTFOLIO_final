@@ -1761,6 +1761,276 @@ body[data-page="about"] .mini-link:nth-child(6n) {
   transform: translateX(100%);
 }
 
+/* ==========================================================================
+   Competitions 4-Column Grid & Interactive Cards
+   ========================================================================== */
+.competitions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.comp-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 250px;
+  background: var(--white);
+  border: 4px solid var(--black);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  outline: none;
+}
+
+.comp-card:hover,
+.comp-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--purple);
+}
+
+.comp-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+}
+
+.comp-badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.comp-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border: 2px solid var(--black);
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 var(--black);
+  white-space: nowrap;
+}
+
+.comp-badge.win-badge {
+  background: var(--lime);
+  color: #111111;
+}
+
+.comp-badge.runner-badge {
+  background: var(--pink);
+  color: #111111;
+}
+
+.comp-badge.part-badge {
+  background: var(--gray);
+  color: #111111;
+}
+
+.comp-year {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.comp-title {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.35vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.18;
+  color: var(--black);
+}
+
+.comp-organizer {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #333333;
+  line-height: 1.3;
+}
+
+.comp-desc {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: #222222;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.comp-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 2px dashed rgba(0, 0, 0, 0.25);
+}
+
+.comp-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border: 1.5px solid var(--black);
+  border-radius: 4px;
+  background: var(--white);
+  color: var(--black);
+  box-shadow: 1.5px 1.5px 0 var(--black);
+}
+
+.comp-hover-hint {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Certificate Hover Overlay contained in card */
+.comp-cert-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 18, 22, 0.94);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.97);
+  transition: opacity 220ms ease, transform 220ms ease;
+  z-index: 5;
+  border-radius: calc(var(--radius) - 4px);
+}
+
+.comp-card:hover .comp-cert-overlay,
+.comp-card:focus-visible .comp-cert-overlay {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.comp-cert-wrap {
+  width: 100%;
+  height: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.comp-cert-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 2px solid var(--black);
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.comp-cert-label {
+  margin-top: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #111111;
+  background: var(--lime);
+  padding: 3px 8px;
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0 var(--black);
+}
+
+/* Certificate Lightbox Modal */
+.cert-lightbox-panel {
+  max-width: 840px;
+  width: min(92vw, 840px);
+}
+
+.lightbox-img-wrap {
+  margin: 16px 0;
+  width: 100%;
+  max-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111111;
+  border: 4px solid var(--black);
+  border-radius: 8px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.lightbox-img-wrap img {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.lightbox-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media (max-width: 1100px) {
+  .competitions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .competitions-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+body.dark .comp-card {
+  background: #1e1e24;
+  border-color: #000000;
+}
+
+body.dark .comp-title {
+  color: #ffffff;
+}
+
+body.dark .comp-organizer {
+  color: #bbbbbb;
+}
+
+body.dark .comp-desc {
+  color: #dddddd;
+}
+
+body.dark .comp-year {
+  color: #ffffff;
+}
+
+body.dark .comp-pill {
+  background: #2a2a32;
+  color: #ffffff;
+}
+
 .hero-stat-box {
   border: 4px solid var(--black);
   border-radius: 10px;

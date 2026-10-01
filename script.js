@@ -3,6 +3,7 @@ const featuredProjectContainer = document.querySelector("#featured-projects-cont
 const moreProjectList = document.querySelector("#more-project-list") || document.querySelector("#project-list");
 const contactModal = document.querySelector("#contact-modal");
 const projectModal = document.querySelector("#project-modal");
+const certLightboxModal = document.querySelector("#cert-lightbox-modal");
 let lastFocusedElement = null;
 
 // Use projectsData if loaded from projects-data.js
@@ -368,6 +369,38 @@ function closeModal() {
   lastFocusedElement?.focus?.();
 }
 
+function openCertModal(title, category, meta, certSrc) {
+  if (!certLightboxModal) return;
+  lastFocusedElement = document.activeElement;
+  const titleEl = certLightboxModal.querySelector("#cert-modal-title");
+  const categoryEl = certLightboxModal.querySelector("#cert-modal-category");
+  const metaEl = certLightboxModal.querySelector("#cert-modal-meta");
+  const imgEl = certLightboxModal.querySelector("#cert-modal-img");
+  const linkEl = certLightboxModal.querySelector("#cert-modal-link");
+
+  if (titleEl) titleEl.textContent = title;
+  if (categoryEl) categoryEl.textContent = category || "Certificate";
+  if (metaEl) metaEl.textContent = meta || "";
+  if (imgEl) {
+    imgEl.src = certSrc;
+    imgEl.alt = `${title} Certificate`;
+  }
+  if (linkEl) {
+    linkEl.href = certSrc;
+  }
+
+  certLightboxModal.hidden = false;
+  document.body.classList.add("modal-open");
+  certLightboxModal.querySelector(".modal-panel")?.focus();
+}
+
+function closeCertModal() {
+  if (!certLightboxModal) return;
+  certLightboxModal.hidden = true;
+  document.body.classList.remove("modal-open");
+  lastFocusedElement?.focus?.();
+}
+
 // Complete modal setup with keyboard focus trap
 function setupModals() {
   document.querySelectorAll("[data-open-modal]").forEach((button) => {
@@ -381,19 +414,45 @@ function setupModals() {
     });
   });
 
+  // Competition cards certificate lightbox trigger
+  document.querySelectorAll(".comp-card[data-cert-src]").forEach((card) => {
+    card.addEventListener("click", () => {
+      const title = card.getAttribute("data-cert-title") || card.querySelector(".comp-title")?.textContent || "Certificate";
+      const category = card.getAttribute("data-cert-category") || "Competition";
+      const meta = card.getAttribute("data-cert-meta") || card.querySelector(".comp-organizer")?.textContent || "";
+      const src = card.getAttribute("data-cert-src");
+      if (src) {
+        openCertModal(title, category, meta, src);
+      }
+    });
+
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-close-cert-modal]").forEach((button) => {
+    button.addEventListener("click", closeCertModal);
+  });
+
   document.addEventListener("keydown", (event) => {
     const isContactOpen = contactModal && !contactModal.hidden;
     const isProjectOpen = projectModal && !projectModal.hidden;
+    const isCertOpen = certLightboxModal && !certLightboxModal.hidden;
 
     if (event.key === "Escape") {
       if (isContactOpen) closeModal();
       if (isProjectOpen) closeProjectModal();
+      if (isCertOpen) closeCertModal();
       return;
     }
 
     // Modal Focus Trap
-    if (event.key === "Tab" && (isContactOpen || isProjectOpen)) {
-      const activeModal = isContactOpen ? contactModal : projectModal;
+    if (event.key === "Tab" && (isContactOpen || isProjectOpen || isCertOpen)) {
+      const activeModal = isContactOpen ? contactModal : isProjectOpen ? projectModal : certLightboxModal;
       const focusables = activeModal.querySelectorAll(
         'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
       );
