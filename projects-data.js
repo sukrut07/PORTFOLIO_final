@@ -1,7 +1,7 @@
 /**
  * Portfolio Project Data — Sukrut Dusane
- * Structured, verified project catalog with categories, case-study architecture details,
- * and direct links.
+ * Curated, verified project catalog with real GitHub repositories,
+ * precise case-study architecture details, and curated hierarchy.
  */
 
 const projectsData = [
@@ -14,16 +14,16 @@ const projectsData = [
     featured: true,
     achievementBadge: "🥇 1st Place — GirlScript Pune Datathon 2026",
     shortDescription: "An intelligent fraud detection and investigation platform built to detect complex financial anomalies and provide automated decision support.",
-    problem: "Modern financial networks and distributed payment platforms face sophisticated fraudulent schemes, synthetic identity manipulation, and anomalous behavioral patterns that traditional static, rule-based systems routinely fail to flag in real time.",
+    problem: "Modern financial networks face sophisticated fraudulent schemes, synthetic identity manipulation, and anomalous behavioral patterns that traditional static rule-based systems routinely fail to flag in real time.",
     solution: "Designed and engineered an end-to-end fraud intelligence pipeline combining unsupervised anomaly detection with supervised risk scoring. The system surfaces suspicious transaction patterns with explainable risk indicators, empowering investigators to make informed decisions rapidly.",
     architecture: [
-      "Data Ingestion: Streaming and batch ingestion of transactional records with schema validation.",
+      "Data Ingestion: Streaming and batch ingestion of transactional records with schema validation via FastAPI.",
       "Feature Engineering: Real-time calculation of velocity metrics, geolocation deviations, and behavioral embeddings.",
-      "Model Pipeline: Ensemble architecture combining isolation forests for anomaly spotting and gradient boosted trees for calibrated probability scoring.",
+      "Model Pipeline: Ensemble architecture combining Isolation Forest for outlier detection and XGBoost for calibrated probability scoring.",
       "Investigation Interface: Interactive dashboard presenting transaction timelines, confidence factors, and explainable risk breakdowns."
     ],
-    technologies: ["Python", "Scikit-learn", "Anomaly Detection", "XGBoost", "FastAPI", "Pandas", "NumPy", "Data Visualization"],
-    githubUrl: "https://github.com/sukrut07",
+    technologies: ["Python", "Scikit-learn", "Anomaly Detection", "XGBoost", "FastAPI", "Pandas", "NumPy"],
+    githubUrl: "https://github.com/sukrut07/sentinel",
     liveUrl: null,
     badgeColor: "var(--lime)"
   },
@@ -34,42 +34,20 @@ const projectsData = [
     category: "ai-ml",
     categoryLabel: "AI / Multi-Agent Systems",
     featured: true,
-    achievementBadge: "🚀 SIH Internal Rounds Selection — Team Agastya",
+    achievementBadge: "🚀 SIH Internal Selection — Team Agastya",
     shortDescription: "An AI-powered public governance audit platform detecting financial anomalies, procurement irregularities, and duplicate works in MPLADS projects.",
-    problem: "The Members of Parliament Local Area Development Scheme (MPLADS) oversees extensive public development funds. Detecting duplicate/ghost projects, cost inflation, procurement anomalies, and delayed execution across disparate districts has historically been manual, opaque, and reactive.",
-    solution: "Developed with Team Agastya as a comprehensive risk audit engine using multi-agent orchestration (LangGraph/LangChain), retrieval-augmented generation (RAG), and geospatial cross-validation to audit projects, cross-examine contractor history, and flag compliance irregularities automatically.",
+    problem: "The Members of Parliament Local Area Development Scheme (MPLADS) oversees extensive public development funds. Detecting duplicate/ghost projects, cost inflation, and procurement irregularities across disparate district reports has historically been slow, opaque, and manual.",
+    solution: "Developed with Team Agastya as a comprehensive risk audit engine using multi-agent orchestration (LangGraph), retrieval-augmented generation (RAG), and geospatial cross-validation to audit projects, cross-examine contractor histories, and flag compliance irregularities automatically.",
     architecture: [
-      "Document Ingestion: Multi-modal parsing of DPRs (Detailed Project Reports), sanction orders, and bills.",
-      "Multi-Agent Audit: Specialized AI agents (Compliance Agent, Financial Discrepancy Agent, Geolocation Verification Agent) coordinated via graph orchestration.",
-      "Knowledge Retrieval: RAG pipeline indexing historical project records and local cost guidelines.",
-      "Explainable Scorecard: Transparent audit reports detailing specific regulatory clauses violated with audit-trail evidence."
+      "Document Ingestion: Multi-modal OCR and parsing of Detailed Project Reports (DPRs), sanction orders, and bills.",
+      "Multi-Agent Audit: Specialized AI agents (Compliance, Financial Discrepancy, Geolocation Verification) coordinated via LangGraph.",
+      "Knowledge Retrieval: RAG pipeline indexing historical project records and official cost schedules.",
+      "Explainable Scorecard: Transparent audit reports detailing specific regulatory clauses violated with verifiable audit-trail evidence."
     ],
-    technologies: ["Python", "LangChain", "LangGraph", "RAG", "Multi-Agent Systems", "NLP", "FastAPI", "React", "Vector Search"],
-    githubUrl: "https://github.com/sukrut07",
+    technologies: ["Python", "LangChain", "LangGraph", "RAG", "Multi-Agent Systems", "NLP", "FastAPI", "React"],
+    githubUrl: null,
     liveUrl: null,
     badgeColor: "var(--purple)"
-  },
-  {
-    id: "paperloop",
-    title: "Paperloop",
-    tagline: "Full-stack logistics platform connecting institutions, recyclers, and NGOs.",
-    category: "full-stack",
-    categoryLabel: "Full-Stack Development",
-    featured: true,
-    achievementBadge: "🌱 Sustainable Logistics Platform",
-    shortDescription: "A multi-stakeholder platform streamlining institutional paper waste aggregation, scheduled recycler pickups, and verified NGO impact tracking.",
-    problem: "Educational institutions generate significant volumes of recyclable paper, but lack structured logistics, reliable collector scheduling, and verifiable proof of downstream recycling and social impact with partner NGOs.",
-    solution: "Architected a full-stack platform supporting role-based workflows for institution administrators, verified recycling partners, and beneficiary NGOs. Features dynamic batch scheduling, pickup milestone verification, proof-of-dispatch uploads, and real-time environmental metrics.",
-    architecture: [
-      "Frontend: Next.js and React client with responsive role-tailored dashboards.",
-      "Backend: Express.js REST API with robust schema validation and state machine tracking for pickup batches.",
-      "Authentication & Security: Firebase Authentication with role-based route guards and JWT claims.",
-      "Database & Geolocation: MongoDB Atlas for multi-entity document stores and Google Maps API for facility coordinate mapping."
-    ],
-    technologies: ["Next.js", "React", "Express.js", "MongoDB Atlas", "Firebase Auth", "Google Maps API", "REST APIs", "Render", "Tailwind CSS"],
-    githubUrl: "https://github.com/sukrut07",
-    liveUrl: null,
-    badgeColor: "var(--pink)"
   },
   {
     id: "sml-code-optimiser",
@@ -80,7 +58,7 @@ const projectsData = [
     featured: true,
     achievementBadge: "⚡ Developer Tooling",
     shortDescription: "An automated developer utility integrating AST analysis and LLM intelligence to diagnose algorithmic inefficiencies and generate optimized code diffs.",
-    problem: "Developers spend significant engineering cycles identifying algorithmic bottlenecks, structural code smells, and unnecessary time/space complexity without context-aware refactoring advice tailored to specific language idioms.",
+    problem: "Developers spend significant engineering cycles identifying algorithmic bottlenecks, structural code smells, and unnecessary complexity without context-aware refactoring advice tailored to specific language idioms.",
     solution: "Created an intelligent developer platform that parses code into an Abstract Syntax Tree (AST), identifies anti-patterns and performance bottlenecks, and leverages high-speed LLM inference to propose optimized refactorings with side-by-side diff previews.",
     architecture: [
       "Parser Module: Structural AST traversal to compute code metrics (cyclomatic complexity, nesting depth).",
@@ -88,7 +66,7 @@ const projectsData = [
       "Preview UI: Interactive Monaco/syntax-highlighted comparison view showing before/after performance trade-offs."
     ],
     technologies: ["TypeScript", "Next.js", "Node.js", "AST Analysis", "Groq API", "LLM Integration", "Tailwind CSS"],
-    githubUrl: "https://github.com/sukrut07",
+    githubUrl: "https://github.com/sukrut07/SML-Code-Optimiser",
     liveUrl: null,
     badgeColor: "var(--cyan)"
   },
@@ -109,10 +87,48 @@ const projectsData = [
       "IPC Bridge: Non-blocking UDP packet transmission delivering sub-15ms input latency to the game engine.",
       "Game Engine: Godot (GDScript) runtime translates UDP payload into player kinematics and particle effects."
     ],
-    technologies: ["Godot Engine", "GDScript", "Python", "MediaPipe", "OpenCV", "UDP Sockets", "Computer Vision"],
-    githubUrl: "https://github.com/sukrut07",
+    technologies: ["Python", "OpenCV", "MediaPipe", "Godot Engine", "GDScript", "UDP Sockets"],
+    githubUrl: "https://github.com/sukrut07/gravity",
     liveUrl: null,
     badgeColor: "var(--neon-orange)"
+  },
+  {
+    id: "paperloop",
+    title: "Paperloop",
+    tagline: "Full-stack logistics platform connecting institutions, recyclers, and NGOs.",
+    category: "full-stack",
+    categoryLabel: "Full-Stack Development",
+    featured: true,
+    achievementBadge: "🌱 Sustainable Logistics Platform",
+    shortDescription: "A multi-stakeholder platform streamlining institutional paper waste aggregation, scheduled recycler pickups, and verified NGO impact tracking.",
+    problem: "Educational institutions generate significant volumes of recyclable paper, but lack structured logistics, reliable collector scheduling, and verifiable proof of downstream recycling and social impact with partner NGOs.",
+    solution: "Architected a full-stack platform supporting role-based workflows for institution administrators, verified recycling partners, and beneficiary NGOs. Features dynamic batch scheduling, pickup milestone verification, proof-of-dispatch uploads, and real-time environmental metrics.",
+    architecture: [
+      "Frontend: Next.js and React client with responsive role-tailored dashboards.",
+      "Backend: Express.js REST API with schema validation and state machine tracking for pickup batches.",
+      "Authentication & Security: Firebase Authentication with role-based route guards and JWT claims.",
+      "Database & Geolocation: MongoDB Atlas for multi-entity document stores and Google Maps API for facility coordinate mapping."
+    ],
+    technologies: ["Next.js", "React", "Express.js", "MongoDB Atlas", "Firebase Auth", "Google Maps API", "REST APIs"],
+    githubUrl: "https://github.com/sukrut07/paperloop",
+    liveUrl: null,
+    badgeColor: "var(--pink)"
+  },
+  {
+    id: "the-debuggers-underwriting",
+    title: "Automated Risk & Underwriting Platform",
+    tagline: "AI-driven predictive risk evaluation for insurance underwriting.",
+    category: "ai-ml",
+    categoryLabel: "FinTech & AI",
+    featured: false,
+    achievementBadge: "🥈 1st Runner-Up — PVG Ignition Hackverse",
+    shortDescription: "Automated policy risk profiling and applicant underwriting decisions using predictive machine learning models and automated decision logic.",
+    problem: "Traditional insurance underwriting is bottlenecked by manual document verification and rigid scoring models that slow policy issuance.",
+    solution: "Coupled predictive risk classification with automated rules to score applicant risk profiles in seconds.",
+    technologies: ["Python", "Machine Learning", "Scikit-learn", "FastAPI", "Risk Modeling", "Data Analytics"],
+    githubUrl: "https://github.com/sukrut07/the-debuggers",
+    liveUrl: null,
+    badgeColor: "var(--pink)"
   },
   {
     id: "healthguard",
@@ -120,18 +136,13 @@ const projectsData = [
     tagline: "AI-powered clinical risk analytics and biomarker evaluation platform.",
     category: "ai-ml",
     categoryLabel: "AI / Healthcare Informatics",
-    featured: true,
+    featured: false,
     achievementBadge: "🩺 Predictive ML Analytics",
-    shortDescription: "A web application assessing multi-factor patient health indicators through machine learning ensembles, data visualizers, and exportable reports.",
-    problem: "Early screening for lifestyle and metabolic conditions often involves fragmented clinical metrics that patients struggle to interpret without clear probabilistic risk visualizations.",
-    solution: "Built a responsive health analytics portal that accepts verified biomarker inputs, evaluates them through trained ML classifiers, and produces interactive visual risk dashboards with exportable summary reports.",
-    architecture: [
-      "Frontend: React with TypeScript, Framer Motion transitions, and Chart.js telemetry charts.",
-      "ML Service: FastAPI backend running trained Scikit-learn, XGBoost, and LightGBM models.",
-      "Export Pipeline: Client-side dynamic report rendering and export using jsPDF and html2canvas."
-    ],
-    technologies: ["React", "TypeScript", "Tailwind CSS", "FastAPI", "Python", "XGBoost", "LightGBM", "Scikit-learn", "Chart.js"],
-    githubUrl: "https://github.com/sukrut07",
+    shortDescription: "Web application assessing multi-factor patient biomarker indicators through machine learning ensembles, interactive charts, and exportable reports.",
+    problem: "Early screening for metabolic conditions involves fragmented clinical metrics that patients struggle to interpret without clear probabilistic visualizations.",
+    solution: "Built a responsive health analytics portal evaluating clinical biomarkers via trained ML classifiers with exportable summary reports.",
+    technologies: ["React", "TypeScript", "FastAPI", "Python", "XGBoost", "Scikit-learn"],
+    githubUrl: "https://github.com/sukrut07/HealthGuard",
     liveUrl: null,
     badgeColor: "var(--lime)"
   },
@@ -143,29 +154,13 @@ const projectsData = [
     categoryLabel: "Full-Stack Web App",
     featured: false,
     achievementBadge: "🚀 Live Deployed",
-    shortDescription: "A campus club discovery and coordination platform enabling students to explore student organizations, track announcements, and register for events.",
+    shortDescription: "Campus club discovery and coordination platform enabling students to explore student organizations, track announcements, and register for events.",
     problem: "Campus clubs frequently lose member engagement due to dispersed communication on instant messaging apps and lack of a structured event discovery hub.",
     solution: "Designed and deployed a responsive web portal allowing student clubs to manage organization profiles, publish schedule updates, and collect participant RSVPs smoothly.",
     technologies: ["React", "TypeScript", "Tailwind CSS", "Vercel", "REST APIs"],
-    githubUrl: "https://github.com/sukrut07",
+    githubUrl: "https://github.com/sukrut07/clubsync",
     liveUrl: "https://clubsync-4qua.vercel.app/",
     badgeColor: "var(--purple)"
-  },
-  {
-    id: "the-debuggers-underwriting",
-    title: "Automated Risk & Underwriting Platform",
-    tagline: "AI-driven predictive risk evaluation for insurance underwriting.",
-    category: "ai-ml",
-    categoryLabel: "AI / FinTech Innovation",
-    featured: false,
-    achievementBadge: "🏆 1st Runner-Up — PVG Ignition Hackverse",
-    shortDescription: "Built with Team The Debuggers across 72 competing teams; automates policy risk profiling and underwriting decisions via predictive modeling.",
-    problem: "Traditional insurance underwriting is bottlenecked by manual document verification and rigid scoring models that slow policy issuance.",
-    solution: "Implemented an automated decision-logic platform coupling predictive risk classification with automated rules to score applicant profiles in seconds.",
-    technologies: ["Python", "Machine Learning", "Scikit-learn", "FastAPI", "Risk Modeling", "Data Analytics"],
-    githubUrl: "https://github.com/imjayeshjadhav/the-debuggers",
-    liveUrl: null,
-    badgeColor: "var(--pink)"
   },
   {
     id: "attendance-management-system",
@@ -175,13 +170,29 @@ const projectsData = [
     categoryLabel: "Full-Stack Application",
     featured: false,
     achievementBadge: "🏫 Campus Tool",
-    shortDescription: "A secure web portal designed for faculty and students to record, compute, and export course attendance records with role authorization.",
+    shortDescription: "Secure web portal designed for faculty and students to record, compute, and export course attendance records with role authorization.",
     problem: "Paper and spreadsheet-based attendance tracking introduces transcription errors and lacks instantaneous reporting for faculty and students.",
     solution: "Built a database-backed application providing teachers with streamlined session recording, threshold alerts, and instant CSV/PDF export capabilities.",
     technologies: ["JavaScript", "Node.js", "Express.js", "MySQL", "HTML5/CSS3", "REST APIs"],
     githubUrl: "https://github.com/sukrut07/Attendance-management-system-demo",
     liveUrl: null,
     badgeColor: "var(--electric-blue)"
+  },
+  {
+    id: "deepfake-detection",
+    title: "Deepfake Detection Pipeline",
+    tagline: "Computer vision and neural architecture for synthetic facial media detection.",
+    category: "computer-vision",
+    categoryLabel: "Computer Vision & Deep Learning",
+    featured: false,
+    achievementBadge: "👁️ Vision Security",
+    shortDescription: "Deep learning model analyzing frame-level facial landmark micro-inconsistencies and spectral artifacts to distinguish real from AI-generated video content.",
+    problem: "Rapidly improving generative video models make synthetic manipulation hard to detect with the naked eye, threatening information integrity.",
+    solution: "Trained a convolutional neural pipeline examining facial landmark micro-inconsistencies and frequency spectrum anomalies across video sequences.",
+    technologies: ["Python", "PyTorch", "OpenCV", "Deep Learning", "MediaPipe", "NumPy"],
+    githubUrl: "https://github.com/sukrut07/deepfake_detection",
+    liveUrl: null,
+    badgeColor: "var(--cyan)"
   },
   {
     id: "ecotechcycle-connect",
@@ -195,41 +206,9 @@ const projectsData = [
     problem: "Improper electronic waste disposal harms local environments when consumers have no easy way to identify certified e-waste recyclers.",
     solution: "Created a marketplace where users schedule e-waste turn-ins, view disposal certifications, and track responsible recycling credits.",
     technologies: ["React", "Node.js", "Express.js", "MongoDB", "REST APIs"],
-    githubUrl: "https://github.com/sukrut07",
+    githubUrl: "https://github.com/sukrut07/ecotechcycle-connect",
     liveUrl: null,
     badgeColor: "var(--neon-mint)"
-  },
-  {
-    id: "deepfake-detection",
-    title: "Deepfake Detection Pipeline",
-    tagline: "Computer vision and neural architecture for synthetic facial media detection.",
-    category: "computer-vision",
-    categoryLabel: "Computer Vision & Deep Learning",
-    featured: false,
-    achievementBadge: "👁️ Vision Security",
-    shortDescription: "A deep learning model analyzing frame-level facial anomalies and spectral artifacts to distinguish real from AI-generated video content.",
-    problem: "Rapidly improving generative video models make synthetic manipulation hard to detect with the naked eye, threatening information integrity.",
-    solution: "Trained a convolutional neural pipeline examining facial landmark micro-inconsistencies and frequency spectrum anomalies across video sequences.",
-    technologies: ["Python", "PyTorch", "OpenCV", "Deep Learning", "MediaPipe", "NumPy"],
-    githubUrl: "https://github.com/sukrut07",
-    liveUrl: null,
-    badgeColor: "var(--cyan)"
-  },
-  {
-    id: "educore",
-    title: "EduCore",
-    tagline: "Curated academic resource and course material distribution repository.",
-    category: "full-stack",
-    categoryLabel: "Full-Stack Development",
-    featured: false,
-    achievementBadge: "📚 Education Platform",
-    shortDescription: "A structured student portal providing organized subject notes, previous question papers, and interactive study planner tools.",
-    problem: "Course notes and academic resources are frequently scattered across various chat groups, resulting in lost files and uneven student access.",
-    solution: "Organized a single, search-indexed portal for student peers to discover semester-specific study guides, curated syllabus links, and lab files.",
-    technologies: ["React", "TypeScript", "Node.js", "Tailwind CSS"],
-    githubUrl: "https://github.com/sukrut07",
-    liveUrl: null,
-    badgeColor: "var(--purple)"
   },
   {
     id: "fixmyspot",
@@ -243,9 +222,41 @@ const projectsData = [
     problem: "Municipal authorities often suffer from delayed reporting of localized infrastructure faults due to cumbersome bureaucratic channels.",
     solution: "Built an intuitive mobile-responsive interface where citizens geotag issues, attach photo evidence, and follow progress toward resolution.",
     technologies: ["JavaScript", "Leaflet Maps", "Express.js", "REST APIs", "CSS3"],
-    githubUrl: "https://github.com/sukrut07",
+    githubUrl: "https://github.com/sukrut07/FixMySpot",
     liveUrl: null,
     badgeColor: "var(--lime)"
+  },
+  {
+    id: "educore",
+    title: "EduCore",
+    tagline: "Curated academic resource and course material distribution repository.",
+    category: "full-stack",
+    categoryLabel: "Education Platform",
+    featured: false,
+    achievementBadge: "📚 Education Platform",
+    shortDescription: "Structured student portal providing organized subject notes, previous question papers, and interactive study planner tools.",
+    problem: "Course notes and academic resources are frequently scattered across various chat groups, resulting in lost files and uneven student access.",
+    solution: "Organized a single, search-indexed portal for student peers to discover semester-specific study guides, curated syllabus links, and lab files.",
+    technologies: ["React", "TypeScript", "Node.js", "Tailwind CSS"],
+    githubUrl: "https://github.com/sukrut07/EduCore",
+    liveUrl: null,
+    badgeColor: "var(--purple)"
+  },
+  {
+    id: "tracera",
+    title: "Tracera",
+    tagline: "Cryptographic supply chain ledger and batch provenance verification.",
+    category: "tools",
+    categoryLabel: "Systems & Security",
+    featured: false,
+    achievementBadge: "🔐 Provenance Security",
+    shortDescription: "Prototype recording tamper-resistant custody handoffs and digital signatures for high-value logistics batches.",
+    problem: "Traditional supply chain audits are susceptible to retroactive record alterations and forged custody timestamps.",
+    solution: "Implemented verifiable cryptographic hashing for each transit checkpoint, giving auditors an immutable verification log.",
+    technologies: ["Python", "Cryptography", "REST APIs", "JSON-LD"],
+    githubUrl: "https://github.com/sukrut07/Tracera",
+    liveUrl: null,
+    badgeColor: "var(--electric-blue)"
   },
   {
     id: "manim-butterfly-curve",
@@ -259,25 +270,9 @@ const projectsData = [
     problem: "Abstract mathematical curves and differential dynamics are difficult to intuit without precise geometric and motion rendering.",
     solution: "Used Python and Manim to render parametric transformations, demonstrating vector trajectories and harmonic oscillations smoothly.",
     technologies: ["Python", "Manim Engine", "Mathematical Modeling", "Simulation"],
-    githubUrl: "https://github.com/sukrut07",
+    githubUrl: "https://github.com/sukrut07/Temple-Fay-s-Butterfly-curve-using-Manim",
     liveUrl: null,
     badgeColor: "var(--pink)"
-  },
-  {
-    id: "tracera",
-    title: "Tracera",
-    tagline: "Cryptographic supply chain ledger and batch provenance verification.",
-    category: "tools",
-    categoryLabel: "Systems & Security",
-    featured: false,
-    achievementBadge: "🔐 Provenance Security",
-    shortDescription: "A prototype recording tamper-resistant custody handoffs and digital signatures for high-value logistics batches.",
-    problem: "Traditional supply chain audits are susceptible to retroactive record alterations and forged custody timestamps.",
-    solution: "Implemented verifiable cryptographic hashing for each transit checkpoint, giving auditors an immutable verification log.",
-    technologies: ["Python", "Cryptography", "REST APIs", "JSON-LD"],
-    githubUrl: "https://github.com/sukrut07",
-    liveUrl: null,
-    badgeColor: "var(--electric-blue)"
   }
 ];
 

@@ -5,43 +5,8 @@ const contactModal = document.querySelector("#contact-modal");
 const projectModal = document.querySelector("#project-modal");
 let lastFocusedElement = null;
 
-// Use projectsData if loaded from projects-data.js, otherwise provide core verified fallback
-const portfolioProjects = typeof projectsData !== "undefined" ? projectsData : [
-  {
-    id: "sentinel-ai",
-    title: "Sentinel AI",
-    tagline: "AI-powered fraud detection and risk intelligence platform.",
-    category: "ai-ml",
-    categoryLabel: "AI / Machine Learning",
-    featured: true,
-    achievementBadge: "🥇 1st Place — GirlScript Pune Datathon 2026",
-    shortDescription: "An intelligent fraud detection and investigation platform built to detect complex financial anomalies and provide automated decision support.",
-    problem: "Financial workflows face sophisticated fraudulent schemes and anomalous behavioral patterns that static rules miss.",
-    solution: "End-to-end fraud pipeline combining unsupervised anomaly detection with supervised risk scoring and explainable factors.",
-    architecture: ["Data Ingestion with schema validation", "Feature extraction & behavioral embeddings", "Isolation Forest & XGBoost risk ensemble", "Investigator dashboard with explainable factor scoring"],
-    technologies: ["Python", "Scikit-learn", "Anomaly Detection", "XGBoost", "FastAPI", "Pandas", "NumPy"],
-    githubUrl: "https://github.com/sukrut07",
-    liveUrl: null,
-    badgeColor: "var(--lime)"
-  },
-  {
-    id: "sanchay",
-    title: "SANCHAY",
-    tagline: "AI-powered MPLADS Risk Intelligence & Audit Platform.",
-    category: "ai-ml",
-    categoryLabel: "AI / Multi-Agent Systems",
-    featured: true,
-    achievementBadge: "🚀 SIH Internal Rounds Selection — Team Agastya",
-    shortDescription: "An AI-powered public governance audit platform detecting financial anomalies, procurement irregularities, and duplicate works in MPLADS projects.",
-    problem: "MPLADS fund allocations across disparate works make identifying duplicate projects and procurement irregularities difficult manually.",
-    solution: "Multi-agent audit system combining LangGraph, RAG, and geospatial cross-referencing to inspect project documentation transparently.",
-    architecture: ["Multi-modal DPR and sanction order ingestion", "Specialized AI agents for compliance, finance, and geospatial validation", "RAG pipeline with regulatory clauses", "Audit scorecard with verifiable evidence"],
-    technologies: ["Python", "LangChain", "LangGraph", "RAG", "Multi-Agent Systems", "NLP", "FastAPI", "React"],
-    githubUrl: "https://github.com/sukrut07",
-    liveUrl: null,
-    badgeColor: "var(--purple)"
-  }
-];
+// Use projectsData if loaded from projects-data.js
+const portfolioProjects = typeof projectsData !== "undefined" ? projectsData : [];
 
 let activeCategory = "all";
 
@@ -63,6 +28,32 @@ function createFeaturedCard(project) {
     .map((tech) => `<span class="tech-pill">${tech}</span>`)
     .join("");
 
+  // Only render actions that actually exist
+  let actionButtonsHtml = `
+    <button type="button" class="btn-action btn-primary" data-open-casestudy="${project.id}">
+      <span>Case Study</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </button>
+  `;
+
+  if (project.githubUrl) {
+    actionButtonsHtml += `
+      <a href="${project.githubUrl}" target="_blank" rel="noreferrer" class="btn-action btn-secondary" aria-label="GitHub Repository for ${project.title}">
+        <span>GitHub Repository</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+    `;
+  }
+
+  if (project.liveUrl) {
+    actionButtonsHtml += `
+      <a href="${project.liveUrl}" target="_blank" rel="noreferrer" class="btn-action btn-dark" aria-label="Live Demo for ${project.title}">
+        <span>Live Demo</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+    `;
+  }
+
   card.innerHTML = `
     <div>
       <div class="badge-row">
@@ -75,20 +66,7 @@ function createFeaturedCard(project) {
       <div class="tech-pills">${techPillsHtml}</div>
     </div>
     <div class="project-actions">
-      <button type="button" class="btn-action btn-primary" data-open-casestudy="${project.id}">
-        <span>Case Study & Architecture</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-      </button>
-      ${project.githubUrl ? `
-        <a href="${project.githubUrl}" target="_blank" rel="noreferrer" class="btn-action btn-secondary">
-          <span>GitHub Code</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-        </a>` : ""}
-      ${project.liveUrl ? `
-        <a href="${project.liveUrl}" target="_blank" rel="noreferrer" class="btn-action btn-dark">
-          <span>Live App</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-        </a>` : ""}
+      ${actionButtonsHtml}
     </div>
   `;
 
@@ -108,30 +86,37 @@ function createMoreProjectCard(project) {
   button.className = "project-toggle";
   button.type = "button";
   button.setAttribute("aria-expanded", "false");
-  button.innerHTML = `<span>${project.title}</span><span>+</span>`;
+  button.innerHTML = `<span>${project.title}</span><span class="toggle-icon">+</span>`;
 
   const body = document.createElement("div");
   body.className = "project-body";
-  
+
   const techPills = (project.technologies || [])
     .slice(0, 5)
-    .map((t) => `<span class="tech-pill" style="font-size: 0.72rem; padding: 2px 6px;">${t}</span>`)
+    .map((t) => `<span class="tech-pill">${t}</span>`)
     .join(" ");
 
   const badgeSpan = project.achievementBadge
-    ? `<span style="font-size: 0.75rem; font-weight: 700; border: 2px solid var(--black); padding: 0.15rem 0.5rem; border-radius: 4px; background: ${project.badgeColor || 'var(--lime)'}; color: var(--black);">${project.achievementBadge}</span>`
+    ? `<span class="achievement-tag-small" style="background: ${project.badgeColor || 'var(--lime)'};">${project.achievementBadge}</span>`
     : "";
+
+  let linksHtml = "";
+  if (project.githubUrl) {
+    linksHtml += `<a href="${project.githubUrl}" target="_blank" rel="noreferrer" class="project-compact-link">GitHub Repository</a>`;
+  }
+  if (project.liveUrl) {
+    linksHtml += `<a href="${project.liveUrl}" target="_blank" rel="noreferrer" class="project-compact-link live-link">Live Demo</a>`;
+  }
 
   body.innerHTML = `
     <div class="project-inner">
-      <p style="font-weight: 600; margin-bottom: 6px;">${project.tagline || ""}</p>
-      <p>${project.shortDescription || project.description || "Production-ready engineering repository."}</p>
-      <div style="display: flex; flex-wrap: wrap; gap: 4px; margin: 10px 0;">${techPills}</div>
+      <p class="project-inner-tagline">${project.tagline || ""}</p>
+      <p class="project-inner-desc">${project.shortDescription || project.problem || "Engineered software system."}</p>
+      <div class="project-inner-tech">${techPills}</div>
       <div class="project-meta">
         ${badgeSpan}
-        ${project.categoryLabel ? `<span style="font-size: 0.75rem; font-weight: 700; color: var(--black);">${project.categoryLabel}</span>` : ""}
-        ${project.githubUrl ? `<a href="${project.githubUrl}" target="_blank" rel="noreferrer">Repo link</a>` : ""}
-        ${project.liveUrl ? `<a href="${project.liveUrl}" target="_blank" rel="noreferrer" style="background: var(--lime); color: var(--black); padding: 2px 6px; border: 2px solid var(--black); border-radius: 4px;">Live App</a>` : ""}
+        ${project.categoryLabel ? `<span class="project-category-name">${project.categoryLabel}</span>` : ""}
+        ${linksHtml}
       </div>
     </div>
   `;
@@ -139,7 +124,7 @@ function createMoreProjectCard(project) {
   button.addEventListener("click", () => {
     const isOpen = item.classList.toggle("open");
     button.setAttribute("aria-expanded", String(isOpen));
-    button.lastElementChild.textContent = isOpen ? "-" : "+";
+    button.querySelector(".toggle-icon").textContent = isOpen ? "−" : "+";
   });
 
   item.append(button, body);
@@ -156,6 +141,7 @@ function openCaseStudyModal(project) {
   const problemEl = projectModal.querySelector("#case-study-problem");
   const solutionEl = projectModal.querySelector("#case-study-solution");
   const architectureListEl = projectModal.querySelector("#case-study-architecture");
+  const pipelineEl = projectModal.querySelector("#case-study-pipeline");
   const stackListEl = projectModal.querySelector("#case-study-stack");
   const actionsEl = projectModal.querySelector("#case-study-actions");
 
@@ -188,6 +174,19 @@ function openCaseStudyModal(project) {
     });
   }
 
+  // Visual Pipeline Diagram
+  if (pipelineEl) {
+    const pipelineSteps = getPipelineForProject(project.id);
+    pipelineEl.innerHTML = pipelineSteps.map((step, idx) => `
+      <div class="pipeline-node">
+        <span class="node-step">0${idx + 1}</span>
+        <strong class="node-title">${step.title}</strong>
+        <span class="node-desc">${step.desc}</span>
+      </div>
+      ${idx < pipelineSteps.length - 1 ? '<div class="pipeline-arrow">➔</div>' : ''}
+    `).join("");
+  }
+
   if (stackListEl) {
     stackListEl.innerHTML = (project.technologies || [])
       .map((tech) => `<span class="tech-pill">${tech}</span>`)
@@ -195,24 +194,78 @@ function openCaseStudyModal(project) {
   }
 
   if (actionsEl) {
-    actionsEl.innerHTML = `
-      ${project.githubUrl ? `
+    let actionButtons = "";
+    if (project.githubUrl) {
+      actionButtons += `
         <a href="${project.githubUrl}" target="_blank" rel="noreferrer" class="btn-action btn-secondary" style="font-size: 0.95rem; padding: 10px 18px;">
-          <span>Explore GitHub Repository</span>
+          <span>GitHub Repository</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-        </a>` : ""}
-      ${project.liveUrl ? `
+        </a>
+      `;
+    }
+    if (project.liveUrl) {
+      actionButtons += `
         <a href="${project.liveUrl}" target="_blank" rel="noreferrer" class="btn-action btn-primary" style="font-size: 0.95rem; padding: 10px 18px;">
-          <span>Open Live Application</span>
+          <span>Live Demo</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-        </a>` : ""}
-    `;
+        </a>
+      `;
+    }
+    if (!project.githubUrl && !project.liveUrl) {
+      actionButtons += `
+        <span class="project-notice">
+          🏛️ Internal Institutional Build • Team Agastya • Smart India Hackathon
+        </span>
+      `;
+    }
+    actionsEl.innerHTML = actionButtons;
   }
 
   projectModal.hidden = false;
   document.body.classList.add("modal-open");
   const modalPanel = projectModal.querySelector(".modal-panel");
   modalPanel?.focus();
+}
+
+function getPipelineForProject(id) {
+  const pipelines = {
+    "sentinel-ai": [
+      { title: "Ingestion", desc: "FastAPI stream + schema validation" },
+      { title: "Features", desc: "Velocity & behavioral embeddings" },
+      { title: "Ensemble ML", desc: "Isolation Forest + XGBoost" },
+      { title: "Scorecard", desc: "SHAP explainability dashboard" }
+    ],
+    "sanchay": [
+      { title: "DPR Ingestion", desc: "Multi-modal OCR & PDF parsing" },
+      { title: "Graph Agents", desc: "Compliance & finance agents" },
+      { title: "RAG Retrieval", desc: "Historical audit schedules" },
+      { title: "Audit Trail", desc: "Clause-verified scorecards" }
+    ],
+    "sml-code-optimiser": [
+      { title: "Code AST", desc: "Structural syntax tree parsing" },
+      { title: "Complexity", desc: "Cyclomatic depth profiling" },
+      { title: "LLM Inference", desc: "Structured refactoring patch" },
+      { title: "Visual Diff", desc: "Side-by-side Monaco diff" }
+    ],
+    "gravity": [
+      { title: "OpenCV Stream", desc: "30 FPS webcam frame capture" },
+      { title: "MediaPipe", desc: "21 3D hand landmarks" },
+      { title: "UDP Sockets", desc: "Sub-15ms IPC bridge" },
+      { title: "Godot Engine", desc: "Kinematics & game physics" }
+    ],
+    "paperloop": [
+      { title: "Dispatch Order", desc: "Campus waste batch schedule" },
+      { title: "Role Auth", desc: "Firebase verified roles" },
+      { title: "State Machine", desc: "Pickup milestone tracking" },
+      { title: "Impact Report", desc: "NGO certified metrics" }
+    ]
+  };
+  return pipelines[id] || [
+    { title: "Input", desc: "Data ingestion & validation" },
+    { title: "Processing", desc: "Core computational logic" },
+    { title: "Inference", desc: "Machine learning or API pipeline" },
+    { title: "Output", desc: "User interface & reporting" }
+  ];
 }
 
 function closeProjectModal() {
@@ -272,7 +325,7 @@ function setupAccordions() {
     button.addEventListener("click", () => {
       const isOpen = item.classList.toggle("open");
       button.setAttribute("aria-expanded", String(isOpen));
-      button.lastElementChild.textContent = isOpen ? "-" : "+";
+      button.lastElementChild.textContent = isOpen ? "−" : "+";
     });
   });
 
@@ -284,7 +337,7 @@ function setupAccordions() {
       const isOpen = item.classList.toggle("open");
       button.setAttribute("aria-expanded", String(isOpen));
       const icon = button.querySelector(".cert-icon");
-      if (icon) icon.textContent = isOpen ? "-" : "+";
+      if (icon) icon.textContent = isOpen ? "−" : "+";
     });
   });
 }
@@ -304,6 +357,7 @@ function closeModal() {
   lastFocusedElement?.focus?.();
 }
 
+// Complete modal setup with keyboard focus trap
 function setupModals() {
   document.querySelectorAll("[data-open-modal]").forEach((button) => {
     button.addEventListener("click", openModal);
@@ -317,9 +371,37 @@ function setupModals() {
   });
 
   document.addEventListener("keydown", (event) => {
+    const isContactOpen = contactModal && !contactModal.hidden;
+    const isProjectOpen = projectModal && !projectModal.hidden;
+
     if (event.key === "Escape") {
-      if (contactModal && !contactModal.hidden) closeModal();
-      if (projectModal && !projectModal.hidden) closeProjectModal();
+      if (isContactOpen) closeModal();
+      if (isProjectOpen) closeProjectModal();
+      return;
+    }
+
+    // Modal Focus Trap
+    if (event.key === "Tab" && (isContactOpen || isProjectOpen)) {
+      const activeModal = isContactOpen ? contactModal : projectModal;
+      const focusables = activeModal.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusables.length) return;
+
+      const firstFocusable = focusables[0];
+      const lastFocusable = focusables[focusables.length - 1];
+
+      if (event.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          lastFocusable.focus();
+          event.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          firstFocusable.focus();
+          event.preventDefault();
+        }
+      }
     }
   });
 }
@@ -340,39 +422,25 @@ function setupActiveNavigation() {
   });
 }
 
+// Mature, static profile display - no arbitrary percentages or distracting timers
 function setupDynamicProfile() {
   const status = document.querySelector("#profile-status");
   const score = document.querySelector("#profile-score");
   const rolePlacard = document.querySelector("#role-placard");
   const tagline = document.querySelector("#profile-tagline");
 
-  if (!status || !score) return;
-
-  const states = [
-    ["AI/ML Engineer", "Training intelligent systems", "96%", "Python | Scikit-learn | PyTorch | Anomaly Detection"],
-    ["Full-Stack Developer", "Shipping production workflows", "95%", "Next.js | React | TypeScript | Node.js | REST APIs"],
-    ["Computer Vision & Agents", "Bridging perception to action", "93%", "OpenCV | MediaPipe | LangGraph | Multi-Agent AI"],
-    ["Competitive Builder", "Winning Datathons & Hackathons", "98%", "1st Place Datathon 2026 | PVG Ignition Runner-Up | SIH"],
-    ["Software Engineer", "Engineering clean architectures", "94%", "FastAPI | Express | MongoDB | Microservices"]
-  ];
-
-  let index = 0;
-
-  window.setInterval(() => {
-    index = (index + 1) % states.length;
-    [rolePlacard, status, score, tagline].forEach((element) => element?.classList.add("changing"));
-
-    window.setTimeout(() => {
-      if (rolePlacard) rolePlacard.textContent = states[index][0];
-      if (status) status.textContent = states[index][1];
-      if (score) score.textContent = states[index][2];
-      if (tagline) tagline.textContent = states[index][3];
-    }, 150);
-
-    window.setTimeout(() => {
-      [rolePlacard, status, score, tagline].forEach((element) => element?.classList.remove("changing"));
-    }, 380);
-  }, 2200);
+  if (rolePlacard) {
+    rolePlacard.textContent = "AI/ML Engineer & Full-Stack Developer";
+  }
+  if (status) {
+    status.textContent = "Focus: AI/ML • Full-Stack Systems • CV";
+  }
+  if (score) {
+    score.textContent = "Active";
+  }
+  if (tagline) {
+    tagline.textContent = "Applied Machine Learning · Computer Vision · Full-Stack Systems";
+  }
 }
 
 function setupThemeToggle() {
@@ -383,70 +451,36 @@ function setupThemeToggle() {
   const button = document.createElement("button");
   button.className = "theme-toggle";
   button.type = "button";
-  button.setAttribute("aria-label", "Toggle dark mode");
+  button.title = "Toggle light / dark mode";
+  button.setAttribute("aria-label", "Toggle color theme");
   touchButton.insertAdjacentElement("beforebegin", button);
 
   const applyTheme = (theme) => {
     const isDark = theme === "dark";
     document.body.classList.toggle("dark", isDark);
-    button.textContent = isDark ? "LT" : "DK";
+    button.innerHTML = isDark
+      ? '<span aria-hidden="true">☀️</span>'
+      : '<span aria-hidden="true">🌙</span>';
+    button.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+    button.setAttribute("title", isDark ? "Switch to light mode" : "Switch to dark mode");
     button.setAttribute("aria-pressed", String(isDark));
     localStorage.setItem("portfolio-theme", theme);
   };
 
-  applyTheme(localStorage.getItem("portfolio-theme") || "light");
+  const storedTheme = localStorage.getItem("portfolio-theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(storedTheme || (prefersDark ? "dark" : "light"));
+
   button.addEventListener("click", () => {
     applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
   });
 }
 
-function setupCursorEffects() {
-  if (window.matchMedia("(pointer: coarse)").matches) return;
-
-  const trail = document.createElement("div");
-  trail.className = "cursor-trail";
-
-  const dot = document.createElement("span");
-  dot.className = "cursor-trail-dot";
-  dot.style.width = "18px";
-  dot.style.height = "18px";
-  trail.append(dot);
-
-  document.body.append(trail);
-
-  let active = false;
-  let queued = false;
-  let pointerX = window.innerWidth / 2;
-  let pointerY = window.innerHeight / 2;
-
-  const moveTrail = () => {
-    queued = false;
-    dot.style.transform = `translate(${pointerX}px, ${pointerY}px) translate(-50%, -50%)`;
-  };
-
-  window.addEventListener("pointermove", (event) => {
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-    if (!active) {
-      active = true;
-      trail.classList.add("active");
-    }
-    if (!queued) {
-      queued = true;
-      window.requestAnimationFrame(moveTrail);
-    }
-  });
-}
-
 function setupImagePerformance() {
-  document.querySelectorAll("img").forEach((image, index) => {
+  document.querySelectorAll("img").forEach((image) => {
     image.decoding = "async";
-    if (index > 3) {
+    if (!image.hasAttribute("loading")) {
       image.loading = "lazy";
-      image.fetchPriority = "low";
-    } else {
-      image.loading = "eager";
-      image.fetchPriority = "high";
     }
   });
 }
@@ -467,11 +501,11 @@ function setupRevealAnimations() {
         }
       });
     },
-    { threshold: 0.14 }
+    { threshold: 0.1 }
   );
 
   cards.forEach((card, index) => {
-    card.style.transitionDelay = `${(index % 8) * 60}ms`;
+    card.style.transitionDelay = `${Math.min((index % 6) * 50, 250)}ms`;
     observer.observe(card);
   });
 }
@@ -490,7 +524,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupModals();
   setupAboutJump();
   setupDynamicProfile();
-  setupCursorEffects();
   setupImagePerformance();
   setupRevealAnimations();
   setupImageFallback();
