@@ -433,25 +433,67 @@ function setupActiveNavigation() {
   });
 }
 
-// Mature, static profile display - no arbitrary percentages or distracting timers
+// Dynamic profile role shuffling: cycles through distinct roles with neo-brutalist placard flip
 function setupDynamicProfile() {
   const status = document.querySelector("#profile-status");
   const score = document.querySelector("#profile-score");
   const rolePlacard = document.querySelector("#role-placard");
+  const rolePrefix = document.querySelector("#role-prefix");
   const tagline = document.querySelector("#profile-tagline");
 
-  if (rolePlacard) {
-    rolePlacard.textContent = "AI/ML Engineer & Full-Stack Developer";
-  }
-  if (status) {
-    status.textContent = "Focus: AI/ML • Full-Stack Systems • CV";
-  }
-  if (score) {
-    score.textContent = "Active";
-  }
-  if (tagline) {
-    tagline.textContent = "Applied Machine Learning · Computer Vision · Full-Stack Systems";
-  }
+  if (!rolePlacard) return;
+
+  const states = [
+    {
+      role: "AI/ML Engineer",
+      prefix: "I build as an",
+      status: "Focus: AI/ML & Deep Learning",
+      score: "Active",
+      tagline: "Applied Machine Learning · Computer Vision · Full-Stack Systems"
+    },
+    {
+      role: "Full-Stack Developer",
+      prefix: "I build as a",
+      status: "Focus: Full-Stack Web & APIs",
+      score: "Active",
+      tagline: "Scalable Web Systems · Distributed APIs · Clean Architectures"
+    },
+    {
+      role: "Computer Vision Engineer",
+      prefix: "I build as a",
+      status: "Focus: Real-Time CV & Tracking",
+      score: "Active",
+      tagline: "OpenCV · MediaPipe · Gesture Physics · PyTorch"
+    },
+    {
+      role: "Agentic Systems Builder",
+      prefix: "I build as an",
+      status: "Focus: Autonomous AI Workflows",
+      score: "Active",
+      tagline: "LangGraph · Multi-Agent Orchestration · RAG Pipelines"
+    }
+  ];
+
+  let index = 0;
+
+  window.setInterval(() => {
+    index = (index + 1) % states.length;
+    const elementsToAnimate = [rolePlacard, rolePrefix, status, tagline].filter(Boolean);
+    elementsToAnimate.forEach((element) => element.classList.add("changing"));
+
+    window.setTimeout(() => {
+      const state = states[index];
+      if (rolePlacard) rolePlacard.textContent = state.role;
+      if (rolePrefix) rolePrefix.textContent = state.prefix;
+      if (status) status.textContent = state.status;
+      if (score) score.textContent = state.score;
+      if (tagline) tagline.textContent = state.tagline;
+    }, 160);
+
+    window.setTimeout(() => {
+      elementsToAnimate.forEach((element) => element.classList.remove("changing"));
+    }, 380);
+  }, 2400);
 }
 
 function setupThemeToggle() {
