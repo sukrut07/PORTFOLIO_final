@@ -4,21 +4,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portfolio of Sukrut Dusane — AI/ML engineer and full-stack developer building intelligent systems, practical AI products, computer vision applications, and agentic workflows." />
+  <meta name="description" content="Sukrut Dusane — AI/ML Engineer & Full-Stack Developer building practical AI systems, intelligent web applications, and computer-vision projects. CSE (AI/ML) at MIT AOE, Pune." />
   <meta name="author" content="Sukrut Dusane" />
-  <meta property="og:title" content="Sukrut Dusane | AI/ML Engineer & Full-Stack Developer" />
-  <meta property="og:description" content="Building intelligent systems, full-stack products, and practical AI solutions. CSE (AI & ML) at MIT Academy of Engineering, Pune." />
-  <meta property="og:image" content="assets/profile.png" />
+  <link rel="canonical" href="https://portfoliosukrut.vercel.app/" />
+
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://portfoliosukrut.vercel.app/" />
+  <meta property="og:title" content="Sukrut Dusane | AI/ML Engineer & Full-Stack Developer" />
+  <meta property="og:description" content="I build practical AI systems, intelligent web applications, and computer-vision projects." />
+  <meta property="og:image" content="assets/profile.png" />
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://portfoliosukrut.vercel.app/" />
   <meta name="twitter:title" content="Sukrut Dusane | AI/ML Engineer & Full-Stack Developer" />
-  <meta name="twitter:description" content="Building intelligent systems, full-stack products, and practical AI solutions." />
+  <meta name="twitter:description" content="I build practical AI systems, intelligent web applications, and computer-vision projects." />
   <meta name="twitter:image" content="assets/profile.png" />
+
   <title>Sukrut Dusane | AI/ML Engineer & Full-Stack Developer</title>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sukrut Dusane",
+    "url": "https://portfoliosukrut.vercel.app/",
+    "jobTitle": "AI/ML Engineer & Full-Stack Developer",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "MIT Academy of Engineering, Pune"
+    },
+    "sameAs": [
+      "https://github.com/sukrut07",
+      "https://www.linkedin.com/in/sukrut-dusane-b44813386/"
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -29,74 +56,74 @@
       <a href="index.html" data-nav="home">Home</a>
       <a href="about.html" data-nav="about">About</a>
       <a href="projects.html" data-nav="projects">Projects</a>
-      <a href="skills.html" data-nav="skills">Skills</a>
+      <a href="qualifications.html" data-nav="experience">Experience</a>
+      <a href="participations.html" data-nav="achievements">Achievements</a>
       <a href="certifications.html" data-nav="certifications">Certifications</a>
-      <a href="participations.html" data-nav="participations">Participations</a>
-      <a href="qualifications.html" data-nav="qualifications">Qualifications</a>
       <a href="contact.html" data-nav="contact">Contact</a>
     </nav>
     <button class="touch-button" type="button" data-open-modal>Get in Touch</button>
   </header>
 
   <main class="page-shell home-grid profile-first-grid" aria-label="Portfolio home dashboard">
+    <!-- Hero Main Section -->
     <section class="card hero-card profile-hero-card reveal" aria-labelledby="hero-title">
       <div>
         <div class="eyebrow">AI/ML Engineer & Full-Stack Developer</div>
         <h1 id="hero-title">Sukrut Dusane</h1>
         <p class="hero-role">
-          <span class="role-prefix">I build as an</span>
-          <span class="role-placard" id="role-placard">AI/ML Engineer</span>
+          <span class="role-prefix">I build</span>
+          <span class="role-placard" id="role-placard">practical AI systems, intelligent applications & CV projects</span>
         </p>
       </div>
 
-      <div class="hero-stats-container" style="margin: 28px 0 20px;">
-        <div class="hero-stats"
-          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px;">
-          <div class="hero-stat-box" style="background: var(--lime);">
-            <div style="font-size: 2.6rem; font-weight: 700; line-height: 1;">15+</div>
-            <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-top: 8px;">Projects</div>
-          </div>
-          <div class="hero-stat-box" style="background: var(--pink);">
-            <div style="font-size: 2.6rem; font-weight: 700; line-height: 1;">6+</div>
-            <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-top: 8px;">Hackathons</div>
-          </div>
-          <div class="hero-stat-box" style="background: var(--white);">
-            <div style="font-size: 2.6rem; font-weight: 700; line-height: 1;">14+</div>
-            <div style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-top: 8px;">Certifications</div>
-          </div>
+      <div class="hero-stats-grid">
+        <div class="hero-stat-box" style="background: var(--lime);">
+          <div class="hero-stat-number">15+</div>
+          <div class="hero-stat-label">Projects Built</div>
         </div>
-
-        <div class="hero-actions" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px;">
-          <a href="projects.html" class="cta-button" style="font-size: 1rem; padding: 11px 18px;">Explore Projects</a>
-          <a href="qualifications.html" class="ghost-button"
-            style="font-size: 1rem; padding: 11px 18px; background: var(--white);">Experience</a>
-          <a href="assets/resume.png" target="_blank" rel="noreferrer" class="ghost-button"
-            style="font-size: 1rem; padding: 11px 18px; background: var(--cyan); color: var(--black);">Resume</a>
-          <a href="https://www.linkedin.com/in/sukrut-dusane-b44813386/" target="_blank" rel="noreferrer" class="ghost-button"
-            style="font-size: 1rem; padding: 11px 18px; background: var(--purple); color: var(--white);">LinkedIn</a>
-          <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="ghost-button"
-            style="font-size: 1rem; padding: 11px 18px; background: var(--black); color: var(--white);">GitHub</a>
+        <div class="hero-stat-box" style="background: var(--pink);">
+          <div class="hero-stat-number">2</div>
+          <div class="hero-stat-label">Hackathon Wins</div>
+        </div>
+        <div class="hero-stat-box" style="background: var(--cyan);">
+          <div class="hero-stat-number">14+</div>
+          <div class="hero-stat-label">Certifications</div>
         </div>
       </div>
 
-      <p class="hero-copy">
-        Building intelligent systems, full-stack products, and practical AI solutions. CSE (AI & ML) student at MIT Academy of Engineering, Pune (2025–2029) focused on real-world engineering through hackathons, open source, and software architecture.
+      <div class="hero-meta-bar">
+        <span>📍 MIT Academy of Engineering, Pune</span>
+        <span>•</span>
+        <span>B.Tech CSE (AI/ML) 2025–2029</span>
+      </div>
+
+      <div class="hero-actions-group">
+        <a href="projects.html" class="cta-button btn-lime">Explore Projects</a>
+        <a href="assets/resume.png" target="_blank" rel="noreferrer" class="ghost-button btn-cyan">View Resume</a>
+        <button type="button" class="ghost-button btn-purple" data-open-modal>Contact Me</button>
+        <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="ghost-button btn-dark" aria-label="GitHub Profile">GitHub</a>
+        <a href="https://www.linkedin.com/in/sukrut-dusane-b44813386/" target="_blank" rel="noreferrer" class="ghost-button btn-white" aria-label="LinkedIn Profile">LinkedIn</a>
+      </div>
+
+      <p class="hero-copy" style="margin-top: 24px;">
+        Engineering applied machine learning, computer-vision pipelines, and reliable full-stack architectures. Driven by shipping functioning code, competitive hackathons, and open-source systems.
       </p>
     </section>
 
-    <aside class="card profile-card dynamic-profile reveal" aria-labelledby="profile-title">
-      <span class="panel-label">CSE AIML UNDERGRAD</span>
+    <!-- Profile Identity Card -->
+    <aside class="card profile-card reveal" aria-labelledby="profile-title">
+      <span class="panel-label">Engineering Focus</span>
       <span class="profile-frame">
-        <img src="assets/profile.png" alt="Sukrut Dusane" />
+        <img src="assets/profile.png" alt="Sukrut Dusane" width="160" height="160" fetchpriority="high" />
         <span class="profile-fallback" aria-hidden="true">SD</span>
       </span>
       <h2 id="profile-title" class="profile-name">Sukrut Dusane</h2>
-      <p class="profile-tag" id="profile-tagline">AI/ML Engineer | Full-Stack Developer | Builder</p>
-      <div class="profile-meter" aria-label="Current focus">
-        <span id="profile-status">Training intelligent systems</span>
-        <strong id="profile-score">96%</strong>
+      <p class="profile-tag" id="profile-tagline">Machine Learning · Generative AI · Full-Stack Systems</p>
+      <div class="profile-meter" aria-label="Current status">
+        <span id="profile-status">Status: Active Builder</span>
+        <strong id="profile-score" style="color: var(--lime); background: var(--black); padding: 2px 8px; border-radius: 4px; font-size: 0.82rem;">2026</strong>
       </div>
-      <div class="hero-strip" aria-label="Focus areas">
+      <div class="hero-strip" aria-label="Core domains">
         <span>AI/ML</span>
         <span>Full Stack</span>
         <span>CV</span>
@@ -104,87 +131,152 @@
       </div>
     </aside>
 
+    <!-- Currently Building Section -->
+    <section class="currently-building-section card accent-white reveal" aria-labelledby="building-title">
+      <div class="card-header">
+        <div>
+          <span class="panel-label">In Active Development</span>
+          <h2 id="building-title">Currently Building</h2>
+        </div>
+        <a class="mini-link" href="projects.html">View all 15+ projects →</a>
+      </div>
+
+      <div class="building-grid">
+        <article class="building-card">
+          <div>
+            <span class="building-card-tag" style="background: var(--purple);">Multi-Agent AI • SIH</span>
+            <h3>SANCHAY</h3>
+            <p>AI-powered public governance risk audit engine inspecting MPLADS records for duplicates and procurement anomalies via LangGraph & RAG.</p>
+          </div>
+          <div class="building-card-tech">
+            <span class="tech-pill">LangGraph</span>
+            <span class="tech-pill">RAG</span>
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">FastAPI</span>
+          </div>
+        </article>
+
+        <article class="building-card">
+          <div>
+            <span class="building-card-tag" style="background: var(--cyan);">Developer Tooling</span>
+            <h3>SML-Code-Optimiser</h3>
+            <p>Automated AST analysis engine coupled with high-speed LLM inference to diagnose algorithmic bottlenecks and render side-by-side patch diffs.</p>
+          </div>
+          <div class="building-card-tech">
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">AST Analysis</span>
+            <span class="tech-pill">Groq LLM</span>
+            <span class="tech-pill">Next.js</span>
+          </div>
+        </article>
+
+        <article class="building-card">
+          <div>
+            <span class="building-card-tag" style="background: var(--neon-orange);">Computer Vision</span>
+            <h3>Gravity</h3>
+            <p>Contactless 2D action game translating webcam hand landmarks into responsive physics controls via a low-latency UDP socket pipeline.</p>
+          </div>
+          <div class="building-card-tech">
+            <span class="tech-pill">OpenCV</span>
+            <span class="tech-pill">MediaPipe</span>
+            <span class="tech-pill">Godot</span>
+            <span class="tech-pill">UDP IPC</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Navigation Hub Cards -->
     <a class="card route-card accent-lime reveal" href="projects.html">
       <span class="panel-label">Engineering Builds</span>
       <h2>Featured Projects</h2>
-      <p>Sentinel AI (1st Place Datathon 2026), SANCHAY (SIH), Paperloop, SML-Code-Optimiser, and Gravity.</p>
+      <p>Sentinel AI (1st Place Datathon 2026), SANCHAY, Paperloop, SML-Code-Optimiser, and Gravity.</p>
     </a>
 
     <a class="card route-card accent-purple reveal" href="qualifications.html">
       <span class="panel-label">Trajectory</span>
       <h2>Experience & Education</h2>
-      <p>Vicharanashala / IIT Ropar, Cisco virtual internship, Open Source Connect, and MIT AOE (2025–2029).</p>
+      <p>Vicharanashala / IIT Ropar traineeship, Cisco virtual internship, Open Source contributions, and MIT AOE.</p>
     </a>
 
     <a class="card route-card accent-pink reveal" href="participations.html">
-      <span class="panel-label">Competitive Building</span>
-      <h2>Hackathons & Wins</h2>
-      <p>GirlScript Datathon 1st Place, PVG Ignition Runner-Up, Datathon 3rd Place, and Stanford Code in Place.</p>
+      <span class="panel-label">Competitive Wins</span>
+      <h2>Achievements & Hackathons</h2>
+      <p>1st Place GirlScript Pune Datathon, 1st Runner-Up PVG Ignition Hackverse, and Start-Up Fest Winner.</p>
     </a>
 
     <a class="card route-card accent-white reveal" href="certifications.html">
-      <span class="panel-label">Verified Proof</span>
+      <span class="panel-label">Verified Credentials</span>
       <h2>Certifications</h2>
-      <p>Anthropic, HP LIFE, Cisco, upGrad, Simplilearn, and Google Cloud verified credentials.</p>
+      <p>Anthropic, Cisco, Infosys Springboard, Google Cloud, and HP LIFE verified credentials.</p>
     </a>
+
+    <!-- GitHub Proof Section -->
+    <section class="github-proof-strip reveal" aria-label="Open Source Proof">
+      <div class="github-proof-info">
+        <h3>Open Source & Code Repositories</h3>
+        <p>15+ public repositories spanning applied machine learning, computer vision prototypes, and full-stack software.</p>
+      </div>
+      <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="cta-button btn-dark">
+        <span>View @sukrut07 on GitHub</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+    </section>
   </main>
 
+  <!-- Consistent Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-bio">
+      <h3>Sukrut Dusane</h3>
+      <p>AI/ML Engineer & Full-Stack Developer • Pune, India</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="footer-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/sukrut-dusane-b44813386/" target="_blank" rel="noreferrer" class="footer-link">LinkedIn</a>
+      <a href="mailto:sukrutdusane@gmail.com" class="footer-link">Email</a>
+      <a href="assets/resume.png" target="_blank" rel="noreferrer" class="footer-link">Resume</a>
+      <button type="button" class="footer-link" data-open-modal style="cursor: pointer;">Contact</button>
+    </div>
+    <div class="footer-copyright">
+      <span>© 2026 Sukrut Dusane. All rights reserved.</span>
+      <span>Engineered with semantic HTML & vanilla CSS.</span>
+    </div>
+  </footer>
+
+  <!-- Contact Modal -->
   <div class="modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
     <div class="modal-backdrop" data-close-modal></div>
     <section class="modal-panel" tabindex="-1">
       <button class="modal-close" type="button" data-close-modal aria-label="Close contact modal">×</button>
-      <span class="panel-label">Signal</span>
+      <span class="panel-label">Contact</span>
       <h2 id="modal-title">Let's build something intelligent.</h2>
       <p>Reach out for AI/ML engineering, full-stack systems, computer vision prototypes, or hackathon collaborations.</p>
-      <div class="modal-actions" style="display: flex; flex-direction: column; gap: 12px; align-items: stretch;">
-        <a href="mailto:sukrutdusane@gmail.com" class="cta-button"
-          style="justify-content: space-between; display: flex; background: var(--lime);">
+      <div class="modal-actions-list">
+        <a href="mailto:sukrutdusane@gmail.com" class="modal-action-row btn-lime">
           <span>Email Sukrut</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
             <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
         </a>
-        <a href="https://www.linkedin.com/in/sukrut-dusane-b44813386/" target="_blank" rel="noreferrer"
-          class="ghost-button"
-          style="justify-content: space-between; display: flex; background: var(--purple); color: var(--white);">
+        <a href="https://www.linkedin.com/in/sukrut-dusane-b44813386/" target="_blank" rel="noreferrer" class="modal-action-row btn-purple">
           <span>LinkedIn</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
             <rect x="2" y="9" width="4" height="12"></rect>
             <circle cx="4" cy="4" r="2"></circle>
           </svg>
         </a>
-        <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="ghost-button"
-          style="justify-content: space-between; display: flex; background: #222; color: var(--white);">
+        <a href="https://github.com/sukrut07" target="_blank" rel="noreferrer" class="modal-action-row btn-dark">
           <span>GitHub</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-            </path>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
           </svg>
         </a>
-        <a href="https://www.instagram.com/sukrut.xo/" target="_blank" rel="noreferrer" class="ghost-button"
-          style="justify-content: space-between; display: flex; background: var(--pink);">
-          <span>Instagram</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-          </svg>
-        </a>
-        <a href="tel:9175117543" class="ghost-button"
-          style="justify-content: space-between; display: flex; background: var(--white);">
+        <a href="tel:9175117543" class="modal-action-row btn-white">
           <span>+91 91751 17543</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-            </path>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
           </svg>
         </a>
       </div>
