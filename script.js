@@ -369,7 +369,7 @@ function closeModal() {
   lastFocusedElement?.focus?.();
 }
 
-function openCertModal(title, category, meta, certSrc) {
+function openCertModal(title, category, meta, certSrc, docSrc) {
   if (!certLightboxModal) return;
   lastFocusedElement = document.activeElement;
   const titleEl = certLightboxModal.querySelector("#cert-modal-title");
@@ -386,7 +386,8 @@ function openCertModal(title, category, meta, certSrc) {
     imgEl.alt = `${title} Certificate`;
   }
   if (linkEl) {
-    linkEl.href = certSrc;
+    linkEl.href = docSrc || certSrc;
+    linkEl.textContent = (docSrc && docSrc.endsWith(".pdf")) ? "Open Original PDF" : "Open Original Asset";
   }
 
   certLightboxModal.hidden = false;
@@ -414,22 +415,29 @@ function setupModals() {
     });
   });
 
-  // Competition cards certificate lightbox trigger
-  document.querySelectorAll(".comp-card[data-cert-src]").forEach((card) => {
-    card.addEventListener("click", () => {
-      const title = card.getAttribute("data-cert-title") || card.querySelector(".comp-title")?.textContent || "Certificate";
-      const category = card.getAttribute("data-cert-category") || "Competition";
-      const meta = card.getAttribute("data-cert-meta") || card.querySelector(".comp-organizer")?.textContent || "";
+  // Certificate lightbox trigger for both Competitions and Certifications cards
+  document.querySelectorAll(".comp-card[data-cert-src], .compact-cert-card[data-cert-src]").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      // If clicking directly on a child external link, don't intercept unless wanted
+      if (e.target.closest("a") && !e.target.closest(".comp-cert-overlay")) {
+        return;
+      }
+      const title = card.getAttribute("data-cert-title") || card.querySelector(".comp-title, .compact-cert-title")?.textContent?.trim() || "Certificate";
+      const category = card.getAttribute("data-cert-category") || card.querySelector(".cert-issuer-badge")?.textContent?.trim() || "Credential";
+      const meta = card.getAttribute("data-cert-meta") || card.querySelector(".comp-organizer, .compact-cert-meta")?.textContent?.trim() || "";
       const src = card.getAttribute("data-cert-src");
+      const doc = card.getAttribute("data-cert-doc") || src;
       if (src) {
-        openCertModal(title, category, meta, src);
+        openCertModal(title, category, meta, src, doc);
       }
     });
 
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        card.click();
+        if (!e.target.closest("a")) {
+          e.preventDefault();
+          card.click();
+        }
       }
     });
   });

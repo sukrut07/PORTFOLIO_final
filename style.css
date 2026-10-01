@@ -2963,14 +2963,49 @@ body.dark .building-tech-tags span {
 }
 
 .cert-category-title {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 16px;
   border-bottom: 3px solid var(--black);
-  padding-bottom: 8px;
+  padding-bottom: 10px;
+}
+
+.category-logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 2.5px solid var(--black);
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 var(--black);
+  flex-shrink: 0;
+  color: #111111;
+  transition: transform 120ms ease;
+}
+
+.cat-logo-ai {
+  background: var(--lime);
+}
+
+.cat-logo-ml {
+  background: var(--cyan);
+}
+
+.cat-logo-prog {
+  background: var(--pink);
+}
+
+.cat-logo-cloud {
+  background: var(--purple);
+  color: #ffffff;
+}
+
+body.dark .cat-logo-cloud {
+  color: #ffffff;
 }
 
 .compact-cert-grid {
@@ -2980,6 +3015,8 @@ body.dark .building-tech-tags span {
 }
 
 .compact-cert-card {
+  position: relative;
+  overflow: hidden;
   border: 3px solid var(--black);
   border-radius: 9px;
   background: var(--white);
@@ -2988,12 +3025,24 @@ body.dark .building-tech-tags span {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  min-height: 230px;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+  outline: none;
 }
 
-.compact-cert-card:hover {
-  transform: translate(-2px, -2px);
+.compact-cert-card:hover,
+.compact-cert-card:focus-visible {
+  transform: translate(-3px, -3px);
   box-shadow: 6px 6px 0 var(--black);
+  border-color: var(--purple);
+}
+
+.compact-cert-card:hover .comp-cert-overlay,
+.compact-cert-card:focus-visible .comp-cert-overlay {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
 }
 
 .compact-cert-header {
@@ -3012,6 +3061,7 @@ body.dark .building-tech-tags span {
   border-radius: 4px;
   background: var(--gray);
   color: var(--black);
+  box-shadow: 1.5px 1.5px 0 var(--black);
 }
 
 .cert-year-tag {
@@ -3026,19 +3076,24 @@ body.dark .building-tech-tags span {
   font-weight: 700;
   margin: 0 0 8px;
   line-height: 1.35;
+  color: var(--black);
 }
 
 .compact-cert-meta {
   font-size: 0.82rem;
   opacity: 0.85;
   margin-bottom: 12px;
+  color: #222222;
 }
 
 .compact-cert-actions {
   display: flex;
+  justify-content: space-between;
   gap: 8px;
   align-items: center;
   margin-top: auto;
+  padding-top: 10px;
+  border-top: 2px dashed rgba(0, 0, 0, 0.2);
 }
 
 .cert-verify-btn {
@@ -3046,9 +3101,9 @@ body.dark .building-tech-tags span {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border: 2px solid var(--black);
   border-radius: 6px;
   background: var(--lime);
@@ -3061,6 +3116,23 @@ body.dark .building-tech-tags span {
 .cert-verify-btn:hover {
   transform: translateY(-2px);
   background: var(--cyan);
+}
+
+body.dark .compact-cert-card {
+  background: #1e1e24;
+  border-color: #000000;
+}
+
+body.dark .compact-cert-title {
+  color: #ffffff;
+}
+
+body.dark .compact-cert-meta {
+  color: #bbbbbb;
+}
+
+body.dark .cert-year-tag {
+  color: #dddddd;
 }
 
 /* Card Visual Architecture Flow */
