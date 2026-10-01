@@ -2478,3 +2478,109 @@ body[data-page="about"] .mini-link:nth-child(6n) {
   gap: 8px;
 }
 
+/* Compact Certification System */
+.cert-category-block {
+  margin-top: 28px;
+}
+
+.cert-category-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  border-bottom: 3px solid var(--black);
+  padding-bottom: 8px;
+}
+
+.compact-cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.compact-cert-card {
+  border: 3px solid var(--black);
+  border-radius: 9px;
+  background: var(--white);
+  padding: 16px 18px;
+  box-shadow: 4px 4px 0 var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.compact-cert-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--black);
+}
+
+.compact-cert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cert-issuer-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  background: var(--gray);
+  color: var(--black);
+}
+
+.cert-year-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--black);
+  opacity: 0.75;
+}
+
+.compact-cert-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.compact-cert-meta {
+  font-size: 0.82rem;
+  opacity: 0.85;
+  margin-bottom: 12px;
+}
+
+.compact-cert-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: auto;
+}
+
+.cert-verify-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border: 2px solid var(--black);
+  border-radius: 6px;
+  background: var(--lime);
+  color: #111111;
+  box-shadow: 2px 2px 0 var(--black);
+  transition: transform 120ms ease, background 120ms ease;
+  text-decoration: none;
+}
+
+.cert-verify-btn:hover {
+  transform: translateY(-2px);
+  background: var(--cyan);
+}
+
