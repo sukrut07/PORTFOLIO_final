@@ -1302,11 +1302,20 @@ h3 {
   background: var(--neon-mint);
 }
 
+.about-copy h2 {
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
 .about-lab {
   background: var(--lime);
 }
 
-.about-copy p,
+.about-copy p {
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+
 .about-lab li,
 .contact-list a {
   font-size: 1.08rem;
