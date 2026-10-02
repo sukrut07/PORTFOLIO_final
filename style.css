@@ -2176,101 +2176,6 @@ body.dark .comp-pill {
 }
 
 /* ==========================================================================
-   Projects Page Layout & Section Architecture (Cleaned & Compact)
-   ========================================================================== */
-
-.projects-page-shell {
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-  width: min(calc(100% - 32px), var(--max-width));
-  margin: 0 auto;
-}
-
-.project-page-hero {
-  min-height: auto !important;
-  padding: 32px 34px 26px !important;
-  background: var(--purple);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  justify-content: flex-start;
-}
-
-.project-page-hero h1 {
-  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
-  line-height: 0.95;
-  margin: 0;
-}
-
-.project-page-hero .hero-desc {
-  max-width: 720px;
-  font-size: 1.05rem;
-  line-height: 1.45;
-  margin: 0;
-  font-weight: 500;
-}
-
-.projects-section {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-bottom: 24px;
-}
-
-.section-header-block {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.section-title {
-  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin: 0;
-}
-
-.section-desc {
-  font-size: 0.92rem;
-  opacity: 0.85;
-  margin: 0;
-  max-width: 620px;
-}
-
-/* Guard: Prevent any project icon or svg from expanding or causing giant shapes */
-.proj-icon,
-.proj-kpi-icon,
-.kpi-card-icon {
-  width: 42px;
-  height: 42px;
-  max-width: 42px;
-  max-height: 42px;
-  min-width: 42px;
-  min-height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 3px solid var(--black);
-  border-radius: 8px;
-  box-shadow: 3px 3px 0 var(--black);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.proj-icon svg,
-.proj-kpi-icon svg,
-.kpi-card-icon svg {
-  width: 22px;
-  height: 22px;
-  max-width: 22px;
-  max-height: 22px;
-  min-width: 22px;
-  min-height: 22px;
-  display: block;
-}
-
-/* ==========================================================================
    Featured Projects Grid & Rich Cards
    ========================================================================== */
 
@@ -2287,57 +2192,29 @@ body.dark .comp-pill {
   gap: 12px;
 }
 
-.featured-systems-grid,
 .featured-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 22px;
-}
-
-@media (min-width: 1200px) {
-  .featured-systems-grid,
-  .featured-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .featured-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 24px 26px;
-  border: 3px solid var(--black);
-  border-radius: 10px;
+  padding: 24px;
+  border: var(--border);
+  border-radius: var(--radius);
   background: var(--white);
-  box-shadow: 4px 4px 0 var(--black);
+  box-shadow: var(--shadow);
   transition: transform 180ms ease, box-shadow 180ms ease;
   position: relative;
+  overflow: hidden;
 }
 
 .featured-card:hover {
   transform: translate(-3px, -3px);
-  box-shadow: 7px 7px 0 var(--black);
-}
-
-.featured-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.featured-header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.featured-card-num {
-  font-family: 'Space Grotesk', monospace, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--black);
-  opacity: 0.85;
+  box-shadow: var(--shadow-hover);
 }
 
 .featured-card .badge-row {
@@ -3391,5 +3268,373 @@ body.dark .cert-year-tag {
   font-weight: 700;
   color: var(--black);
   opacity: 0.6;
+}
+
+/* ==========================================================================
+   Projects Page — 4-Column KPI Card Grid System
+   ========================================================================== */
+
+/* Section wrapper */
+.projects-kpi-section {
+  width: min(calc(100% - 32px), var(--max-width));
+  margin: 0 auto 60px;
+}
+
+/* Section headings for Featured / Engineering Projects groups */
+.proj-section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--black);
+  opacity: 0.7;
+}
+
+.proj-section-label::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: var(--grid-line);
+  border-radius: 2px;
+}
+
+/* Featured group — 3 columns desktop, spacious */
+.proj-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+/* Engineering (remaining) group — 4 columns desktop, compact */
+.proj-engineering-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* ── Base KPI Card ── */
+.proj-kpi-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 3px solid var(--black);
+  border-radius: 10px;
+  box-shadow: 5px 5px 0 var(--black);
+  padding: 20px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  cursor: default;
+  min-height: 0;
+}
+
+.proj-kpi-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--black);
+}
+
+/* Featured card — slightly more prominent */
+.proj-kpi-card.featured {
+  border-width: 4px;
+  box-shadow: 6px 6px 0 var(--black);
+  padding: 22px;
+}
+
+.proj-kpi-card.featured:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 var(--black);
+}
+
+/* ── Card Top Row: number + icon ── */
+.proj-kpi-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.proj-kpi-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--black);
+  opacity: 0.45;
+  letter-spacing: 0.5px;
+}
+
+.proj-kpi-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid var(--black);
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0 var(--black);
+}
+
+.proj-kpi-card.featured .proj-kpi-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+}
+
+.proj-kpi-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--black);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.proj-kpi-card.featured .proj-kpi-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Card Body ── */
+.proj-kpi-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.proj-kpi-category {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--black);
+  opacity: 0.55;
+  line-height: 1;
+}
+
+.proj-kpi-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--black);
+  text-transform: none;
+}
+
+.proj-kpi-card.featured .proj-kpi-title {
+  font-size: 1.2rem;
+}
+
+.proj-kpi-tagline {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  margin: 4px 0 0;
+  color: var(--black);
+  opacity: 0.8;
+  flex: 1;
+}
+
+/* ── Tech Tag Stack ── */
+.proj-kpi-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.proj-kpi-tech {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border: 1.5px solid var(--black);
+  border-radius: 4px;
+  background: var(--gray);
+  color: var(--black);
+  white-space: nowrap;
+}
+
+/* ── Card Actions ── */
+.proj-kpi-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 2px solid var(--grid-line);
+  margin-top: auto;
+}
+
+.proj-kpi-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--black);
+  color: var(--white);
+  border: 2px solid var(--black);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--black);
+  text-decoration: none;
+  transition: transform 130ms ease, box-shadow 130ms ease;
+  white-space: nowrap;
+}
+
+.proj-kpi-github:hover,
+.proj-kpi-github:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--black);
+  outline: none;
+}
+
+.proj-kpi-github svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.proj-kpi-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--lime);
+  color: var(--black);
+  border: 2px solid var(--black);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--black);
+  text-decoration: none;
+  transition: transform 130ms ease, box-shadow 130ms ease;
+  white-space: nowrap;
+}
+
+.proj-kpi-live:hover,
+.proj-kpi-live:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--black);
+  outline: none;
+}
+
+.proj-kpi-casestudy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--white);
+  color: var(--black);
+  border: 2px solid var(--black);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--black);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 130ms ease, box-shadow 130ms ease, background 130ms ease;
+  white-space: nowrap;
+}
+
+.proj-kpi-casestudy:hover,
+.proj-kpi-casestudy:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--black);
+  background: var(--lime);
+  outline: none;
+}
+
+/* ── Projects Page Hero — make compact ── */
+.project-page-hero .panel-label {
+  margin-bottom: 8px;
+}
+
+.project-page-hero h1 {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  line-height: 0.9;
+  margin-bottom: 12px;
+}
+
+.project-page-hero p {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  max-width: 640px;
+  margin-top: 12px;
+  opacity: 0.85;
+}
+
+/* ── Responsive: Tablet ── */
+@media (max-width: 1099px) {
+  .proj-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .proj-engineering-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .proj-featured-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .proj-engineering-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .proj-kpi-card {
+    padding: 16px;
+  }
+
+  .proj-kpi-card.featured {
+    padding: 18px;
+  }
+
+  .proj-kpi-title {
+    font-size: 1rem;
+  }
+
+  .proj-kpi-card.featured .proj-kpi-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .proj-kpi-actions {
+    flex-direction: column;
+  }
+
+  .proj-kpi-github,
+  .proj-kpi-live,
+  .proj-kpi-casestudy {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Dark mode support ── */
+body.dark .proj-kpi-card {
+  background: #1e1e1e;
+  border-color: #000000;
+}
+
+body.dark .proj-kpi-tech {
+  background: #2a2a2a;
+}
+
+body.dark .proj-kpi-github {
+  background: var(--black);
+  color: #111111;
 }
 
