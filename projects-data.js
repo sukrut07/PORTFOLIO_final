@@ -120,7 +120,7 @@ const projectsData = [
     tagline: "AI-driven predictive risk evaluation for insurance underwriting.",
     category: "ai-ml",
     categoryLabel: "FinTech & AI",
-    featured: false,
+    featured: true,
     achievementBadge: "🥈 1st Runner-Up — PVG Ignition Hackverse",
     shortDescription: "Automated policy risk profiling and applicant underwriting decisions using predictive machine learning models and automated decision logic.",
     problem: "Traditional insurance underwriting is bottlenecked by manual document verification and rigid scoring models that slow policy issuance.",
