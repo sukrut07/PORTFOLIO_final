@@ -38,11 +38,11 @@
     <button class="touch-button" type="button" data-open-modal>Get in Touch</button>
   </header>
 
-  <main class="page-shell cert-page-grid">
+  <main class="page-shell projects-page-shell">
     <section class="card page-hero project-page-hero reveal">
       <span class="panel-label">Engineering Portfolio</span>
       <h1>Projects</h1>
-      <p>A curated showcase of intelligent systems, practical full-stack architectures, computer vision tools, and hackathon prototypes built from first principles.</p>
+      <p class="hero-desc">AI systems, full-stack products, computer vision experiments, and engineering projects.</p>
       
       <div class="filter-bar" aria-label="Project category filter">
         <button type="button" class="filter-pill active" data-category-filter="all">All Projects</button>
@@ -53,10 +53,27 @@
       </div>
     </section>
 
-    <!-- Unified Project KPI Grid — all projects, data-driven -->
-    <section class="projects-kpi-section" aria-label="All Projects">
-      <div id="projects-kpi-grid" class="projects-kpi-grid" aria-live="polite">
-        <!-- Rendered dynamically by script.js from projectsData -->
+    <!-- Featured Systems Section -->
+    <section class="projects-section featured-systems-section reveal" aria-label="Featured Systems">
+      <div class="section-header-block">
+        <span class="panel-label">Core Architecture</span>
+        <h2 class="section-title">Featured Systems</h2>
+        <p class="section-desc">Key architectures spanning applied machine learning, multi-agent orchestration, and developer systems.</p>
+      </div>
+      <div id="featured-projects-container" class="featured-systems-grid" aria-live="polite">
+        <!-- Populated dynamically by script.js -->
+      </div>
+    </section>
+
+    <!-- Engineering Projects Section (4-Column KPI Grid) -->
+    <section class="projects-section engineering-projects-section reveal" aria-label="Engineering Projects">
+      <div class="section-header-block">
+        <span class="panel-label">Catalog</span>
+        <h2 class="section-title">Engineering Projects</h2>
+        <p class="section-desc">Full-stack applications, computer vision tools, and specialized software builds.</p>
+      </div>
+      <div id="engineering-projects-container" class="engineering-kpi-grid" aria-live="polite">
+        <!-- Populated dynamically by script.js -->
       </div>
     </section>
   </main>

@@ -2176,6 +2176,101 @@ body.dark .comp-pill {
 }
 
 /* ==========================================================================
+   Projects Page Layout & Section Architecture (Cleaned & Compact)
+   ========================================================================== */
+
+.projects-page-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  width: min(calc(100% - 32px), var(--max-width));
+  margin: 0 auto;
+}
+
+.project-page-hero {
+  min-height: auto !important;
+  padding: 32px 34px 26px !important;
+  background: var(--purple);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: flex-start;
+}
+
+.project-page-hero h1 {
+  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  line-height: 0.95;
+  margin: 0;
+}
+
+.project-page-hero .hero-desc {
+  max-width: 720px;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  margin: 0;
+  font-weight: 500;
+}
+
+.projects-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.section-header-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.section-desc {
+  font-size: 0.92rem;
+  opacity: 0.85;
+  margin: 0;
+  max-width: 620px;
+}
+
+/* Guard: Prevent any project icon or svg from expanding or causing giant shapes */
+.proj-icon,
+.proj-kpi-icon,
+.kpi-card-icon {
+  width: 42px;
+  height: 42px;
+  max-width: 42px;
+  max-height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--black);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--black);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.proj-icon svg,
+.proj-kpi-icon svg,
+.kpi-card-icon svg {
+  width: 22px;
+  height: 22px;
+  max-width: 22px;
+  max-height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  display: block;
+}
+
+/* ==========================================================================
    Featured Projects Grid & Rich Cards
    ========================================================================== */
 
