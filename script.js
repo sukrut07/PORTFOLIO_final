@@ -1,6 +1,7 @@
 const githubUser = "sukrut07";
 const featuredProjectContainer = document.querySelector("#featured-projects-container");
 const moreProjectList = document.querySelector("#more-project-list") || document.querySelector("#project-list");
+const kpiProjectGrid = document.querySelector("#projects-kpi-grid");
 const contactModal = document.querySelector("#contact-modal");
 const projectModal = document.querySelector("#project-modal");
 const certLightboxModal = document.querySelector("#cert-lightbox-modal");
@@ -287,33 +288,88 @@ function closeProjectModal() {
   lastFocusedElement?.focus?.();
 }
 
-function filterAndRenderProjects() {
-  const featured = portfolioProjects.filter((p) => p.featured);
-  const more = portfolioProjects.filter((p) => !p.featured);
+// ── Category icon map (SVG paths per project category) ─────────────────────
+const CATEGORY_ICONS = {
+  "ai-ml": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`,
+  "full-stack": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+  "computer-vision": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
+  "tools": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`
+};
 
+const ACCENT_COLORS = ["var(--lime)","var(--purple)","var(--pink)","var(--cyan)","var(--neon-orange)","var(--electric-blue)","var(--neon-mint)"];
+
+function createKpiProjectCard(project, index) {
+  const card = document.createElement("article");
+  card.className = "proj-kpi-card reveal visible";
+  card.dataset.category = project.category;
+
+  const accent = ACCENT_COLORS[index % ACCENT_COLORS.length];
+  const iconSvg = CATEGORY_ICONS[project.category] || CATEGORY_ICONS["tools"];
+
+  const techTags = (project.technologies || [])
+    .slice(0, 4)
+    .map((t) => `<span class="proj-kpi-tech">${t}</span>`)
+    .join("");
+
+  const githubBtn = project.githubUrl
+    ? `<a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer"
+         class="proj-kpi-github"
+         aria-label="View GitHub repository for ${project.title}">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+         View GitHub
+       </a>`
+    : "";
+
+  const caseStudyBtn = `<button type="button" class="proj-kpi-casestudy" data-open-casestudy="${project.id}"
+      aria-label="Open case study for ${project.title}">Case Study →</button>`;
+
+  card.innerHTML = `
+    <div class="proj-kpi-top">
+      <span class="proj-kpi-num">${String(index + 1).padStart(2, "0")}</span>
+      <span class="proj-kpi-icon" style="background:${accent};" aria-hidden="true">${iconSvg}</span>
+    </div>
+    <div class="proj-kpi-body">
+      <span class="proj-kpi-category">${project.categoryLabel || ""}</span>
+      <h3 class="proj-kpi-title">${project.title}</h3>
+      <p class="proj-kpi-tagline">${project.tagline}</p>
+      <div class="proj-kpi-stack">${techTags}</div>
+    </div>
+    <div class="proj-kpi-actions">
+      ${githubBtn}
+      ${caseStudyBtn}
+    </div>
+  `;
+
+  card.querySelector("[data-open-casestudy]")?.addEventListener("click", () => {
+    openCaseStudyModal(project);
+  });
+
+  return card;
+}
+
+function filterAndRenderProjects() {
+  // Legacy containers (non-projects pages ignore this)
   if (featuredProjectContainer) {
+    const featured = portfolioProjects.filter((p) => p.featured);
     const filteredFeatured = activeCategory === "all"
       ? featured
       : featured.filter((p) => p.category === activeCategory);
-
-    featuredProjectContainer.replaceChildren(
-      ...filteredFeatured.map(createFeaturedCard)
-    );
-
+    featuredProjectContainer.replaceChildren(...filteredFeatured.map(createFeaturedCard));
     const featuredSection = featuredProjectContainer.closest(".featured-section");
-    if (featuredSection) {
-      featuredSection.style.display = filteredFeatured.length ? "block" : "none";
-    }
+    if (featuredSection) featuredSection.style.display = filteredFeatured.length ? "block" : "none";
+  }
+  if (moreProjectList) {
+    const more = portfolioProjects.filter((p) => !p.featured);
+    const filteredMore = activeCategory === "all" ? more : more.filter((p) => p.category === activeCategory);
+    moreProjectList.replaceChildren(...filteredMore.map(createMoreProjectCard));
   }
 
-  if (moreProjectList) {
-    const filteredMore = activeCategory === "all"
-      ? more
-      : more.filter((p) => p.category === activeCategory);
-
-    moreProjectList.replaceChildren(
-      ...filteredMore.map(createMoreProjectCard)
-    );
+  // ── Unified KPI grid (projects page) ──
+  if (kpiProjectGrid) {
+    const filtered = activeCategory === "all"
+      ? portfolioProjects
+      : portfolioProjects.filter((p) => p.category === activeCategory);
+    kpiProjectGrid.replaceChildren(...filtered.map((p, i) => createKpiProjectCard(p, i)));
   }
 }
 
@@ -637,6 +693,65 @@ function setupImageFallback() {
   });
 }
 
+// Simultaneous count-up animation for hero stat numbers (15+, 10+, 30+)
+function setupHeroStatCounters() {
+  const statElements = document.querySelectorAll(".hero-stat-number[data-target]");
+  if (!statElements.length) return;
+
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  const duration = 1000;
+
+  function animateSimultaneously() {
+    let startTimestamp = null;
+    function step(timestamp) {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+
+      statElements.forEach((el) => {
+        const target = parseInt(el.getAttribute("data-target"), 10);
+        const current = Math.floor(easeOut * target);
+        el.textContent = `${current}+`;
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        statElements.forEach((el) => {
+          const target = el.getAttribute("data-target");
+          el.textContent = `${target}+`;
+        });
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  const statsGrid = document.querySelector(".hero-stats-grid");
+  if (!statsGrid || !("IntersectionObserver" in window)) {
+    animateSimultaneously();
+    return;
+  }
+
+  let animated = false;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !animated) {
+          animated = true;
+          window.setTimeout(animateSimultaneously, 120);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  observer.observe(statsGrid);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupThemeToggle();
   setupActiveNavigation();
@@ -644,6 +759,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupModals();
   setupAboutJump();
   setupDynamicProfile();
+  setupHeroStatCounters();
   setupImagePerformance();
   setupRevealAnimations();
   setupImageFallback();
