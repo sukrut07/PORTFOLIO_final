@@ -836,6 +836,196 @@ h3 {
   background: var(--white);
 }
 
+/* ==========================================================================
+   Beyond the Stack Section (Hero Right Panel)
+   ========================================================================== */
+
+.beyond-stack-section {
+  width: 100%;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.beyond-stack-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.beyond-stack-header .panel-label {
+  margin-bottom: 0;
+  font-size: 0.74rem;
+  padding: 5px 10px;
+}
+
+.beyond-stack-intro {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--black);
+  opacity: 0.88;
+  margin: 0;
+  font-weight: 500;
+}
+
+.beyond-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.beyond-card {
+  position: relative;
+  background: var(--white);
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--black);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  overflow: hidden;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.beyond-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 4px 4px 0 var(--black);
+}
+
+.beyond-card:hover .beyond-icon-badge {
+  transform: scale(1.08);
+}
+
+.beyond-accent-cyan {
+  border-top: 4px solid var(--cyan);
+}
+
+.beyond-accent-pink {
+  border-top: 4px solid var(--pink);
+}
+
+.beyond-accent-lime {
+  border-top: 4px solid var(--lime);
+}
+
+.beyond-accent-purple {
+  border-top: 4px solid var(--purple);
+}
+
+.beyond-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.beyond-icon-badge {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--black);
+  border-radius: 6px;
+  box-shadow: 1.5px 1.5px 0 var(--black);
+  transition: transform 160ms ease;
+  color: #111111;
+}
+
+.beyond-accent-cyan .beyond-icon-badge {
+  background: var(--cyan);
+}
+
+.beyond-accent-pink .beyond-icon-badge {
+  background: var(--pink);
+}
+
+.beyond-accent-lime .beyond-icon-badge {
+  background: var(--lime);
+}
+
+.beyond-accent-purple .beyond-icon-badge {
+  background: var(--purple);
+}
+
+body.dark .beyond-icon-badge {
+  color: #111111 !important;
+}
+
+.beyond-card-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--black);
+}
+
+.beyond-card-desc {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--black);
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+.beyond-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.beyond-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 2px 6px;
+  border: 1.5px solid var(--black);
+  border-radius: 4px;
+  background: var(--gray);
+  color: var(--black);
+  line-height: 1.2;
+}
+
+.beyond-stack-footer {
+  text-align: center;
+  margin-top: 4px;
+  padding-top: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  opacity: 0.6;
+}
+
+@media (max-width: 520px) {
+  .beyond-stack-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beyond-card,
+  .beyond-card:hover,
+  .beyond-card:hover .beyond-icon-badge {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+
 .hero-strip {
   display: flex;
   flex-wrap: wrap;
@@ -1647,12 +1837,16 @@ body[data-page="about"] .mini-link:nth-child(6n) {
   }
 
   .profile-first-grid .profile-hero-card {
+    grid-column: 1 / -1;
+    grid-row: auto;
     min-height: auto;
   }
 
+  .profile-first-grid .profile-card,
   .dynamic-profile {
-    grid-column: auto;
+    grid-column: 1 / -1;
     grid-row: auto;
+    min-height: auto;
   }
 
   .dashboard {

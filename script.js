@@ -745,7 +745,7 @@ function setupRevealAnimations() {
         }
       });
     },
-    { threshold: 0.1 }
+    { threshold: 0.02, rootMargin: "20px" }
   );
 
   cards.forEach((card, index) => {
