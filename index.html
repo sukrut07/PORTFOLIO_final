@@ -112,30 +112,33 @@
       </p>
     </section>
 
-    <!-- Profile Identity Card -->
-    <aside class="card profile-card reveal" aria-labelledby="profile-title">
-      <span class="panel-label">Engineering Focus</span>
-      <span class="profile-frame">
-        <img src="assets/profile.png" alt="Sukrut Dusane" width="160" height="160" fetchpriority="high" />
-        <span class="profile-fallback" aria-hidden="true">SD</span>
-      </span>
-      <h2 id="profile-title" class="profile-name">Sukrut Dusane</h2>
-      <p class="profile-tag" id="profile-tagline">Machine Learning · Generative AI · Full-Stack Systems</p>
-      <div class="profile-meter" aria-label="Current status">
-        <span id="profile-status">Status: Active Builder</span>
-        <strong id="profile-score" style="color: var(--lime); background: var(--black); padding: 2px 8px; border-radius: 4px; font-size: 0.82rem;">2026</strong>
-      </div>
-      <div class="hero-strip" aria-label="Core domains">
-        <span>AI/ML</span>
-        <span>Full Stack</span>
-        <span>CV</span>
-        <span>Agents</span>
-      </div>
+    <!-- Engineering Snapshot Panel -->
+    <aside class="card profile-card hero-snapshot-panel reveal" aria-label="AI and Engineering Snapshot">
+      <!-- 01 / CURRENT FOCUS -->
+      <section class="hero-panel-block focus-block" aria-label="Current Focus">
+        <div class="block-header">
+          <span class="block-index">01</span>
+          <span class="block-divider">/</span>
+          <h2 class="block-title">Current Focus</h2>
+        </div>
+        <div class="profile-meter" aria-label="Current status">
+          <span id="profile-status">Focus: Autonomous AI Workflows</span>
+          <strong id="profile-score" class="focus-badge">Active</strong>
+        </div>
+        <div class="hero-strip" aria-label="Core domains">
+          <span>AI/ML</span>
+          <span>Full Stack</span>
+          <span>CV</span>
+          <span>Agents</span>
+        </div>
+      </section>
 
-      <div class="hero-tech-card" aria-label="Core Engineering Stack">
-        <div class="hero-tech-card-header">
-          <span class="hero-tech-pulse" aria-hidden="true"></span>
-          <span>Core Tooling &amp; Stack</span>
+      <!-- 02 / CORE TOOLING & STACK -->
+      <section class="hero-panel-block tooling-block" aria-label="Core Tooling and Stack">
+        <div class="block-header">
+          <span class="block-index">02</span>
+          <span class="block-divider">/</span>
+          <h2 class="block-title">Core Tooling &amp; Stack</h2>
         </div>
         <div class="hero-tech-chips">
           <span class="hero-tech-chip chip-lime">Python • PyTorch</span>
@@ -143,17 +146,15 @@
           <span class="hero-tech-chip chip-pink">LangGraph • Agents</span>
           <span class="hero-tech-chip chip-white">FastAPI • React</span>
         </div>
-      </div>
+      </section>
 
-      <!-- Beyond the Stack Section -->
-      <section class="beyond-stack-section" aria-label="Beyond the Stack">
-        <div class="beyond-stack-header">
-          <span class="panel-label">Beyond the Stack</span>
-          <p class="beyond-stack-intro">
-            I like learning by building — whether that means experimenting with a model, visualizing an idea, building a game system, or turning a hackathon idea into a working prototype.
-          </p>
+      <!-- 03 / BEYOND THE STACK -->
+      <section class="hero-panel-block beyond-block" aria-label="Beyond the Stack">
+        <div class="block-header">
+          <span class="block-index">03</span>
+          <span class="block-divider">/</span>
+          <h2 class="block-title">Beyond the Stack</h2>
         </div>
-
         <div class="beyond-stack-grid">
           <!-- Card 01: Visual Computing -->
           <article class="beyond-card beyond-accent-cyan">
@@ -166,7 +167,7 @@
             <p class="beyond-card-desc">Exploring mathematical visualization and computer vision through projects and experiments.</p>
             <div class="beyond-card-tags">
               <span class="beyond-tag">Manim</span>
-              <span class="beyond-tag">Computer Vision</span>
+              <span class="beyond-tag">CV</span>
             </div>
           </article>
 
@@ -181,7 +182,6 @@
             <p class="beyond-card-desc">Experimenting with gameplay systems and interactive experiences using Godot.</p>
             <div class="beyond-card-tags">
               <span class="beyond-tag">Godot</span>
-              <span class="beyond-tag">Game Systems</span>
             </div>
           </article>
 
@@ -197,7 +197,7 @@
             <div class="beyond-card-tags">
               <span class="beyond-tag">ML</span>
               <span class="beyond-tag">RL</span>
-              <span class="beyond-tag">AI Systems</span>
+              <span class="beyond-tag">AI</span>
             </div>
           </article>
 
@@ -209,16 +209,27 @@
               </span>
               <h3 class="beyond-card-title">Build &amp; Compete</h3>
             </div>
-            <p class="beyond-card-desc">Learning by building projects, participating in hackathons and working on entrepreneurship initiatives.</p>
+            <p class="beyond-card-desc">Learning by building projects, participating in hackathons and entrepreneurship initiatives.</p>
             <div class="beyond-card-tags">
               <span class="beyond-tag">Hackathons</span>
               <span class="beyond-tag">E-Cell</span>
             </div>
           </article>
         </div>
+      </section>
 
-        <div class="beyond-stack-footer">
-          <span>Learn → Build → Break → Refine</span>
+      <!-- 04 / BUILDING PHILOSOPHY -->
+      <section class="hero-panel-block philosophy-block" aria-label="Building Philosophy">
+        <div class="block-header">
+          <span class="block-index">04</span>
+          <span class="block-divider">/</span>
+          <h2 class="block-title">Building Philosophy</h2>
+        </div>
+        <div class="philosophy-content">
+          <div class="philosophy-motto">LEARN → BUILD → BREAK → REFINE</div>
+          <p class="philosophy-copy">
+            Most of my learning happens by turning ideas into working prototypes, testing them, and improving what breaks.
+          </p>
         </div>
       </section>
     </aside>

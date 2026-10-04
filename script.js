@@ -711,7 +711,8 @@ function setupThemeToggle() {
     localStorage.setItem("portfolio-theme", theme);
   };
 
-  const storedTheme = localStorage.getItem("portfolio-theme");
+  const urlTheme = new URLSearchParams(window.location.search).get("theme");
+  const storedTheme = urlTheme || localStorage.getItem("portfolio-theme");
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   applyTheme(storedTheme || (prefersDark ? "dark" : "light"));
 
