@@ -5,6 +5,7 @@ const kpiProjectGrid = document.querySelector("#projects-kpi-grid");
 const contactModal = document.querySelector("#contact-modal");
 const projectModal = document.querySelector("#project-modal");
 const certLightboxModal = document.querySelector("#cert-lightbox-modal");
+const experienceModal = document.querySelector("#experience-modal");
 let lastFocusedElement = null;
 
 // Use projectsData if loaded from projects-data.js
@@ -526,6 +527,142 @@ function closeCertModal() {
   lastFocusedElement?.focus?.();
 }
 
+// Experience Data Dictionary
+const experienceData = {
+  "vicharanashala": {
+    id: "vicharanashala",
+    role: "Software & Technical Intern",
+    org: "Vicharanashala / IIT Ropar (Samagama Internship Program)",
+    program: "Applied Machine Learning & Backend Systems",
+    typeBadge: "Virtual Traineeship",
+    badgeColor: "var(--lime)",
+    iconEmoji: "🤖",
+    iconBg: "var(--lime)",
+    period: "June 2025 – August 2025",
+    mode: "Remote • Engineering Mentorship",
+    overview: "Engaged in structured software development and foundational machine learning modules under direct engineering mentorship at Vicharanashala in collaboration with IIT Ropar. Developed data preprocessing routines, explored predictive models, and integrated scalable REST endpoints for full-stack web applications following agile engineering cadences.",
+    deliverables: [
+      "Implemented exploratory data analysis (EDA) scripts and robust dataset preprocessing routines in Python utilizing Pandas and NumPy.",
+      "Built and tested RESTful endpoint integrations for core web application modules using Node.js and Express.",
+      "Participated actively in weekly technical architecture reviews, milestone sprints, and peer code walkthroughs with engineering mentors.",
+      "Streamlined data transformation pipelines to ensure clean data ingestion, feature normalization, and deterministic testing routines.",
+      "Collaborated using Git version control with clean commit histories, branching workflows, and pull request code reviews."
+    ],
+    technologies: ["Python", "Pandas", "NumPy", "Data Preprocessing", "Node.js", "Express.js", "REST APIs", "Git", "EDA"],
+    keyCompetencies: ["Data Engineering & EDA", "Backend API Integration", "Agile Sprint Delivery", "Collaborative Code Review"]
+  },
+  "cisco-academy": {
+    id: "cisco-academy",
+    role: "Virtual Technical Trainee",
+    org: "Cisco Networking Academy & MIT Academy of Engineering",
+    program: "Systems Networking & Applied AI Training",
+    typeBadge: "Technical Training",
+    badgeColor: "var(--cyan)",
+    iconEmoji: "🌐",
+    iconBg: "var(--cyan)",
+    period: "2025 – 2026",
+    mode: "Hybrid / Lab Training • MIT AOE",
+    overview: "Completed extensive hands-on technical training through Cisco Networking Academy in partnership with MIT Academy of Engineering. Focused on deep architectural understanding of network topologies, packet analysis, socket communication, automated scripting, and modern artificial intelligence foundations.",
+    deliverables: [
+      "Analyzed IP routing protocols, packet flows, subnet topologies, and client-server socket communication architectures in simulated network environments.",
+      "Developed Python automation scripts for data parsing, network configuration validation, and system telemetry modeling.",
+      "Earned verified credentials in Introduction to Modern AI, Python Essentials 1, and Python Essentials 2.",
+      "Conducted practical packet inspection labs using protocol analyzers to verify reliable, secure transmission workflows.",
+      "Engineered automated validation routines to parse JSON network payloads and test socket connections."
+    ],
+    technologies: ["Computer Networks", "Python Scripting", "Modern AI", "Socket Programming", "Network Protocols", "TCP/IP", "Wireshark", "Automation"],
+    keyCompetencies: ["Network Architecture & Protocols", "Python Systems Automation", "Socket Communication", "Verified Industry Certifications"]
+  },
+  "open-source": {
+    id: "open-source",
+    role: "Open Source Contributor",
+    org: "Open Source Connect India & Developer Repositories",
+    program: "Community Engineering & Student Tooling",
+    typeBadge: "Open Source",
+    badgeColor: "var(--pink)",
+    iconEmoji: "🚀",
+    iconBg: "var(--pink)",
+    period: "Ongoing Contributor",
+    mode: "GitHub Ecosystem • Public Repositories",
+    overview: "Active contributor across student developer communities and public repositories under Open Source Connect India. Contributing code enhancements, triaging issues, refining documentation, and collaborating with developers across India to build transparent, accessible developer tooling.",
+    deliverables: [
+      "Triaged community repository issues, reproduced bugs, and submitted reviewed pull requests adhering to upstream coding standards.",
+      "Collaborated with peers and maintainers to debug and enhance student developer utilities and web portals.",
+      "Authored clean, maintainable technical documentation, setup guides, and architectural breakdowns to streamline onboarding for incoming contributors.",
+      "Practiced continuous integration (CI) workflows, atomic git commits, and responsive code review feedback cycles.",
+      "Maintained high standards for reproducible bug reporting and transparent open-source communication."
+    ],
+    technologies: ["Git & GitHub", "Code Reviews", "Issue Triage", "Technical Documentation", "Open Source Tooling", "Markdown", "CI/CD"],
+    keyCompetencies: ["Open Source Contribution", "Asynchronous Code Collaboration", "Technical Documentation", "GitHub Flow & CI/CD"]
+  }
+};
+
+experienceData["internship-vicharanashala"] = experienceData["vicharanashala"];
+experienceData["training-cisco"] = experienceData["cisco-academy"];
+experienceData["opensource-contributor"] = experienceData["open-source"];
+
+function openExperienceModal(expId) {
+  if (!experienceModal) return;
+  const data = experienceData[expId];
+  if (!data) return;
+
+  lastFocusedElement = document.activeElement;
+
+  const iconEl = experienceModal.querySelector("#exp-modal-icon");
+  const badgeEl = experienceModal.querySelector("#exp-modal-badge");
+  const periodEl = experienceModal.querySelector("#exp-modal-period");
+  const titleEl = experienceModal.querySelector("#exp-modal-title");
+  const orgEl = experienceModal.querySelector("#exp-modal-org");
+  const modeEl = experienceModal.querySelector("#exp-modal-mode");
+  const overviewEl = experienceModal.querySelector("#exp-modal-overview");
+  const deliverablesEl = experienceModal.querySelector("#exp-modal-deliverables");
+  const tagsEl = experienceModal.querySelector("#exp-modal-tags");
+  const competenciesEl = experienceModal.querySelector("#exp-modal-competencies");
+
+  if (iconEl) {
+    iconEl.textContent = data.iconEmoji;
+    iconEl.style.background = data.iconBg;
+  }
+  if (badgeEl) {
+    badgeEl.textContent = data.typeBadge;
+    badgeEl.style.background = data.badgeColor;
+  }
+  if (periodEl) periodEl.textContent = data.period;
+  if (titleEl) titleEl.textContent = data.role;
+  if (orgEl) orgEl.textContent = data.org;
+  if (modeEl) modeEl.textContent = data.mode;
+  if (overviewEl) overviewEl.textContent = data.overview;
+
+  if (deliverablesEl) {
+    deliverablesEl.innerHTML = data.deliverables
+      .map((item) => `<li>${item}</li>`)
+      .join("");
+  }
+
+  if (tagsEl) {
+    tagsEl.innerHTML = data.technologies
+      .map((tech) => `<span class="tech-pill">${tech}</span>`)
+      .join("");
+  }
+
+  if (competenciesEl) {
+    competenciesEl.innerHTML = data.keyCompetencies
+      .map((comp) => `<span class="competency-pill">⚡ ${comp}</span>`)
+      .join("");
+  }
+
+  experienceModal.hidden = false;
+  document.body.classList.add("modal-open");
+  experienceModal.querySelector(".modal-panel")?.focus();
+}
+
+function closeExperienceModal() {
+  if (!experienceModal) return;
+  experienceModal.hidden = true;
+  document.body.classList.remove("modal-open");
+  lastFocusedElement?.focus?.();
+}
+
 // Complete modal setup with keyboard focus trap
 function setupModals() {
   document.querySelectorAll("[data-open-modal]").forEach((button) => {
@@ -536,6 +673,7 @@ function setupModals() {
     button.addEventListener("click", () => {
       closeModal();
       closeProjectModal();
+      closeExperienceModal();
     });
   });
 
@@ -570,21 +708,47 @@ function setupModals() {
     button.addEventListener("click", closeCertModal);
   });
 
+  // Experience / Internship cards trigger
+  document.querySelectorAll(".experience-card[data-exp-id]").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("a")) return;
+      const expId = card.getAttribute("data-exp-id");
+      if (expId) {
+        openExperienceModal(expId);
+      }
+    });
+
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        if (!e.target.closest("a")) {
+          e.preventDefault();
+          card.click();
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-close-exp-modal]").forEach((button) => {
+    button.addEventListener("click", closeExperienceModal);
+  });
+
   document.addEventListener("keydown", (event) => {
     const isContactOpen = contactModal && !contactModal.hidden;
     const isProjectOpen = projectModal && !projectModal.hidden;
     const isCertOpen = certLightboxModal && !certLightboxModal.hidden;
+    const isExpOpen = experienceModal && !experienceModal.hidden;
 
     if (event.key === "Escape") {
       if (isContactOpen) closeModal();
       if (isProjectOpen) closeProjectModal();
       if (isCertOpen) closeCertModal();
+      if (isExpOpen) closeExperienceModal();
       return;
     }
 
     // Modal Focus Trap
-    if (event.key === "Tab" && (isContactOpen || isProjectOpen || isCertOpen)) {
-      const activeModal = isContactOpen ? contactModal : isProjectOpen ? projectModal : certLightboxModal;
+    if (event.key === "Tab" && (isContactOpen || isProjectOpen || isCertOpen || isExpOpen)) {
+      const activeModal = isContactOpen ? contactModal : isProjectOpen ? projectModal : isCertOpen ? certLightboxModal : experienceModal;
       const focusables = activeModal.querySelectorAll(
         'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
       );

@@ -38,95 +38,113 @@
     <button class="touch-button" type="button" data-open-modal>Get in Touch</button>
   </header>
 
-  <main class="page-shell inner-grid" style="grid-template-columns: 1fr;">
+  <main class="page-shell">
     <section class="card page-hero reveal">
       <span class="panel-label">Technical Background</span>
       <h1>Experience & Education</h1>
       <p>A concrete, defensible record of software internships, hands-on technical traineeships, open-source engineering contributions, and academic qualifications.</p>
     </section>
 
-    <!-- Work & Technical Experience Section -->
-    <section class="reveal" aria-label="Technical Experience">
-      <h2 class="section-headline">
-        <span style="font-size: 1.5rem;" aria-hidden="true">💼</span> Technical Experience & Roles
-      </h2>
+    <!-- Work & Technical Experience Section (2-Column Grid) -->
+    <section class="experience-section reveal" aria-label="Technical Experience">
+      <div class="section-title-wrap">
+        <h2 class="section-headline">
+          <span class="theme-icon-badge bg-lime" aria-hidden="true">⚡</span>
+          <span>Technical Experience & Roles</span>
+        </h2>
+        <span class="section-badge-pill">3 Specialized Roles</span>
+      </div>
 
-      <div class="experience-timeline">
-        <!-- Vicharanashala / IIT Ropar -->
-        <article class="experience-card">
-          <div class="experience-header">
+      <div class="experience-grid">
+        <!-- 01 Vicharanashala / IIT Ropar -->
+        <article class="experience-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Software & Technical Intern details at Vicharanashala / IIT Ropar" data-exp-id="vicharanashala">
+          <div class="experience-card-top">
+            <div class="role-badge-row">
+              <span class="theme-icon-badge bg-lime" aria-hidden="true">🤖</span>
+              <div class="role-meta-group">
+                <span class="experience-badge" style="background: var(--lime);">Virtual Traineeship</span>
+                <span class="experience-year-tag">June 2025 – Aug 2025</span>
+              </div>
+            </div>
             <div>
               <h3 class="experience-role">Software & Technical Intern</h3>
               <div class="experience-org">Vicharanashala / IIT Ropar (Samagama Internship Program)</div>
             </div>
-            <span class="experience-date" style="background: var(--lime); color: #111111;">Virtual Traineeship</span>
+            <p class="experience-preview-desc">
+              Engaged in structured software development and foundational machine learning modules under direct engineering mentorship.
+            </p>
+            <div class="experience-tags">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Data Preprocessing</span>
+              <span class="tech-pill">Node.js</span>
+              <span class="tech-pill">REST APIs</span>
+              <span class="tech-pill">Git</span>
+            </div>
           </div>
-          <p style="font-size: 0.94rem; margin: 0; line-height: 1.45;">
-            Engaged in structured software development and foundational machine learning modules under engineering mentorship.
-          </p>
-          <ul class="experience-bullets">
-            <li>Implemented exploratory data analysis scripts and dataset preprocessing routines in Python with Pandas and NumPy.</li>
-            <li>Built and tested REST endpoint integrations for web application modules using Node.js and Express.</li>
-            <li>Participated in weekly technical reviews, sprint milestones, and peer code walkthroughs.</li>
-          </ul>
-          <div class="experience-tags">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">Data Preprocessing</span>
-            <span class="tech-pill">Node.js</span>
-            <span class="tech-pill">Express.js</span>
-            <span class="tech-pill">REST APIs</span>
-            <span class="tech-pill">Git</span>
+          <div class="experience-card-cta">
+            <span class="cta-prompt">View Internship Details</span>
+            <span class="cta-arrow" aria-hidden="true">↗</span>
           </div>
         </article>
 
-        <!-- Cisco Networking Academy -->
-        <article class="experience-card">
-          <div class="experience-header">
+        <!-- 02 Cisco Networking Academy -->
+        <article class="experience-card" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Virtual Technical Trainee details at Cisco Networking Academy" data-exp-id="cisco-academy">
+          <div class="experience-card-top">
+            <div class="role-badge-row">
+              <span class="theme-icon-badge bg-cyan" aria-hidden="true">🌐</span>
+              <div class="role-meta-group">
+                <span class="experience-badge" style="background: var(--cyan);">Technical Training</span>
+                <span class="experience-year-tag">2025 – 2026</span>
+              </div>
+            </div>
             <div>
               <h3 class="experience-role">Virtual Technical Trainee</h3>
               <div class="experience-org">Cisco Networking Academy & MIT Academy of Engineering</div>
             </div>
-            <span class="experience-date" style="background: var(--cyan); color: #111111;">Technical Training</span>
+            <p class="experience-preview-desc">
+              Completed hands-on laboratory exercises in network protocols, Python scripting for automation, and foundational AI systems.
+            </p>
+            <div class="experience-tags">
+              <span class="tech-pill">Computer Networks</span>
+              <span class="tech-pill">Python Scripting</span>
+              <span class="tech-pill">Modern AI</span>
+              <span class="tech-pill">Socket Programming</span>
+            </div>
           </div>
-          <p style="font-size: 0.94rem; margin: 0; line-height: 1.45;">
-            Completed hands-on laboratory exercises in network protocols, Python scripting for automation, and foundational AI systems.
-          </p>
-          <ul class="experience-bullets">
-            <li>Analyzed IP routing protocols, packet flows, and client-server socket communication architectures.</li>
-            <li>Developed Python automation scripts for data parsing, validation, and network configuration modeling.</li>
-            <li>Earned verified credentials in <em>Introduction to Modern AI</em>, <em>Python Essentials 1</em>, and <em>Python Essentials 2</em>.</li>
-          </ul>
-          <div class="experience-tags">
-            <span class="tech-pill">Computer Networks</span>
-            <span class="tech-pill">Python Scripting</span>
-            <span class="tech-pill">Modern AI</span>
-            <span class="tech-pill">Socket Programming</span>
-            <span class="tech-pill">Network Protocols</span>
+          <div class="experience-card-cta">
+            <span class="cta-prompt">View Internship Details</span>
+            <span class="cta-arrow" aria-hidden="true">↗</span>
           </div>
         </article>
 
-        <!-- Open Source Community -->
-        <article class="experience-card">
-          <div class="experience-header">
+        <!-- 03 Open Source Community (Spans 2 columns on desktop) -->
+        <article class="experience-card span-2" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Open Source Contributor details at Open Source Connect India" data-exp-id="open-source">
+          <div class="experience-card-top">
+            <div class="role-badge-row">
+              <span class="theme-icon-badge bg-pink" aria-hidden="true">🚀</span>
+              <div class="role-meta-group">
+                <span class="experience-badge" style="background: var(--pink);">Open Source</span>
+                <span class="experience-year-tag">Ongoing Contributor</span>
+              </div>
+            </div>
             <div>
               <h3 class="experience-role">Open Source Contributor</h3>
               <div class="experience-org">Open Source Connect India & Developer Repositories</div>
             </div>
-            <span class="experience-date" style="background: var(--pink); color: #111111;">Open Source</span>
+            <p class="experience-preview-desc">
+              Contributed bug fixes, documentation, and feature enhancements across student developer tooling repositories adhering to strict commit conventions.
+            </p>
+            <div class="experience-tags">
+              <span class="tech-pill">Git & GitHub</span>
+              <span class="tech-pill">Code Reviews</span>
+              <span class="tech-pill">Issue Triage</span>
+              <span class="tech-pill">Technical Documentation</span>
+              <span class="tech-pill">CI/CD</span>
+            </div>
           </div>
-          <p style="font-size: 0.94rem; margin: 0; line-height: 1.45;">
-            Contributed bug fixes, documentation, and feature enhancements across student developer tooling repositories.
-          </p>
-          <ul class="experience-bullets">
-            <li>Triaged repository issues and submitted pull requests adhering to project coding standards and commit conventions.</li>
-            <li>Collaborated with peers to debug and enhance student developer utilities and web portals.</li>
-            <li>Authored clean, maintainable technical documentation to improve onboarding for incoming contributors.</li>
-          </ul>
-          <div class="experience-tags">
-            <span class="tech-pill">Git & GitHub</span>
-            <span class="tech-pill">Code Reviews</span>
-            <span class="tech-pill">Issue Triage</span>
-            <span class="tech-pill">Technical Documentation</span>
+          <div class="experience-card-cta">
+            <span class="cta-prompt">View Contribution Details</span>
+            <span class="cta-arrow" aria-hidden="true">↗</span>
           </div>
         </article>
       </div>
@@ -134,11 +152,12 @@
 
     <!-- Academic Qualifications Section -->
     <section class="card qualifications-card reveal" style="margin-top: 10px;">
-      <div class="card-header" style="margin-bottom: 16px;">
-        <div>
-          <span class="panel-label">Formal Education</span>
-          <h2 style="font-size: clamp(1.4rem, 2.5vw, 1.9rem); margin-top: 4px;">Academic Record</h2>
-        </div>
+      <div class="section-title-wrap" style="margin-bottom: 8px;">
+        <h2 class="section-headline">
+          <span class="theme-icon-badge bg-purple" aria-hidden="true">🎓</span>
+          <span>Academic Record</span>
+        </h2>
+        <span class="section-badge-pill">Formal Education</span>
       </div>
       <div class="qualification-table-wrap">
         <table class="qualification-table" aria-label="Qualifications">
@@ -196,6 +215,59 @@
       <span>© 2026 Sukrut Dusane. All rights reserved.</span>
     </div>
   </footer>
+
+  <!-- Experience / Internship Details Modal -->
+  <div class="modal" id="experience-modal" role="dialog" aria-modal="true" aria-labelledby="exp-modal-title" hidden>
+    <div class="modal-backdrop" data-close-exp-modal></div>
+    <section class="modal-panel exp-modal-panel" tabindex="-1">
+      <button class="modal-close" type="button" data-close-exp-modal aria-label="Close details modal">×</button>
+
+      <div class="exp-modal-header">
+        <div class="exp-modal-header-top">
+          <span id="exp-modal-icon" class="theme-icon-badge bg-lime" aria-hidden="true">🤖</span>
+          <div class="exp-modal-badges">
+            <span id="exp-modal-badge" class="experience-badge" style="background: var(--lime);">Virtual Traineeship</span>
+            <span id="exp-modal-period" class="experience-year-tag">June 2025 – August 2025</span>
+          </div>
+        </div>
+        <h2 id="exp-modal-title" class="exp-modal-title">Software & Technical Intern</h2>
+        <div id="exp-modal-org" class="exp-modal-org">Vicharanashala / IIT Ropar (Samagama Internship Program)</div>
+        <div id="exp-modal-mode" class="exp-modal-mode">Remote • Technical Traineeship</div>
+      </div>
+
+      <div class="exp-modal-body">
+        <div class="exp-modal-section">
+          <h4>Program Overview & Engineering Scope</h4>
+          <p id="exp-modal-overview">Detailed overview goes here.</p>
+        </div>
+
+        <div class="exp-modal-section">
+          <h4>Key Responsibilities & Deliverables</h4>
+          <ul id="exp-modal-deliverables" class="exp-modal-list">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+
+        <div class="exp-modal-section">
+          <h4>Technologies & Development Tooling</h4>
+          <div id="exp-modal-tags" class="tech-pills">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div class="exp-modal-section">
+          <h4>Core Engineering Competencies</h4>
+          <div id="exp-modal-competencies" class="exp-competencies-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-modal-footer">
+        <button class="touch-button" type="button" data-close-exp-modal>Close Details</button>
+      </div>
+    </section>
+  </div>
 
   <!-- Contact Modal -->
   <div class="modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" hidden>
