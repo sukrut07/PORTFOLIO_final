@@ -996,6 +996,204 @@ function setupHeroStatCounters() {
   observer.observe(statsGrid);
 }
 
+// ==========================================================================
+// Categorized Skills Dashboard Logic
+// ==========================================================================
+function setupSkillsDashboard() {
+  const skillsContainer = document.querySelector("#skills-container");
+  if (!skillsContainer || typeof skillsData === "undefined" || typeof skillsCategories === "undefined") return;
+
+  // Calculate dynamic category overview counts
+  const aiMlCount = skillsData.filter(s => s.category === "ai-ml").length;
+  const devCount = skillsData.filter(s => s.category === "programming" || s.category === "full-stack").length;
+  const dataCount = skillsData.filter(s => s.category === "data-science" || s.category === "computer-vision").length;
+  const systemsCount = skillsData.filter(s => s.category === "tools" || s.category === "advanced-ai" || s.category === "networking" || s.category === "game-dev" || s.category === "cs-fundamentals" || s.category === "practices").length;
+  const totalCount = skillsData.length;
+
+  const countAiEl = document.querySelector("#count-ai-ml");
+  const countDevEl = document.querySelector("#count-dev");
+  const countDataEl = document.querySelector("#count-data");
+  const countSysEl = document.querySelector("#count-systems");
+  const totalCountEl = document.querySelector("#total-skills-count");
+  const visibleCountEl = document.querySelector("#visible-skills-count");
+
+  if (countAiEl) countAiEl.textContent = `${aiMlCount} Skills`;
+  if (countDevEl) countDevEl.textContent = `${devCount} Skills`;
+  if (countDataEl) countDataEl.textContent = `${dataCount} Skills`;
+  if (countSysEl) countSysEl.textContent = `${systemsCount} Skills`;
+  if (totalCountEl) totalCountEl.textContent = totalCount;
+
+  // Render category filter pills dynamically with computed counts
+  const filterBar = document.querySelector("#skills-filter-bar");
+  if (filterBar) {
+    let pillsHtml = `
+      <button type="button" class="skill-filter-pill active" data-skill-filter="all">
+        All <span class="pill-count">${totalCount}</span>
+      </button>
+    `;
+
+    skillsCategories.forEach(cat => {
+      const catCount = skillsData.filter(s => s.category === cat.id).length;
+      pillsHtml += `
+        <button type="button" class="skill-filter-pill" data-skill-filter="${cat.id}">
+          ${cat.title} <span class="pill-count">${catCount}</span>
+        </button>
+      `;
+    });
+
+    filterBar.innerHTML = pillsHtml;
+  }
+
+  // Interactive Filter & Search state
+  let activeCategory = "all";
+  let searchQuery = "";
+
+  const searchInput = document.querySelector("#skills-search-input");
+  const clearSearchBtn = document.querySelector("#skills-clear-search");
+  const emptyState = document.querySelector("#skills-empty-state");
+  const emptyMsg = document.querySelector("#empty-state-message");
+  const resetBtn = document.querySelector("#reset-skills-filter");
+
+  function renderSkills() {
+    const q = searchQuery.trim().toLowerCase();
+    let totalVisible = 0;
+    let html = "";
+
+    skillsCategories.forEach(cat => {
+      // Check if category matches active filter
+      if (activeCategory !== "all" && activeCategory !== cat.id) {
+        return;
+      }
+
+      // Filter skills within category
+      const matchedSkills = skillsData.filter(skill => {
+        if (skill.category !== cat.id) return false;
+        if (!q) return true;
+
+        const nameMatch = skill.name.toLowerCase().includes(q);
+        const descMatch = skill.description.toLowerCase().includes(q);
+        const tagMatch = skill.tags.some(t => t.toLowerCase().includes(q));
+        const evidenceMatch = skill.evidence.toLowerCase().includes(q);
+        const catMatch = skill.categoryLabel.toLowerCase().includes(q);
+        return nameMatch || descMatch || tagMatch || evidenceMatch || catMatch;
+      });
+
+      if (matchedSkills.length > 0) {
+        totalVisible += matchedSkills.length;
+
+        html += `
+          <section class="skills-category-block reveal visible" aria-labelledby="cat-${cat.id}">
+            <div class="skills-category-header">
+              <div class="skills-category-title-wrap">
+                <span class="skills-category-icon-badge" style="background: ${cat.badgeColor};" aria-hidden="true">
+                  ${cat.iconSvg}
+                </span>
+                <h2 id="cat-${cat.id}" class="skills-category-title">${cat.title}</h2>
+              </div>
+              <span class="skills-category-pill" style="background: ${cat.badgeColor};">${cat.badgeLabel}</span>
+            </div>
+            <p class="skills-category-desc">${cat.description}</p>
+
+            <div class="skills-kpi-grid">
+              ${matchedSkills.map(skill => {
+                const evidenceClass = `evidence-${skill.evidence.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+                return `
+                  <article class="skill-kpi-card" tabindex="0">
+                    <div>
+                      <div class="skill-card-header">
+                        <span class="skill-card-badge" style="background: ${cat.badgeColor};" aria-hidden="true">
+                          ${cat.iconSvg}
+                        </span>
+                        <span class="evidence-tag ${evidenceClass}">${skill.evidence}</span>
+                      </div>
+                      <h3 class="skill-card-title">${skill.name}</h3>
+                      <p class="skill-card-desc">${skill.description}</p>
+                      <div class="skill-card-tags">
+                        ${skill.tags.map(t => `<span class="tech-pill">${t}</span>`).join('')}
+                      </div>
+                    </div>
+                    ${skill.repoUrl ? `
+                      <div class="skill-card-footer">
+                        <a href="${skill.repoUrl}" target="_blank" rel="noopener noreferrer" class="skill-evidence-link" aria-label="View ${skill.name} demonstrated in ${skill.repoName} repository">
+                          <span>Demonstrated in ${skill.repoName}</span>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                      </div>
+                    ` : ''}
+                  </article>
+                `;
+              }).join('')}
+            </div>
+          </section>
+        `;
+      }
+    });
+
+    if (visibleCountEl) visibleCountEl.textContent = totalVisible;
+
+    if (totalVisible === 0) {
+      skillsContainer.innerHTML = "";
+      skillsContainer.hidden = true;
+      if (emptyState) {
+        emptyState.hidden = false;
+        if (emptyMsg) {
+          emptyMsg.textContent = q
+            ? `No skills matched your search "${searchQuery}". Try another keyword or clear filters.`
+            : `No skills found in the selected category.`;
+        }
+      }
+    } else {
+      skillsContainer.hidden = false;
+      if (emptyState) emptyState.hidden = true;
+      skillsContainer.innerHTML = html;
+    }
+  }
+
+  // Filter pill click listener
+  filterBar?.addEventListener("click", (e) => {
+    const pill = e.target.closest(".skill-filter-pill");
+    if (!pill) return;
+
+    filterBar.querySelectorAll(".skill-filter-pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    activeCategory = pill.dataset.skillFilter || "all";
+    renderSkills();
+  });
+
+  // Search input listener
+  searchInput?.addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+    if (clearSearchBtn) {
+      clearSearchBtn.hidden = !searchQuery;
+    }
+    renderSkills();
+  });
+
+  // Clear search button
+  clearSearchBtn?.addEventListener("click", () => {
+    if (searchInput) searchInput.value = "";
+    searchQuery = "";
+    clearSearchBtn.hidden = true;
+    searchInput?.focus();
+    renderSkills();
+  });
+
+  // Reset button in empty state
+  resetBtn?.addEventListener("click", () => {
+    if (searchInput) searchInput.value = "";
+    searchQuery = "";
+    if (clearSearchBtn) clearSearchBtn.hidden = true;
+    activeCategory = "all";
+    filterBar?.querySelectorAll(".skill-filter-pill").forEach((p, idx) => {
+      p.classList.toggle("active", idx === 0);
+    });
+    renderSkills();
+  });
+
+  // Initial render
+  renderSkills();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupThemeToggle();
   setupActiveNavigation();
@@ -1009,4 +1207,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupImageFallback();
   setupCategoryFilters();
   filterAndRenderProjects();
+  setupSkillsDashboard();
 });
