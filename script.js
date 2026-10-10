@@ -987,16 +987,9 @@ function setupSpotifyControl() {
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-haspopup", "dialog");
     button.innerHTML = `
-      <span class="spotify-nav-icon" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
-        </svg>
-      </span>
-      <span class="spotify-eq-bars" aria-hidden="true">
-        <span class="eq-bar bar-1"></span>
-        <span class="eq-bar bar-2"></span>
-        <span class="eq-bar bar-3"></span>
-      </span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
+      </svg>
     `;
     touchButton.insertAdjacentElement("beforebegin", button);
   }
@@ -1068,7 +1061,6 @@ function setupSpotifyControl() {
   const updateUI = (data) => {
     const badge = document.querySelector("#spotify-status-badge");
     const body = document.querySelector("#spotify-island-body");
-    const eqBars = button.querySelector(".spotify-eq-bars");
 
     if (!badge || !body) return;
 
@@ -1076,7 +1068,6 @@ function setupSpotifyControl() {
       badge.textContent = "Disconnected";
       badge.className = "spotify-badge badge-disconnected";
       button.classList.remove("is-playing");
-      eqBars?.classList.remove("animate");
 
       const authUrl = data?.authUrl || "/api/spotify-login";
       body.innerHTML = `
@@ -1097,7 +1088,6 @@ function setupSpotifyControl() {
       badge.textContent = "Idle";
       badge.className = "spotify-badge badge-idle";
       button.classList.remove("is-playing");
-      eqBars?.classList.remove("animate");
 
       body.innerHTML = `
         <div class="spotify-empty-state">
@@ -1116,14 +1106,7 @@ function setupSpotifyControl() {
     const isPlaying = Boolean(data.isPlaying);
     badge.textContent = isPlaying ? "● Playing" : "⏸ Paused";
     badge.className = `spotify-badge ${isPlaying ? "badge-playing" : "badge-paused"}`;
-
-    if (isPlaying) {
-      button.classList.add("is-playing");
-      eqBars?.classList.add("animate");
-    } else {
-      button.classList.remove("is-playing");
-      eqBars?.classList.remove("animate");
-    }
+    button.classList.toggle("is-playing", isPlaying);
 
     const artHtml = data.albumArt
       ? `<img src="${data.albumArt}" alt="${escapeHtml(data.album || data.title)} album art" class="spotify-track-art" width="72" height="72" />`
