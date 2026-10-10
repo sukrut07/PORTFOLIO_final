@@ -1145,9 +1145,6 @@ function setupSkillsDashboard() {
 
   const searchInput = document.querySelector("#skills-search-input");
   const clearSearchBtn = document.querySelector("#skills-clear-search");
-  const emptyState = document.querySelector("#skills-empty-state");
-  const emptyMsg = document.querySelector("#empty-state-message");
-  const resetBtn = document.querySelector("#reset-skills-filter");
 
   // Colorful neo-brutalist KPI tile palette: Lime, Pink, Cyan, Purple, Orange, Blue
   const colorPalette = [
@@ -1225,18 +1222,7 @@ function setupSkillsDashboard() {
 
     if (totalVisible === 0) {
       skillsContainer.innerHTML = "";
-      skillsContainer.hidden = true;
-      if (emptyState) {
-        emptyState.hidden = false;
-        if (emptyMsg) {
-          emptyMsg.textContent = q
-            ? `No skills matched your search "${searchQuery}". Try another keyword or clear filters.`
-            : `No skills found in the selected category.`;
-        }
-      }
     } else {
-      skillsContainer.hidden = false;
-      if (emptyState) emptyState.hidden = true;
       skillsContainer.innerHTML = html;
     }
   }
@@ -1277,18 +1263,6 @@ function setupSkillsDashboard() {
     searchQuery = "";
     clearSearchBtn.hidden = true;
     searchInput?.focus();
-    renderSkills();
-  });
-
-  // Reset button in empty state
-  resetBtn?.addEventListener("click", () => {
-    if (searchInput) searchInput.value = "";
-    searchQuery = "";
-    if (clearSearchBtn) clearSearchBtn.hidden = true;
-    activeCategory = "all";
-    filterBar?.querySelectorAll(".skill-filter-pill").forEach((p, idx) => {
-      p.classList.toggle("active", idx === 0);
-    });
     renderSkills();
   });
 

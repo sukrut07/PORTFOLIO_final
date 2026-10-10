@@ -4771,47 +4771,6 @@ body.dark .experience-badge {
   box-shadow: 1.5px 1.5px 0 var(--black);
 }
 
-/* Empty Search State */
-.skills-empty-card {
-  text-align: center;
-  padding: 48px 24px;
-  margin: 32px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.empty-icon-wrap {
-  width: 64px;
-  height: 64px;
-  border: 3.5px solid var(--black);
-  border-radius: 12px;
-  background: var(--pink);
-  box-shadow: 4px 4px 0 var(--black);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-  color: #111111;
-}
-
-.empty-icon-wrap svg {
-  stroke: currentColor;
-}
-
-.skills-empty-card h3 {
-  font-size: 1.35rem;
-  font-weight: 700;
-  margin: 0 0 8px;
-}
-
-.skills-empty-card p {
-  color: #555555;
-  font-size: 0.92rem;
-  max-width: 480px;
-  margin: 0 0 20px;
-}
-
 /* Responsive queries */
 @media (max-width: 1024px) {
   .skills-kpi-summary-grid {
@@ -4921,10 +4880,3 @@ body.dark .skill-filter-pill.active .pill-count {
   background: #111111;
   color: #ffffff;
 }
-
-body.dark .skills-empty-card p {
-  color: #a0a0a0;
-}
-
-
-
