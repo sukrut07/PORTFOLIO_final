@@ -674,6 +674,93 @@ function closeExperienceModal() {
   lastFocusedElement?.focus?.();
 }
 
+let lastFocusedSkillTile = null;
+
+function openSkillModal(skillId, sourceElement) {
+  const modal = document.querySelector("#skill-detail-modal");
+  if (!modal || typeof skillsData === "undefined") return;
+
+  const skill = skillsData.find((s) => s.id === skillId);
+  if (!skill) return;
+
+  lastFocusedSkillTile = sourceElement || document.activeElement;
+
+  const titleEl = modal.querySelector("#skill-modal-title");
+  const catEl = modal.querySelector("#skill-modal-category");
+  const evidenceEl = modal.querySelector("#skill-modal-evidence");
+  const explanationEl = modal.querySelector("#skill-modal-explanation");
+  const applicationEl = modal.querySelector("#skill-modal-application");
+  const exampleWrap = modal.querySelector("#skill-modal-example-wrap");
+  const exampleEl = modal.querySelector("#skill-modal-example");
+  const tagsEl = modal.querySelector("#skill-modal-tags");
+  const repoWrap = modal.querySelector("#skill-modal-repo-wrap");
+
+  if (titleEl) titleEl.textContent = skill.name;
+
+  if (catEl) {
+    catEl.textContent = skill.categoryLabel;
+    const catMeta = typeof skillsCategories !== "undefined" ? skillsCategories.find((c) => c.id === skill.category) : null;
+    catEl.style.background = catMeta ? catMeta.badgeColor : "var(--lime)";
+  }
+
+  if (evidenceEl) {
+    evidenceEl.textContent = skill.evidence;
+    evidenceEl.className = `evidence-tag evidence-${skill.evidence.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+  }
+
+  if (explanationEl) {
+    explanationEl.textContent = skill.explanation || skill.description || "";
+  }
+
+  if (applicationEl) {
+    applicationEl.textContent = skill.application || "Applied across scalable software workflows, data pipelines, or algorithmic implementations.";
+  }
+
+  if (exampleWrap && exampleEl) {
+    if (skill.example) {
+      exampleWrap.hidden = false;
+      exampleEl.textContent = skill.example;
+    } else {
+      exampleWrap.hidden = true;
+    }
+  }
+
+  if (tagsEl) {
+    tagsEl.innerHTML = (skill.tags || []).map((t) => `<span class="tech-pill">${t}</span>`).join("");
+  }
+
+  if (repoWrap) {
+    if (skill.repoUrl) {
+      repoWrap.innerHTML = `
+        <a href="${skill.repoUrl}" target="_blank" rel="noopener noreferrer" class="skill-modal-repo-btn">
+          <span>Demonstrated in ${skill.repoName}</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      `;
+    } else {
+      repoWrap.innerHTML = "";
+    }
+  }
+
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  modal.querySelector(".modal-panel")?.focus();
+}
+
+function closeSkillModal() {
+  const modal = document.querySelector("#skill-detail-modal");
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  document.body.classList.remove("modal-open");
+  if (lastFocusedSkillTile && typeof lastFocusedSkillTile.focus === "function") {
+    lastFocusedSkillTile.focus();
+  }
+}
+
 // Complete modal setup with keyboard focus trap
 function setupModals() {
   document.querySelectorAll("[data-open-modal]").forEach((button) => {
@@ -685,7 +772,12 @@ function setupModals() {
       closeModal();
       closeProjectModal();
       closeExperienceModal();
+      closeSkillModal();
     });
+  });
+
+  document.querySelectorAll("[data-close-skill-modal]").forEach((button) => {
+    button.addEventListener("click", closeSkillModal);
   });
 
   // Certificate lightbox trigger for both Competitions and Certifications cards
@@ -748,18 +840,21 @@ function setupModals() {
     const isProjectOpen = projectModal && !projectModal.hidden;
     const isCertOpen = certLightboxModal && !certLightboxModal.hidden;
     const isExpOpen = experienceModal && !experienceModal.hidden;
+    const skillModal = document.querySelector("#skill-detail-modal");
+    const isSkillOpen = skillModal && !skillModal.hidden;
 
     if (event.key === "Escape") {
       if (isContactOpen) closeModal();
       if (isProjectOpen) closeProjectModal();
       if (isCertOpen) closeCertModal();
       if (isExpOpen) closeExperienceModal();
+      if (isSkillOpen) closeSkillModal();
       return;
     }
 
     // Modal Focus Trap
-    if (event.key === "Tab" && (isContactOpen || isProjectOpen || isCertOpen || isExpOpen)) {
-      const activeModal = isContactOpen ? contactModal : isProjectOpen ? projectModal : isCertOpen ? certLightboxModal : experienceModal;
+    if (event.key === "Tab" && (isContactOpen || isProjectOpen || isCertOpen || isExpOpen || isSkillOpen)) {
+      const activeModal = isContactOpen ? contactModal : isProjectOpen ? projectModal : isCertOpen ? certLightboxModal : isExpOpen ? experienceModal : skillModal;
       const focusables = activeModal.querySelectorAll(
         'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
       );
@@ -1054,28 +1149,40 @@ function setupSkillsDashboard() {
   const emptyMsg = document.querySelector("#empty-state-message");
   const resetBtn = document.querySelector("#reset-skills-filter");
 
+  // Colorful neo-brutalist KPI tile palette: Lime, Pink, Cyan, Purple, Orange, Blue
+  const colorPalette = [
+    "tile-color-lime",
+    "tile-color-pink",
+    "tile-color-cyan",
+    "tile-color-purple",
+    "tile-color-orange",
+    "tile-color-blue"
+  ];
+
   function renderSkills() {
     const q = searchQuery.trim().toLowerCase();
     let totalVisible = 0;
     let html = "";
 
-    skillsCategories.forEach(cat => {
+    skillsCategories.forEach((cat, catIdx) => {
       // Check if category matches active filter
       if (activeCategory !== "all" && activeCategory !== cat.id) {
         return;
       }
 
       // Filter skills within category
-      const matchedSkills = skillsData.filter(skill => {
+      const matchedSkills = skillsData.filter((skill) => {
         if (skill.category !== cat.id) return false;
         if (!q) return true;
 
         const nameMatch = skill.name.toLowerCase().includes(q);
-        const descMatch = skill.description.toLowerCase().includes(q);
-        const tagMatch = skill.tags.some(t => t.toLowerCase().includes(q));
-        const evidenceMatch = skill.evidence.toLowerCase().includes(q);
-        const catMatch = skill.categoryLabel.toLowerCase().includes(q);
-        return nameMatch || descMatch || tagMatch || evidenceMatch || catMatch;
+        const descMatch = (skill.explanation || skill.description || "").toLowerCase().includes(q);
+        const appMatch = (skill.application || "").toLowerCase().includes(q);
+        const exampleMatch = (skill.example || "").toLowerCase().includes(q);
+        const tagMatch = (skill.tags || []).some((t) => t.toLowerCase().includes(q));
+        const evidenceMatch = (skill.evidence || "").toLowerCase().includes(q);
+        const catMatch = (skill.categoryLabel || "").toLowerCase().includes(q);
+        return nameMatch || descMatch || appMatch || exampleMatch || tagMatch || evidenceMatch || catMatch;
       });
 
       if (matchedSkills.length > 0) {
@@ -1095,34 +1202,19 @@ function setupSkillsDashboard() {
             <p class="skills-category-desc">${cat.description}</p>
 
             <div class="skills-kpi-grid">
-              ${matchedSkills.map(skill => {
-                const evidenceClass = `evidence-${skill.evidence.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+              ${matchedSkills.map((skill, idx) => {
+                const colorClass = colorPalette[(catIdx + idx) % colorPalette.length];
                 return `
-                  <article class="skill-kpi-card" tabindex="0">
-                    <div>
-                      <div class="skill-card-header">
-                        <span class="skill-card-badge" style="background: ${cat.badgeColor};" aria-hidden="true">
-                          ${cat.iconSvg}
-                        </span>
-                        <span class="evidence-tag ${evidenceClass}">${skill.evidence}</span>
-                      </div>
-                      <h3 class="skill-card-title">${skill.name}</h3>
-                      <p class="skill-card-desc">${skill.description}</p>
-                      <div class="skill-card-tags">
-                        ${skill.tags.map(t => `<span class="tech-pill">${t}</span>`).join('')}
-                      </div>
-                    </div>
-                    ${skill.repoUrl ? `
-                      <div class="skill-card-footer">
-                        <a href="${skill.repoUrl}" target="_blank" rel="noopener noreferrer" class="skill-evidence-link" aria-label="View ${skill.name} demonstrated in ${skill.repoName} repository">
-                          <span>Demonstrated in ${skill.repoName}</span>
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        </a>
-                      </div>
-                    ` : ''}
-                  </article>
+                  <button 
+                    type="button" 
+                    class="skill-kpi-tile ${colorClass}" 
+                    data-skill-id="${skill.id}" 
+                    aria-haspopup="dialog" 
+                    aria-label="View details for ${skill.name}">
+                    <span class="skill-tile-name">${skill.name}</span>
+                  </button>
                 `;
-              }).join('')}
+              }).join("")}
             </div>
           </section>
         `;
@@ -1149,12 +1241,22 @@ function setupSkillsDashboard() {
     }
   }
 
+  // Click delegation for skill tiles
+  skillsContainer.addEventListener("click", (e) => {
+    const tile = e.target.closest(".skill-kpi-tile");
+    if (!tile) return;
+    const skillId = tile.getAttribute("data-skill-id");
+    if (skillId) {
+      openSkillModal(skillId, tile);
+    }
+  });
+
   // Filter pill click listener
   filterBar?.addEventListener("click", (e) => {
     const pill = e.target.closest(".skill-filter-pill");
     if (!pill) return;
 
-    filterBar.querySelectorAll(".skill-filter-pill").forEach(p => p.classList.remove("active"));
+    filterBar.querySelectorAll(".skill-filter-pill").forEach((p) => p.classList.remove("active"));
     pill.classList.add("active");
     activeCategory = pill.dataset.skillFilter || "all";
     renderSkills();

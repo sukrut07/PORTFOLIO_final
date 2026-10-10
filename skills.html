@@ -210,6 +210,54 @@
     </section>
   </div>
 
+  <!-- Skill Detail Modal -->
+  <div class="modal" id="skill-detail-modal" role="dialog" aria-modal="true" aria-labelledby="skill-modal-title" hidden>
+    <div class="modal-backdrop" data-close-skill-modal></div>
+    <section class="modal-panel skill-detail-modal-panel" tabindex="-1">
+      <button class="modal-close" type="button" data-close-skill-modal aria-label="Close skill details">×</button>
+      <div class="skill-modal-header-meta">
+        <span class="skill-modal-category-badge" id="skill-modal-category">Category</span>
+        <span class="evidence-tag" id="skill-modal-evidence">PROJECT-USED</span>
+      </div>
+      <h2 id="skill-modal-title" class="skill-modal-title">Skill Name</h2>
+      
+      <div class="skill-modal-body">
+        <div class="skill-modal-section">
+          <h3 class="skill-modal-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            What It Means
+          </h3>
+          <p id="skill-modal-explanation" class="skill-modal-text"></p>
+        </div>
+
+        <div class="skill-modal-section">
+          <h3 class="skill-modal-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            Role in AI/ML & Software Engineering
+          </h3>
+          <p id="skill-modal-application" class="skill-modal-text"></p>
+        </div>
+
+        <div class="skill-modal-section" id="skill-modal-example-wrap">
+          <h3 class="skill-modal-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            Practical Application & Projects
+          </h3>
+          <p id="skill-modal-example" class="skill-modal-text"></p>
+        </div>
+
+        <div class="skill-modal-footer">
+          <div class="skill-modal-tags" id="skill-modal-tags">
+            <!-- Tech pills -->
+          </div>
+          <div id="skill-modal-repo-wrap">
+            <!-- Repo button if available -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <script src="skills-data.js"></script>
   <script src="script.js"></script>
 </body>
