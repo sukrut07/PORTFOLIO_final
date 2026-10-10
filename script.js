@@ -975,20 +975,23 @@ function setupSpotifyControl() {
   // Forcibly remove any legacy theme-toggle element
   document.querySelectorAll(".theme-toggle").forEach((el) => el.remove());
 
-  // Find existing static button or dynamically create it
+  // Locate existing navbar button or dynamically inject it
   let button = document.querySelector("#spotify-nav-btn");
   if (!button && touchButton) {
     button = document.createElement("button");
     button.className = "spotify-nav-btn";
     button.type = "button";
     button.id = "spotify-nav-btn";
-    button.title = "Spotify: The Weeknd - Timeless";
-    button.setAttribute("aria-label", "Play Timeless by The Weeknd on Spotify");
+    button.title = "Music Player - Timeless";
+    button.setAttribute("aria-label", "Music Player - Timeless");
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-haspopup", "dialog");
     button.innerHTML = `
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
+      <svg class="nav-vinyl-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="#18181b" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="6.5" stroke="currentColor" stroke-width="1" stroke-dasharray="2 1.5" opacity="0.65"/>
+        <circle cx="12" cy="12" r="3.2" fill="#1db954" stroke="currentColor" stroke-width="1"/>
+        <circle cx="12" cy="12" r="1" fill="#18181b"/>
       </svg>
     `;
     touchButton.insertAdjacentElement("beforebegin", button);
@@ -996,229 +999,155 @@ function setupSpotifyControl() {
 
   if (!button) return;
 
-  // Single audio instance
-  let audio = document.querySelector("#spotify-audio-player");
+  // Ensure button has minimal vinyl icon
+  button.title = "Music Player - Timeless";
+  button.setAttribute("aria-label", "Music Player - Timeless");
+  button.innerHTML = `
+    <svg class="nav-vinyl-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" fill="#18181b" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="12" r="6.5" stroke="currentColor" stroke-width="1" stroke-dasharray="2 1.5" opacity="0.65"/>
+      <circle cx="12" cy="12" r="3.2" fill="#1db954" stroke="currentColor" stroke-width="1"/>
+      <circle cx="12" cy="12" r="1" fill="#18181b"/>
+    </svg>
+  `;
+
+  // HTML5 audio element
+  let audio = document.querySelector("#vinyl-audio-player");
   if (!audio) {
     audio = document.createElement("audio");
-    audio.id = "spotify-audio-player";
+    audio.id = "vinyl-audio-player";
     audio.src = "assets/timeless.mp3";
     audio.preload = "metadata";
     audio.loop = true;
+    // Initial volume set to ~8% (subtle background ambience)
+    audio.volume = 0.08;
     document.body.appendChild(audio);
   }
 
-  // Restore playback state if available
-  try {
-    const savedTime = parseFloat(sessionStorage.getItem("spotify_timeless_time"));
-    if (!isNaN(savedTime) && savedTime > 0) {
-      audio.currentTime = savedTime;
-    }
-  } catch (_) {}
-
-  // Create or retrieve floating macOS Dynamic Island player
+  // Floating Dynamic Island vinyl player panel
   let panel = document.querySelector("#spotify-island-panel");
   if (!panel) {
     panel = document.createElement("div");
     panel.id = "spotify-island-panel";
-    panel.className = "spotify-island-panel";
+    panel.className = "vinyl-player-panel";
     panel.setAttribute("role", "dialog");
-    panel.setAttribute("aria-label", "Spotify: The Weeknd - Timeless");
+    panel.setAttribute("aria-label", "Vinyl Player - Timeless");
     panel.hidden = true;
     panel.innerHTML = `
-      <div class="spotify-island-header">
-        <div class="spotify-header-left">
-          <svg class="spotify-green-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
-          </svg>
-          <span class="spotify-header-title">SPOTIFY</span>
-          <span class="spotify-badge badge-paused" id="spotify-status-badge">⏸ Paused</span>
+      <div class="vinyl-player-header">
+        <div class="vinyl-header-status">
+          <span class="vinyl-status-dot"></span>
+          <span class="vinyl-status-text" id="vinyl-status-text">READY</span>
         </div>
-        <button type="button" class="spotify-island-close" id="spotify-close-btn" aria-label="Close player">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="vinyl-close-btn" id="vinyl-close-btn" aria-label="Close music player">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </div>
 
-      <div class="spotify-island-body">
-        <div class="spotify-track-layout">
-          <div class="spotify-art-wrap">
-            <img src="assets/timeless_cover.png" alt="Timeless by The Weeknd and Playboi Carti" class="spotify-track-art" width="76" height="76" loading="eager" />
-          </div>
-          <div class="spotify-track-meta">
-            <div class="spotify-title-row">
-              <span class="spotify-track-title" title="Timeless">Timeless</span>
-              <span class="spotify-explicit-tag" title="Explicit">E</span>
-            </div>
-            <p class="spotify-track-artist" title="The Weeknd, Playboi Carti">The Weeknd, Playboi Carti</p>
-            <p class="spotify-track-album" title="Hurry Up Tomorrow">Hurry Up Tomorrow</p>
-          </div>
-        </div>
-
-        <div class="spotify-timeline">
-          <span class="spotify-time" id="spotify-current-time">0:00</span>
-          <div class="spotify-progress-wrap" id="spotify-progress-wrap" role="slider" aria-label="Playback scrubber" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-            <div class="spotify-progress-bar">
-              <div class="spotify-progress-fill" id="spotify-progress-fill" style="width: 0%;">
-                <span class="spotify-progress-thumb"></span>
-              </div>
+      <div class="vinyl-player-main">
+        <div class="vinyl-disc-wrap">
+          <div class="vinyl-disc" id="vinyl-disc" aria-hidden="true">
+            <div class="vinyl-groove-ring ring-1"></div>
+            <div class="vinyl-groove-ring ring-2"></div>
+            <div class="vinyl-center-label">
+              <img src="assets/timeless_cover.png" alt="" class="vinyl-center-img" />
+              <div class="vinyl-spindle-hole"></div>
             </div>
           </div>
-          <span class="spotify-time" id="spotify-total-time">4:16</span>
         </div>
 
-        <div class="spotify-controls-row">
-          <button type="button" class="spotify-ctrl-btn" id="spotify-ctrl-shuffle" title="Shuffle" aria-label="Shuffle">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="16 3 21 3 21 8"></polyline>
-              <line x1="4" y1="20" x2="21" y2="3"></line>
-              <polyline points="21 16 21 21 16 21"></polyline>
-              <line x1="15" y1="15" x2="21" y2="21"></line>
-              <line x1="4" y1="4" x2="9" y2="9"></line>
-            </svg>
-          </button>
-          <button type="button" class="spotify-ctrl-btn" id="spotify-ctrl-prev" title="Restart track" aria-label="Restart track">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="19 20 9 12 19 4 19 20"></polygon>
-              <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.5"></line>
-            </svg>
-          </button>
-          <button type="button" class="spotify-play-btn" id="spotify-play-btn" title="Play / Pause" aria-label="Play or Pause track">
-            <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-              <rect x="6" y="4" width="4" height="16" rx="1"></rect>
-              <rect x="14" y="4" width="4" height="16" rx="1"></rect>
-            </svg>
-            <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: block; margin-left: 2px;">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </button>
-          <button type="button" class="spotify-ctrl-btn" id="spotify-ctrl-next" title="Restart track" aria-label="Next track">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 4 15 12 5 20 5 4"></polygon>
-              <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"></line>
-            </svg>
-          </button>
-          <button type="button" class="spotify-ctrl-btn active" id="spotify-ctrl-repeat" title="Repeat" aria-label="Repeat">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="17 1 21 5 17 9"></polyline>
-              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-              <polyline points="7 23 3 19 7 15"></polyline>
-              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-            </svg>
-            <span class="repeat-dot"></span>
-          </button>
-        </div>
-
-        <div class="spotify-track-footer">
-          <div class="spotify-soundwaves" id="spotify-soundwaves" aria-hidden="true">
-            <span class="wave-bar w-1"></span>
-            <span class="wave-bar w-2"></span>
-            <span class="wave-bar w-3"></span>
-            <span class="wave-bar w-4"></span>
-            <span class="wave-bar w-5"></span>
+        <div class="vinyl-track-info">
+          <div class="vinyl-track-title" title="Timeless">Timeless</div>
+          <div class="vinyl-track-artist" title="The Weeknd & Playboi Carti">The Weeknd &amp; Playboi Carti</div>
+          <div class="vinyl-controls-bar">
+            <button type="button" class="vinyl-play-btn" id="vinyl-play-btn" aria-label="Play Timeless">
+              <svg class="icon-play" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <svg class="icon-pause" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+              </svg>
+              <span class="play-btn-label" id="vinyl-play-label">Play</span>
+            </button>
           </div>
-          <a href="https://open.spotify.com/track/62k1Gz5e62N3XgZ9pW6c1C" target="_blank" rel="noopener noreferrer" class="spotify-track-link" aria-label="Listen to Timeless on Spotify">
-            <span>Listen on Spotify</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="7" y1="17" x2="17" y2="7"></line>
-              <polyline points="7 7 17 7 17 17"></polyline>
-            </svg>
-          </a>
         </div>
+      </div>
+
+      <div class="vinyl-volume-row">
+        <svg class="volume-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <input type="range" class="vinyl-volume-slider" id="vinyl-volume-slider" min="0" max="100" value="8" step="1" aria-label="Volume level" />
+        <span class="volume-value" id="vinyl-volume-value">8%</span>
       </div>
     `;
     document.body.appendChild(panel);
   }
 
-  // Avoid multiple event binding on the same page load
+  // Prevent duplicate binding
   if (button.dataset.bound === "true") return;
   button.dataset.bound = "true";
 
   let isPanelOpen = false;
-  const badge = panel.querySelector("#spotify-status-badge");
-  const playBtn = panel.querySelector("#spotify-play-btn");
+  const statusText = panel.querySelector("#vinyl-status-text");
+  const playBtn = panel.querySelector("#vinyl-play-btn");
+  const playLabel = panel.querySelector("#vinyl-play-label");
   const iconPlay = panel.querySelector(".icon-play");
   const iconPause = panel.querySelector(".icon-pause");
-  const currentTimeEl = panel.querySelector("#spotify-current-time");
-  const totalTimeEl = panel.querySelector("#spotify-total-time");
-  const progressFill = panel.querySelector("#spotify-progress-fill");
-  const progressWrap = panel.querySelector("#spotify-progress-wrap");
-  const prevBtn = panel.querySelector("#spotify-ctrl-prev");
-  const nextBtn = panel.querySelector("#spotify-ctrl-next");
-  const shuffleBtn = panel.querySelector("#spotify-ctrl-shuffle");
-  const repeatBtn = panel.querySelector("#spotify-ctrl-repeat");
-  const closeBtn = panel.querySelector("#spotify-close-btn");
+  const closeBtn = panel.querySelector("#vinyl-close-btn");
+  const volumeSlider = panel.querySelector("#vinyl-volume-slider");
+  const volumeValue = panel.querySelector("#vinyl-volume-value");
 
-  const formatTime = (secs) => {
-    if (isNaN(secs) || secs < 0) return "0:00";
-    const m = Math.floor(secs / 60);
-    const s = Math.floor(secs % 60);
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
-  };
+  // Keep volume slider synchronized with audio.volume
+  if (volumeSlider && volumeValue) {
+    volumeSlider.value = Math.round(audio.volume * 100);
+    volumeValue.textContent = `${volumeSlider.value}%`;
+
+    volumeSlider.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value);
+      const clamped = Math.max(0, Math.min(100, isNaN(val) ? 8 : val));
+      audio.volume = clamped / 100;
+      volumeValue.textContent = `${Math.round(clamped)}%`;
+    });
+  }
 
   const updatePlayStateUI = (isPlaying) => {
     if (isPlaying) {
       button.classList.add("is-playing");
       panel.classList.add("is-playing");
-      if (badge) {
-        badge.textContent = "● Playing";
-        badge.className = "spotify-badge badge-playing";
-      }
+      if (statusText) statusText.textContent = "PLAYING";
       if (iconPlay) iconPlay.style.display = "none";
       if (iconPause) iconPause.style.display = "block";
+      if (playLabel) playLabel.textContent = "Pause";
+      playBtn?.setAttribute("aria-label", "Pause Timeless");
     } else {
       button.classList.remove("is-playing");
       panel.classList.remove("is-playing");
-      if (badge) {
-        badge.textContent = "⏸ Paused";
-        badge.className = "spotify-badge badge-paused";
-      }
+      if (statusText) statusText.textContent = "PAUSED";
       if (iconPlay) iconPlay.style.display = "block";
       if (iconPause) iconPause.style.display = "none";
+      if (playLabel) playLabel.textContent = "Play";
+      playBtn?.setAttribute("aria-label", "Play Timeless");
     }
   };
 
-  const updateProgress = () => {
-    const cur = audio.currentTime || 0;
-    const dur = audio.duration || 256;
-    if (currentTimeEl) currentTimeEl.textContent = formatTime(cur);
-    if (totalTimeEl && audio.duration) totalTimeEl.textContent = formatTime(dur);
-    const pct = dur > 0 ? (cur / dur) * 100 : 0;
-    if (progressFill) progressFill.style.width = `${pct.toFixed(2)}%`;
-    if (progressWrap) progressWrap.setAttribute("aria-valuenow", Math.round(pct));
-    try {
-      sessionStorage.setItem("spotify_timeless_time", cur);
-    } catch (_) {}
-  };
-
-  // Audio events
-  audio.addEventListener("play", () => {
-    updatePlayStateUI(true);
-    try { sessionStorage.setItem("spotify_timeless_playing", "true"); } catch (_) {}
-  });
-
-  audio.addEventListener("pause", () => {
-    updatePlayStateUI(false);
-    try { sessionStorage.setItem("spotify_timeless_playing", "false"); } catch (_) {}
-  });
-
-  audio.addEventListener("timeupdate", updateProgress);
-
-  audio.addEventListener("loadedmetadata", () => {
-    if (totalTimeEl && audio.duration) {
-      totalTimeEl.textContent = formatTime(audio.duration);
-    }
-    updateProgress();
-  });
-
+  // Audio lifecycle events
+  audio.addEventListener("play", () => updatePlayStateUI(true));
+  audio.addEventListener("pause", () => updatePlayStateUI(false));
   audio.addEventListener("ended", () => {
-    if (audio.loop) {
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-    } else {
-      updatePlayStateUI(false);
+    if (!audio.loop) updatePlayStateUI(false);
+  });
+  audio.addEventListener("error", () => {
+    if (statusText) {
+      statusText.textContent = "ASSET ERROR";
+      statusText.style.color = "var(--pink)";
     }
+    console.error("Audio failed to load from assets/timeless.mp3");
   });
 
   const positionPanel = () => {
@@ -1234,7 +1163,7 @@ function setupSpotifyControl() {
       const rightMargin = Math.max(16, window.innerWidth - rect.right);
       panel.style.right = `${rightMargin}px`;
       panel.style.left = "auto";
-      panel.style.width = "380px";
+      panel.style.width = "320px";
     }
   };
 
@@ -1248,14 +1177,7 @@ function setupSpotifyControl() {
     panel.hidden = false;
     panel.classList.add("active");
     button.setAttribute("aria-expanded", "true");
-    updateProgress();
-
-    // User clicked the Spotify control: start playback of Timeless
-    if (audio.paused) {
-      audio.play().catch((err) => {
-        console.warn("Audio play prevented:", err);
-      });
-    }
+    // Notice: Opening the panel does NOT automatically play music.
   };
 
   const closePanel = () => {
@@ -1264,11 +1186,11 @@ function setupSpotifyControl() {
     button.setAttribute("aria-expanded", "false");
     setTimeout(() => {
       if (!isPanelOpen) panel.hidden = true;
-    }, 220);
+    }, 200);
+    // Notice: Closing the panel does NOT stop or restart the music.
   };
 
-  // Button click in navbar:
-  // "when clicked, the track of that particular song plays"
+  // Clicking navbar music button toggles panel
   button.addEventListener("click", (e) => {
     e.stopPropagation();
     if (isPanelOpen) {
@@ -1278,117 +1200,39 @@ function setupSpotifyControl() {
     }
   });
 
-  // Play / Pause button inside panel
+  // Explicit Play / Pause button click
   playBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
     if (audio.paused) {
-      audio.play().catch(() => {});
+      audio.play().catch((err) => {
+        console.warn("Audio playback prevented:", err);
+      });
     } else {
       audio.pause();
     }
   });
 
-  // Restart track (Prev / Next)
-  prevBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    audio.currentTime = 0;
-    if (audio.paused) audio.play().catch(() => {});
-    updateProgress();
-  });
-
-  nextBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    audio.currentTime = 0;
-    if (audio.paused) audio.play().catch(() => {});
-    updateProgress();
-  });
-
-  // Shuffle toggle
-  shuffleBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    shuffleBtn.classList.toggle("active");
-  });
-
-  // Repeat toggle
-  repeatBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    audio.loop = !audio.loop;
-    repeatBtn.classList.toggle("active", audio.loop);
-  });
-
-  // Scrubber click / drag seeking
-  let isSeeking = false;
-  const seekTo = (e) => {
-    if (!progressWrap) return;
-    const rect = progressWrap.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-    const dur = audio.duration || 256;
-    audio.currentTime = ratio * dur;
-    updateProgress();
-  };
-
-  progressWrap?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    seekTo(e);
-  });
-
-  progressWrap?.addEventListener("mousedown", (e) => {
-    isSeeking = true;
-    seekTo(e);
-    const onMouseMove = (moveEvent) => {
-      if (isSeeking) seekTo(moveEvent);
-    };
-    const onMouseUp = () => {
-      isSeeking = false;
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-  });
-
-  // Keyboard seek on slider
-  progressWrap?.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") {
-      audio.currentTime = Math.max(0, audio.currentTime - 5);
-      updateProgress();
-    } else if (e.key === "ArrowRight") {
-      audio.currentTime = Math.min(audio.duration || 256, audio.currentTime + 5);
-      updateProgress();
-    }
-  });
-
+  // Close button inside panel
   closeBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
     closePanel();
     button.focus();
   });
 
+  // Click outside to close
   document.addEventListener("click", (e) => {
     if (isPanelOpen && !panel.contains(e.target) && !button.contains(e.target)) {
       closePanel();
     }
   });
 
+  // Escape key to close
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && isPanelOpen) {
       closePanel();
       button.focus();
     }
   });
-
-  // Check if session was playing on previous page navigation
-  try {
-    const wasPlaying = sessionStorage.getItem("spotify_timeless_playing") === "true";
-    if (wasPlaying && audio.paused) {
-      audio.play().then(() => {
-        updatePlayStateUI(true);
-      }).catch(() => {
-        updatePlayStateUI(false);
-      });
-    }
-  } catch (_) {}
 }
 
 function setupImagePerformance() {
