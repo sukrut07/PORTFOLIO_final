@@ -204,6 +204,12 @@ button {
   box-shadow: 8px 8px 0 var(--black);
 }
 
+.theme-toggle {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .spotify-nav-btn {
   display: inline-flex;
   align-items: center;

@@ -190,6 +190,20 @@ const skillsData = [
     repoUrl: "https://github.com/sukrut07/sentinel",
     repoName: "sentinel"
   },
+  {
+    id: "skill-supervised-learning",
+    name: "Supervised Learning",
+    category: "ai-ml",
+    categoryLabel: "AI & Machine Learning",
+    evidence: "PROJECT-USED",
+    explanation: "Training predictive models on ground-truth labeled datasets to learn mapping functions between input features and target classes or continuous values.",
+    application: "Underpins regression prediction, binary/multi-class classification, risk scoring, fraud detection, and biometric classification.",
+    example: "Trained supervised gradient boosting and random forest classifiers on labeled transaction datasets in Sentinel to detect fraudulent patterns.",
+    description: "Regression models, decision boundaries, cross-validation & labeled classification pipelines.",
+    tags: ["Classification", "Regression", "Supervised Training"],
+    repoUrl: "https://github.com/sukrut07/sentinel",
+    repoName: "sentinel"
+  },
 
   // ==========================================
   // Category B — COMPUTER VISION & IMAGE ANALYSIS
@@ -640,6 +654,20 @@ const skillsData = [
     repoUrl: "https://github.com/sukrut07/paperloop",
     repoName: "paperloop"
   },
+  {
+    id: "skill-rest-apis",
+    name: "REST APIs",
+    category: "full-stack",
+    categoryLabel: "Full-Stack Development",
+    evidence: "PROJECT-USED",
+    explanation: "Representational State Transfer architectural principles for designing stateless, standard HTTP endpoints communicating over JSON payloads.",
+    application: "Enables robust data exchange between web/mobile frontends and backend services with standardized HTTP status codes, routing, and CRUD contracts.",
+    example: "Engineered RESTful API endpoints for user authentication, collection schedules, and transaction receipts in PaperLoop and ClubSync.",
+    description: "Stateless HTTP methods, JSON serialization, CRUD endpoints & OpenAPI specifications.",
+    tags: ["HTTP Methods", "JSON Serialization", "CRUD Contracts"],
+    repoUrl: "https://github.com/sukrut07/paperloop",
+    repoName: "paperloop"
+  },
 
   // ==========================================
   // Category F — DATABASES & STORAGE
@@ -887,6 +915,20 @@ const skillsData = [
     example: "Architected semantic vector retrieval workflows in SANCHAY indexing official public development project documentation and sanction orders.",
     description: "Dense vector spaces, cosine similarity, nearest-neighbor retrieval & semantic search.",
     tags: ["Cosine Similarity", "Dense Vectors", "Semantic Search"],
+    repoUrl: null,
+    repoName: null
+  },
+  {
+    id: "skill-agent-workflows",
+    name: "AI Agent Workflows",
+    category: "advanced-ai",
+    categoryLabel: "Advanced AI & Agents",
+    evidence: "PROJECT-USED",
+    explanation: "Autonomous reasoning architectures combining multi-step planning loops, tool calling, state transitions, and memory persistence.",
+    application: "Automates multi-step developer workflows, compliance checks, automated research synthesis, and self-correcting validation pipelines.",
+    example: "Architected multi-step agent planning loops in SANCHAY with tool-calling capabilities for structured regulatory and financial verification.",
+    description: "Autonomous planning loops, tool routing, state transitions & multi-turn execution.",
+    tags: ["Autonomous Planning", "Tool Calling", "Execution Loops"],
     repoUrl: null,
     repoName: null
   },

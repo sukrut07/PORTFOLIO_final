@@ -970,33 +970,42 @@ function escapeHtml(str) {
 function setupSpotifyControl() {
   const navbar = document.querySelector(".navbar");
   const touchButton = document.querySelector(".touch-button");
-  if (!navbar || !touchButton || document.querySelector(".spotify-nav-btn")) return;
+  if (!navbar) return;
 
-  // Remove any legacy theme toggle if present
-  document.querySelector(".theme-toggle")?.remove();
+  // Forcibly remove any legacy theme-toggle element
+  document.querySelectorAll(".theme-toggle").forEach((el) => el.remove());
 
-  // Create compact Spotify navbar control
-  const button = document.createElement("button");
-  button.className = "spotify-nav-btn";
-  button.type = "button";
-  button.id = "spotify-nav-btn";
-  button.title = "Spotify Listening Status";
-  button.setAttribute("aria-label", "Spotify listening status");
-  button.setAttribute("aria-expanded", "false");
-  button.setAttribute("aria-haspopup", "dialog");
-  button.innerHTML = `
-    <span class="spotify-nav-icon" aria-hidden="true">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
-      </svg>
-    </span>
-    <span class="spotify-eq-bars" aria-hidden="true">
-      <span class="eq-bar bar-1"></span>
-      <span class="eq-bar bar-2"></span>
-      <span class="eq-bar bar-3"></span>
-    </span>
-  `;
-  touchButton.insertAdjacentElement("beforebegin", button);
+  // Find existing static button or dynamically create it
+  let button = document.querySelector("#spotify-nav-btn");
+  if (!button && touchButton) {
+    button = document.createElement("button");
+    button.className = "spotify-nav-btn";
+    button.type = "button";
+    button.id = "spotify-nav-btn";
+    button.title = "Spotify Listening Status";
+    button.setAttribute("aria-label", "Spotify listening status");
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-haspopup", "dialog");
+    button.innerHTML = `
+      <span class="spotify-nav-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
+        </svg>
+      </span>
+      <span class="spotify-eq-bars" aria-hidden="true">
+        <span class="eq-bar bar-1"></span>
+        <span class="eq-bar bar-2"></span>
+        <span class="eq-bar bar-3"></span>
+      </span>
+    `;
+    touchButton.insertAdjacentElement("beforebegin", button);
+  }
+
+  if (!button) return;
+
+  // Avoid duplicate event listener attachments
+  if (button.dataset.bound === "true") return;
+  button.dataset.bound = "true";
 
   // Create macOS Dynamic Island-style floating panel
   let panel = document.querySelector("#spotify-island-panel");
@@ -1034,6 +1043,27 @@ function setupSpotifyControl() {
 
   let pollInterval = null;
   let isPanelOpen = false;
+
+  const positionPanel = () => {
+    if (!button || !panel) return;
+    const rect = button.getBoundingClientRect();
+    if (window.innerWidth <= 640) {
+      panel.style.top = `${Math.round(rect.bottom + 8)}px`;
+      panel.style.right = "12px";
+      panel.style.left = "12px";
+      panel.style.width = "auto";
+    } else {
+      panel.style.top = `${Math.round(rect.bottom + 8)}px`;
+      const rightMargin = Math.max(16, window.innerWidth - rect.right);
+      panel.style.right = `${rightMargin}px`;
+      panel.style.left = "auto";
+      panel.style.width = "380px";
+    }
+  };
+
+  window.addEventListener("resize", () => {
+    if (isPanelOpen) positionPanel();
+  });
 
   const updateUI = (data) => {
     const badge = document.querySelector("#spotify-status-badge");
@@ -1158,6 +1188,7 @@ function setupSpotifyControl() {
   };
 
   const openPanel = () => {
+    positionPanel();
     isPanelOpen = true;
     panel.hidden = false;
     panel.classList.add("active");
