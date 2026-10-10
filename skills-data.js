@@ -162,6 +162,34 @@ const skillsData = [
     repoUrl: "https://github.com/sukrut07/the-debuggers",
     repoName: "the-debuggers"
   },
+  {
+    id: "skill-neural-networks",
+    name: "Neural Networks",
+    category: "ai-ml",
+    categoryLabel: "AI & Machine Learning",
+    evidence: "PROJECT-USED",
+    explanation: "Computational network architectures composed of interconnected nodes with learned weight matrices that transform high-dimensional inputs through non-linear activation functions.",
+    application: "The core foundation of deep learning, used to model complex non-linear relationships across computer vision, speech synthesis, NLP, and tabular representations.",
+    example: "Designed multi-layer convolutional and dense neural network layers in Deepfake Detection for facial feature representation extraction.",
+    description: "Multi-layer perceptrons, backpropagation, convolutional layers & activation functions.",
+    tags: ["Perceptrons", "Backpropagation", "Activations"],
+    repoUrl: "https://github.com/sukrut07/deepfake_detection",
+    repoName: "deepfake_detection"
+  },
+  {
+    id: "skill-unsupervised-learning",
+    name: "Unsupervised Learning",
+    category: "ai-ml",
+    categoryLabel: "AI & Machine Learning",
+    evidence: "PROJECT-USED",
+    explanation: "Machine learning algorithms that discover underlying patterns, cluster groupings, and distribution anomalies from unlabelled datasets without ground-truth targets.",
+    application: "Widely used for customer behavioral segmentation, dimensional reduction, anomaly detection, data drift analysis, and recommendation clustering.",
+    example: "Applied unsupervised Isolation Forest and density modeling in Sentinel to isolate high-risk transaction outliers without prior fraud labels.",
+    description: "Clustering, density estimation, unsupervised anomaly discovery & dimensionality reduction.",
+    tags: ["Clustering", "Outlier Analysis", "Density"],
+    repoUrl: "https://github.com/sukrut07/sentinel",
+    repoName: "sentinel"
+  },
 
   // ==========================================
   // Category B — COMPUTER VISION & IMAGE ANALYSIS
@@ -233,6 +261,34 @@ const skillsData = [
     example: "Conducted frame-by-frame temporal consistency checks and facial bounding box segmentation in Deepfake Detection.",
     description: "Frame-by-frame temporal consistency checks, video segmentation & facial bounding boxes.",
     tags: ["Video Analysis", "Segmentation", "Bounding Boxes"],
+    repoUrl: "https://github.com/sukrut07/deepfake_detection",
+    repoName: "deepfake_detection"
+  },
+  {
+    id: "skill-image-processing",
+    name: "Image Processing",
+    category: "computer-vision",
+    categoryLabel: "Computer Vision",
+    evidence: "PROJECT-USED",
+    explanation: "Algorithmic transformation and mathematical filtering of digital image arrays to enhance visual features, eliminate noise, and extract structural edges.",
+    application: "Preprocessing camera feeds with Gaussian blurring, morphological dilation/erosion, color space conversions, and adaptive thresholding for robust inference.",
+    example: "Built video frame preprocessing pipelines in Gravity applying morphological smoothing, color space transforms, and contour thresholding.",
+    description: "Spatial filtering, morphological transforms, color spaces & adaptive thresholding.",
+    tags: ["Spatial Filtering", "Thresholding", "Morphology"],
+    repoUrl: "https://github.com/sukrut07/gravity",
+    repoName: "gravity"
+  },
+  {
+    id: "skill-image-classification",
+    name: "Image Classification",
+    category: "computer-vision",
+    categoryLabel: "Computer Vision",
+    evidence: "PROJECT-USED",
+    explanation: "The computer vision discipline of categorizing entire images or segmented bounding regions into discrete probability classes based on visual features.",
+    application: "Automating visual quality inspection, biometric verification, medical screening, and synthetic media forensic auditing.",
+    example: "Trained convolutional classifiers in Deepfake Detection to categorize extracted video face crops as authentic or synthetically altered.",
+    description: "Convolutional feature extraction, boundary scoring & forensic image classification.",
+    tags: ["CNN Features", "Softmax Scoring", "Forensics"],
     repoUrl: "https://github.com/sukrut07/deepfake_detection",
     repoName: "deepfake_detection"
   },
@@ -412,6 +468,20 @@ const skillsData = [
     repoUrl: null,
     repoName: null
   },
+  {
+    id: "skill-data-visualization",
+    name: "Data Visualization",
+    category: "data-science",
+    categoryLabel: "Data Science & Analytics",
+    evidence: "PROJECT-USED",
+    explanation: "Graphical representation of multi-dimensional data, distributions, and model performance metrics using statistical visualization libraries.",
+    application: "Diagnosing data skew, communicating feature correlations, illustrating precision-recall trade-offs, and building stakeholder dashboards.",
+    example: "Generated interactive ROC-AUC curves, confusion matrices, and clinical biomarker distributions in HealthGuard and Sentinel.",
+    description: "Statistical charting, distribution plots, ROC-AUC curves & interactive visual metrics.",
+    tags: ["Matplotlib", "Seaborn", "Metric Charts"],
+    repoUrl: "https://github.com/sukrut07/HealthGuard",
+    repoName: "HealthGuard"
+  },
 
   // ==========================================
   // Category E — BACKEND & FULL-STACK DEVELOPMENT
@@ -525,6 +595,48 @@ const skillsData = [
     example: "Configured role-based route guards (Students, Recyclers, Administrators) with Firebase Auth in PaperLoop.",
     description: "Role-based route authorization (Admin, Recycler, Student), Firebase Auth & tokens.",
     tags: ["Firebase Auth", "Role Guards", "Protected Routes"],
+    repoUrl: "https://github.com/sukrut07/paperloop",
+    repoName: "paperloop"
+  },
+  {
+    id: "skill-responsive-design",
+    name: "Responsive Web Design",
+    category: "full-stack",
+    categoryLabel: "Full-Stack Development",
+    evidence: "PROJECT-USED",
+    explanation: "Engineering fluid, mobile-first web layouts that adapt seamlessly across phone, tablet, laptop, and ultra-wide desktop viewports.",
+    application: "Eliminating horizontal layout overflows, implementing fluid CSS Grid and Flexbox layouts, dynamic rem scaling, and touch-target optimization.",
+    example: "Engineered the fluid 7-column neo-brutalist grid layouts, mobile drawer navigation, and breakpoint rules across ClubSync and this portfolio.",
+    description: "Fluid grid systems, media queries, mobile-first layouts & touch-target optimization.",
+    tags: ["Fluid Layouts", "Media Queries", "Mobile-First"],
+    repoUrl: "https://github.com/sukrut07/clubsync",
+    repoName: "clubsync"
+  },
+  {
+    id: "skill-websockets",
+    name: "WebSockets & Streaming",
+    category: "full-stack",
+    categoryLabel: "Full-Stack Development",
+    evidence: "PROJECT-USED",
+    explanation: "Full-duplex, persistent communication protocols enabling real-time, bidirectional message streaming between clients and backend servers.",
+    application: "Delivering real-time telemetry streams, live gaming synchronization, financial market tickers, and collaborative canvas updates.",
+    example: "Engineered sub-15ms real-time telemetry streaming pipelines bridging Python gesture tracking loops with client renderers in Gravity.",
+    description: "Persistent full-duplex sockets, real-time message streaming & low-latency IPC bridges.",
+    tags: ["Full-Duplex", "Low-Latency", "Real-Time IPC"],
+    repoUrl: "https://github.com/sukrut07/gravity",
+    repoName: "gravity"
+  },
+  {
+    id: "skill-state-management",
+    name: "State Management",
+    category: "full-stack",
+    categoryLabel: "Full-Stack Development",
+    evidence: "PROJECT-USED",
+    explanation: "Architecting predictable reactive state flows, component lifecycles, and asynchronous data caching across complex user interfaces.",
+    application: "Synchronizing authentication sessions, managing multi-step transactional flows, caching server queries, and maintaining single-source-of-truth UI state.",
+    example: "Managed multi-role user state, pickup verification state machines, and asynchronous forms in PaperLoop and SML-Code-Optimiser.",
+    description: "React hooks, Context API, state machines & unidirectional reactive data flows.",
+    tags: ["React Hooks", "Context API", "Unidirectional Flow"],
     repoUrl: "https://github.com/sukrut07/paperloop",
     repoName: "paperloop"
   },
@@ -648,6 +760,48 @@ const skillsData = [
     repoUrl: "https://github.com/sukrut07/clubsync",
     repoName: "clubsync"
   },
+  {
+    id: "skill-api-integration",
+    name: "API Integration",
+    category: "tools",
+    categoryLabel: "Developer Tools",
+    evidence: "PROJECT-USED",
+    explanation: "Connecting distributed frontend clients, microservices, and third-party SaaS platforms through authenticated HTTP contracts, tokens, and schemas.",
+    application: "Integrating mapping and geocoding services, user authentication providers, cloud database APIs, and AI inference endpoints.",
+    example: "Integrated Google Maps Geocoding API, Firebase Auth SDK, and Groq LLM API across PaperLoop and SML-Code-Optimiser.",
+    description: "HTTP contracts, third-party cloud SDKs, token headers & error retry mechanisms.",
+    tags: ["HTTP Contracts", "Error Handling", "Cloud SDKs"],
+    repoUrl: "https://github.com/sukrut07/paperloop",
+    repoName: "paperloop"
+  },
+  {
+    id: "skill-debugging",
+    name: "Debugging & Diagnostics",
+    category: "tools",
+    categoryLabel: "Developer Tools",
+    evidence: "PROJECT-USED",
+    explanation: "Systematically inspecting runtime execution, tracing memory usage, analyzing stack traces, and diagnosing software bottlenecks.",
+    application: "Isolating asynchronous race conditions, profiling browser rendering reflows, inspecting network payloads, and verifying boundary conditions.",
+    example: "Leveraged Chrome DevTools profilers, Python pdb breakpoints, and Node.js stack inspection to isolate runtime bottlenecks across projects.",
+    description: "Interactive breakpoints, memory profiling, network payload inspection & stack trace analysis.",
+    tags: ["Stack Traces", "DevTools", "Breakpoints"],
+    repoUrl: "https://github.com/sukrut07/SML-Code-Optimiser",
+    repoName: "SML-Code-Optimiser"
+  },
+  {
+    id: "skill-python-automation",
+    name: "Python Automation",
+    category: "tools",
+    categoryLabel: "Developer Tools",
+    evidence: "PROJECT-USED",
+    explanation: "Developing lightweight, reproducible automation scripts to orchestrate batch tasks, process media assets, and transform data pipelines.",
+    application: "Automated batch asset optimization, dataset conversion scripts, test harness orchestration, and scheduled scraping pipelines.",
+    example: "Authored automated Python utility scripts for SVG asset processing, dataset formatting, and telemetry verification across projects.",
+    description: "Batch scripts, automated file parsing, CLI utilities & pipeline orchestration.",
+    tags: ["Batch Scripts", "CLI Utilities", "Automation"],
+    repoUrl: "https://github.com/sukrut07/sentinel",
+    repoName: "sentinel"
+  },
 
   // ==========================================
   // Category H — ADVANCED AI & AGENTS
@@ -707,6 +861,34 @@ const skillsData = [
     tags: ["Structured Outputs", "Groq API", "Inference"],
     repoUrl: "https://github.com/sukrut07/SML-Code-Optimiser",
     repoName: "SML-Code-Optimiser"
+  },
+  {
+    id: "skill-llms",
+    name: "Large Language Models",
+    category: "advanced-ai",
+    categoryLabel: "Advanced AI & Agents",
+    evidence: "PROJECT-USED",
+    explanation: "Transformer-based autoregressive neural architectures trained on massive corpora capable of zero-shot reasoning, code synthesis, and structured text generation.",
+    application: "Building context-aware developer assistants, automated code refactoring pipelines, structured JSON information extraction, and intelligent agent planning.",
+    example: "Integrated high-speed Groq and open LLM inference pipelines in SML-Code-Optimiser to synthesize structural code refactoring patches and explanations.",
+    description: "Transformer architectures, token context windows, inference parameter tuning & code synthesis.",
+    tags: ["Transformers", "Context Windows", "Inference"],
+    repoUrl: "https://github.com/sukrut07/SML-Code-Optimiser",
+    repoName: "SML-Code-Optimiser"
+  },
+  {
+    id: "skill-embeddings-vector-search",
+    name: "Embeddings & Vector Search",
+    category: "advanced-ai",
+    categoryLabel: "Advanced AI & Agents",
+    evidence: "PROJECT-USED",
+    explanation: "Mapping words, documents, or code into dense geometric vector spaces where semantic proximity correlates with cosine similarity distance.",
+    application: "Powering semantic document retrieval, contextual recommendation engines, code deduplication, and grounding RAG pipelines against domain knowledge bases.",
+    example: "Architected semantic vector retrieval workflows in SANCHAY indexing official public development project documentation and sanction orders.",
+    description: "Dense vector spaces, cosine similarity, nearest-neighbor retrieval & semantic search.",
+    tags: ["Cosine Similarity", "Dense Vectors", "Semantic Search"],
+    repoUrl: null,
+    repoName: null
   },
 
   // ==========================================
@@ -785,6 +967,20 @@ const skillsData = [
     tags: ["Math Visualization", "Parametric Curves", "Animation"],
     repoUrl: "https://github.com/sukrut07/Temple-Fay-s-Butterfly-curve-using-Manim",
     repoName: "Manim-Butterfly"
+  },
+  {
+    id: "skill-2d-game-dev",
+    name: "2D Game Development",
+    category: "game-dev",
+    categoryLabel: "Game Dev & Simulation",
+    evidence: "PROJECT-USED",
+    explanation: "Structuring 2D coordinate spaces, kinematic player physics, sprite animations, collision layers, and delta-time game loop logic.",
+    application: "Developing interactive 2D arcade games, educational physics simulations, and experimental gesture-driven touchless interfaces.",
+    example: "Architected player movement kinematics, dynamic obstacle spawning, collision response, and particle effects in Gravity.",
+    description: "Kinematic bodies, collision layers, frame delta timing & interactive 2D game loops.",
+    tags: ["Kinematics", "Delta Time", "Collision Layers"],
+    repoUrl: "https://github.com/sukrut07/gravity",
+    repoName: "gravity"
   },
 
   // ==========================================

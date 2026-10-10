@@ -957,38 +957,259 @@ function setupDynamicProfile() {
   }, 2400);
 }
 
-function setupThemeToggle() {
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function setupSpotifyControl() {
   const navbar = document.querySelector(".navbar");
   const touchButton = document.querySelector(".touch-button");
-  if (!navbar || !touchButton || document.querySelector(".theme-toggle")) return;
+  if (!navbar || !touchButton || document.querySelector(".spotify-nav-btn")) return;
 
+  // Remove any legacy theme toggle if present
+  document.querySelector(".theme-toggle")?.remove();
+
+  // Create compact Spotify navbar control
   const button = document.createElement("button");
-  button.className = "theme-toggle";
+  button.className = "spotify-nav-btn";
   button.type = "button";
-  button.title = "Toggle light / dark mode";
-  button.setAttribute("aria-label", "Toggle color theme");
+  button.id = "spotify-nav-btn";
+  button.title = "Spotify Listening Status";
+  button.setAttribute("aria-label", "Spotify listening status");
+  button.setAttribute("aria-expanded", "false");
+  button.setAttribute("aria-haspopup", "dialog");
+  button.innerHTML = `
+    <span class="spotify-nav-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
+      </svg>
+    </span>
+    <span class="spotify-eq-bars" aria-hidden="true">
+      <span class="eq-bar bar-1"></span>
+      <span class="eq-bar bar-2"></span>
+      <span class="eq-bar bar-3"></span>
+    </span>
+  `;
   touchButton.insertAdjacentElement("beforebegin", button);
 
-  const applyTheme = (theme) => {
-    const isDark = theme === "dark";
-    document.body.classList.toggle("dark", isDark);
-    button.innerHTML = isDark
-      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>'
-      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-    button.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-    button.setAttribute("title", isDark ? "Switch to light mode" : "Switch to dark mode");
-    button.setAttribute("aria-pressed", String(isDark));
-    localStorage.setItem("portfolio-theme", theme);
+  // Create macOS Dynamic Island-style floating panel
+  let panel = document.querySelector("#spotify-island-panel");
+  if (!panel) {
+    panel = document.createElement("div");
+    panel.id = "spotify-island-panel";
+    panel.className = "spotify-island-panel";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "Spotify Playback Status");
+    panel.hidden = true;
+    panel.innerHTML = `
+      <div class="spotify-island-header">
+        <div class="spotify-header-left">
+          <svg class="spotify-green-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
+          </svg>
+          <span class="spotify-badge" id="spotify-status-badge">Checking...</span>
+        </div>
+        <button type="button" class="spotify-island-close" id="spotify-close-btn" aria-label="Close Spotify panel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="spotify-island-body" id="spotify-island-body">
+        <div class="spotify-loading-state">
+          <div class="spotify-spinner"></div>
+          <span>Connecting to Spotify...</span>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(panel);
+  }
+
+  let pollInterval = null;
+  let isPanelOpen = false;
+
+  const updateUI = (data) => {
+    const badge = document.querySelector("#spotify-status-badge");
+    const body = document.querySelector("#spotify-island-body");
+    const eqBars = button.querySelector(".spotify-eq-bars");
+
+    if (!badge || !body) return;
+
+    if (!data || data.connected === false) {
+      badge.textContent = "Disconnected";
+      badge.className = "spotify-badge badge-disconnected";
+      button.classList.remove("is-playing");
+      eqBars?.classList.remove("animate");
+
+      const authUrl = data?.authUrl || "/api/spotify-login";
+      body.innerHTML = `
+        <div class="spotify-empty-state">
+          <div class="spotify-empty-icon" aria-hidden="true">&#9835;</div>
+          <p class="spotify-empty-title">Connect Spotify</p>
+          <p class="spotify-empty-sub">Connect Spotify to see what you're listening to.</p>
+          <a href="${authUrl}" target="_blank" rel="noopener noreferrer" class="spotify-connect-action">
+            <span>Connect Spotify</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+        </div>
+      `;
+      return;
+    }
+
+    if (!data.title || !data.artist) {
+      badge.textContent = "Idle";
+      badge.className = "spotify-badge badge-idle";
+      button.classList.remove("is-playing");
+      eqBars?.classList.remove("animate");
+
+      body.innerHTML = `
+        <div class="spotify-empty-state">
+          <div class="spotify-empty-icon" aria-hidden="true">&#9834;</div>
+          <p class="spotify-empty-title">Nothing playing right now</p>
+          <p class="spotify-empty-sub">Sukrut isn't playing any track on Spotify at the moment.</p>
+          <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="spotify-open-link">
+            <span>Open Spotify</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+        </div>
+      `;
+      return;
+    }
+
+    const isPlaying = Boolean(data.isPlaying);
+    badge.textContent = isPlaying ? "● Playing" : "⏸ Paused";
+    badge.className = `spotify-badge ${isPlaying ? "badge-playing" : "badge-paused"}`;
+
+    if (isPlaying) {
+      button.classList.add("is-playing");
+      eqBars?.classList.add("animate");
+    } else {
+      button.classList.remove("is-playing");
+      eqBars?.classList.remove("animate");
+    }
+
+    const artHtml = data.albumArt
+      ? `<img src="${data.albumArt}" alt="${escapeHtml(data.album || data.title)} album art" class="spotify-track-art" width="72" height="72" />`
+      : `<div class="spotify-track-art spotify-art-placeholder">&#9835;</div>`;
+
+    const openSpotifyLink = data.spotifyUrl
+      ? `<a href="${data.spotifyUrl}" target="_blank" rel="noopener noreferrer" class="spotify-track-link" aria-label="Open ${escapeHtml(data.title)} on Spotify">
+           <span>Open in Spotify</span>
+           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+         </a>`
+      : "";
+
+    body.innerHTML = `
+      <div class="spotify-track-layout">
+        <div class="spotify-art-wrap">
+          ${artHtml}
+        </div>
+        <div class="spotify-track-meta">
+          <p class="spotify-track-title" title="${escapeHtml(data.title)}">${escapeHtml(data.title)}</p>
+          <p class="spotify-track-artist" title="${escapeHtml(data.artist)}">${escapeHtml(data.artist)}</p>
+          ${data.album ? `<p class="spotify-track-album" title="${escapeHtml(data.album)}">${escapeHtml(data.album)}</p>` : ""}
+          <div class="spotify-track-footer">
+            <div class="spotify-footer-status">
+              <span class="spotify-indicator-dot ${isPlaying ? "live" : ""}"></span>
+              <span class="spotify-status-note">${isPlaying ? "Currently playing on Spotify" : "Paused on Spotify"}</span>
+            </div>
+            ${openSpotifyLink}
+          </div>
+        </div>
+      </div>
+    `;
   };
 
-  const urlTheme = new URLSearchParams(window.location.search).get("theme");
-  const storedTheme = urlTheme || localStorage.getItem("portfolio-theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  applyTheme(storedTheme || (prefersDark ? "dark" : "light"));
+  const fetchStatus = async () => {
+    try {
+      const res = await fetch("/api/spotify");
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      updateUI(data);
+    } catch (err) {
+      const badge = document.querySelector("#spotify-status-badge");
+      const body = document.querySelector("#spotify-island-body");
+      if (badge) {
+        badge.textContent = "Offline";
+        badge.className = "spotify-badge badge-idle";
+      }
+      if (body) {
+        body.innerHTML = `
+          <div class="spotify-empty-state">
+            <p class="spotify-empty-title">Connect Spotify</p>
+            <p class="spotify-empty-sub">Connect Spotify to see what you're listening to.</p>
+            <a href="/api/spotify-login" target="_blank" rel="noopener noreferrer" class="spotify-connect-action">
+              <span>Connect Spotify</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </div>
+        `;
+      }
+    }
+  };
 
-  button.addEventListener("click", () => {
-    applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
+  const openPanel = () => {
+    isPanelOpen = true;
+    panel.hidden = false;
+    panel.classList.add("active");
+    button.setAttribute("aria-expanded", "true");
+    fetchStatus();
+    if (pollInterval) clearInterval(pollInterval);
+    pollInterval = setInterval(fetchStatus, 10000);
+  };
+
+  const closePanel = () => {
+    isPanelOpen = false;
+    panel.classList.remove("active");
+    button.setAttribute("aria-expanded", "false");
+    setTimeout(() => {
+      if (!isPanelOpen) panel.hidden = true;
+    }, 220);
+    if (pollInterval) {
+      clearInterval(pollInterval);
+      pollInterval = null;
+    }
+  };
+
+  button.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (isPanelOpen) {
+      closePanel();
+    } else {
+      openPanel();
+    }
   });
+
+  panel.querySelector("#spotify-close-btn")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    closePanel();
+    button.focus();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (isPanelOpen && !panel.contains(e.target) && !button.contains(e.target)) {
+      closePanel();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isPanelOpen) {
+      closePanel();
+      button.focus();
+    }
+  });
+
+  // Initial status check
+  fetchStatus();
 }
 
 function setupImagePerformance() {
@@ -1271,7 +1492,7 @@ function setupSkillsDashboard() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  setupThemeToggle();
+  setupSpotifyControl();
   setupActiveNavigation();
   setupAccordions();
   setupModals();
