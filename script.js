@@ -982,8 +982,8 @@ function setupSpotifyControl() {
     button.className = "spotify-nav-btn";
     button.type = "button";
     button.id = "spotify-nav-btn";
-    button.title = "Spotify Listening Status";
-    button.setAttribute("aria-label", "Spotify listening status");
+    button.title = "Spotify: The Weeknd - Timeless";
+    button.setAttribute("aria-label", "Play Timeless by The Weeknd on Spotify");
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-haspopup", "dialog");
     button.innerHTML = `
@@ -996,46 +996,230 @@ function setupSpotifyControl() {
 
   if (!button) return;
 
-  // Avoid duplicate event listener attachments
-  if (button.dataset.bound === "true") return;
-  button.dataset.bound = "true";
+  // Single audio instance
+  let audio = document.querySelector("#spotify-audio-player");
+  if (!audio) {
+    audio = document.createElement("audio");
+    audio.id = "spotify-audio-player";
+    audio.src = "assets/timeless.mp3";
+    audio.preload = "metadata";
+    audio.loop = true;
+    document.body.appendChild(audio);
+  }
 
-  // Create macOS Dynamic Island-style floating panel
+  // Restore playback state if available
+  try {
+    const savedTime = parseFloat(sessionStorage.getItem("spotify_timeless_time"));
+    if (!isNaN(savedTime) && savedTime > 0) {
+      audio.currentTime = savedTime;
+    }
+  } catch (_) {}
+
+  // Create or retrieve floating macOS Dynamic Island player
   let panel = document.querySelector("#spotify-island-panel");
   if (!panel) {
     panel = document.createElement("div");
     panel.id = "spotify-island-panel";
     panel.className = "spotify-island-panel";
     panel.setAttribute("role", "dialog");
-    panel.setAttribute("aria-label", "Spotify Playback Status");
+    panel.setAttribute("aria-label", "Spotify: The Weeknd - Timeless");
     panel.hidden = true;
     panel.innerHTML = `
       <div class="spotify-island-header">
         <div class="spotify-header-left">
-          <svg class="spotify-green-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <svg class="spotify-green-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.52 17.305c-.217.355-.677.47-1.032.253-2.827-1.728-6.386-2.119-10.578-1.162-.405.093-.812-.162-.905-.568-.093-.406.162-.813.568-.906 4.587-1.049 8.528-.606 11.694 1.35.355.217.47.678.253 1.033zm1.474-3.277c-.273.444-.855.588-1.299.315-3.236-1.99-8.169-2.564-11.996-1.401-.5.152-1.03-.133-1.182-.633-.152-.5.133-1.03.633-1.182 4.38-1.33 9.807-.69 13.53 1.602.443.273.587.855.314 1.299zm.126-3.41c-3.88-2.304-10.28-2.516-13.99-1.39-.596.18-1.229-.16-1.41-.756-.18-.596.16-1.229.756-1.41 4.267-1.296 11.333-1.045 15.807 1.61.536.318.712 1.01.394 1.546-.318.536-1.01.712-1.547.394z"/>
           </svg>
-          <span class="spotify-badge" id="spotify-status-badge">Checking...</span>
+          <span class="spotify-header-title">SPOTIFY</span>
+          <span class="spotify-badge badge-paused" id="spotify-status-badge">⏸ Paused</span>
         </div>
-        <button type="button" class="spotify-island-close" id="spotify-close-btn" aria-label="Close Spotify panel">
+        <button type="button" class="spotify-island-close" id="spotify-close-btn" aria-label="Close player">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </div>
-      <div class="spotify-island-body" id="spotify-island-body">
-        <div class="spotify-loading-state">
-          <div class="spotify-spinner"></div>
-          <span>Connecting to Spotify...</span>
+
+      <div class="spotify-island-body">
+        <div class="spotify-track-layout">
+          <div class="spotify-art-wrap">
+            <img src="assets/timeless_cover.png" alt="Timeless by The Weeknd and Playboi Carti" class="spotify-track-art" width="76" height="76" loading="eager" />
+          </div>
+          <div class="spotify-track-meta">
+            <div class="spotify-title-row">
+              <span class="spotify-track-title" title="Timeless">Timeless</span>
+              <span class="spotify-explicit-tag" title="Explicit">E</span>
+            </div>
+            <p class="spotify-track-artist" title="The Weeknd, Playboi Carti">The Weeknd, Playboi Carti</p>
+            <p class="spotify-track-album" title="Hurry Up Tomorrow">Hurry Up Tomorrow</p>
+          </div>
+        </div>
+
+        <div class="spotify-timeline">
+          <span class="spotify-time" id="spotify-current-time">0:00</span>
+          <div class="spotify-progress-wrap" id="spotify-progress-wrap" role="slider" aria-label="Playback scrubber" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="spotify-progress-bar">
+              <div class="spotify-progress-fill" id="spotify-progress-fill" style="width: 0%;">
+                <span class="spotify-progress-thumb"></span>
+              </div>
+            </div>
+          </div>
+          <span class="spotify-time" id="spotify-total-time">4:16</span>
+        </div>
+
+        <div class="spotify-controls-row">
+          <button type="button" class="spotify-ctrl-btn" id="spotify-ctrl-shuffle" title="Shuffle" aria-label="Shuffle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 3 21 3 21 8"></polyline>
+              <line x1="4" y1="20" x2="21" y2="3"></line>
+              <polyline points="21 16 21 21 16 21"></polyline>
+              <line x1="15" y1="15" x2="21" y2="21"></line>
+              <line x1="4" y1="4" x2="9" y2="9"></line>
+            </svg>
+          </button>
+          <button type="button" class="spotify-ctrl-btn" id="spotify-ctrl-prev" title="Restart track" aria-label="Restart track">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="19 20 9 12 19 4 19 20"></polygon>
+              <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.5"></line>
+            </svg>
+          </button>
+          <button type="button" class="spotify-play-btn" id="spotify-play-btn" title="Play / Pause" aria-label="Play or Pause track">
+            <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+              <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+            </svg>
+            <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: block; margin-left: 2px;">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </button>
+          <button type="button" class="spotify-ctrl-btn" id="spotify-ctrl-next" title="Restart track" aria-label="Next track">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"></line>
+            </svg>
+          </button>
+          <button type="button" class="spotify-ctrl-btn active" id="spotify-ctrl-repeat" title="Repeat" aria-label="Repeat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="17 1 21 5 17 9"></polyline>
+              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+              <polyline points="7 23 3 19 7 15"></polyline>
+              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+            </svg>
+            <span class="repeat-dot"></span>
+          </button>
+        </div>
+
+        <div class="spotify-track-footer">
+          <div class="spotify-soundwaves" id="spotify-soundwaves" aria-hidden="true">
+            <span class="wave-bar w-1"></span>
+            <span class="wave-bar w-2"></span>
+            <span class="wave-bar w-3"></span>
+            <span class="wave-bar w-4"></span>
+            <span class="wave-bar w-5"></span>
+          </div>
+          <a href="https://open.spotify.com/track/62k1Gz5e62N3XgZ9pW6c1C" target="_blank" rel="noopener noreferrer" class="spotify-track-link" aria-label="Listen to Timeless on Spotify">
+            <span>Listen on Spotify</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
         </div>
       </div>
     `;
     document.body.appendChild(panel);
   }
 
-  let pollInterval = null;
+  // Avoid multiple event binding on the same page load
+  if (button.dataset.bound === "true") return;
+  button.dataset.bound = "true";
+
   let isPanelOpen = false;
+  const badge = panel.querySelector("#spotify-status-badge");
+  const playBtn = panel.querySelector("#spotify-play-btn");
+  const iconPlay = panel.querySelector(".icon-play");
+  const iconPause = panel.querySelector(".icon-pause");
+  const currentTimeEl = panel.querySelector("#spotify-current-time");
+  const totalTimeEl = panel.querySelector("#spotify-total-time");
+  const progressFill = panel.querySelector("#spotify-progress-fill");
+  const progressWrap = panel.querySelector("#spotify-progress-wrap");
+  const prevBtn = panel.querySelector("#spotify-ctrl-prev");
+  const nextBtn = panel.querySelector("#spotify-ctrl-next");
+  const shuffleBtn = panel.querySelector("#spotify-ctrl-shuffle");
+  const repeatBtn = panel.querySelector("#spotify-ctrl-repeat");
+  const closeBtn = panel.querySelector("#spotify-close-btn");
+
+  const formatTime = (secs) => {
+    if (isNaN(secs) || secs < 0) return "0:00";
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+  };
+
+  const updatePlayStateUI = (isPlaying) => {
+    if (isPlaying) {
+      button.classList.add("is-playing");
+      panel.classList.add("is-playing");
+      if (badge) {
+        badge.textContent = "● Playing";
+        badge.className = "spotify-badge badge-playing";
+      }
+      if (iconPlay) iconPlay.style.display = "none";
+      if (iconPause) iconPause.style.display = "block";
+    } else {
+      button.classList.remove("is-playing");
+      panel.classList.remove("is-playing");
+      if (badge) {
+        badge.textContent = "⏸ Paused";
+        badge.className = "spotify-badge badge-paused";
+      }
+      if (iconPlay) iconPlay.style.display = "block";
+      if (iconPause) iconPause.style.display = "none";
+    }
+  };
+
+  const updateProgress = () => {
+    const cur = audio.currentTime || 0;
+    const dur = audio.duration || 256;
+    if (currentTimeEl) currentTimeEl.textContent = formatTime(cur);
+    if (totalTimeEl && audio.duration) totalTimeEl.textContent = formatTime(dur);
+    const pct = dur > 0 ? (cur / dur) * 100 : 0;
+    if (progressFill) progressFill.style.width = `${pct.toFixed(2)}%`;
+    if (progressWrap) progressWrap.setAttribute("aria-valuenow", Math.round(pct));
+    try {
+      sessionStorage.setItem("spotify_timeless_time", cur);
+    } catch (_) {}
+  };
+
+  // Audio events
+  audio.addEventListener("play", () => {
+    updatePlayStateUI(true);
+    try { sessionStorage.setItem("spotify_timeless_playing", "true"); } catch (_) {}
+  });
+
+  audio.addEventListener("pause", () => {
+    updatePlayStateUI(false);
+    try { sessionStorage.setItem("spotify_timeless_playing", "false"); } catch (_) {}
+  });
+
+  audio.addEventListener("timeupdate", updateProgress);
+
+  audio.addEventListener("loadedmetadata", () => {
+    if (totalTimeEl && audio.duration) {
+      totalTimeEl.textContent = formatTime(audio.duration);
+    }
+    updateProgress();
+  });
+
+  audio.addEventListener("ended", () => {
+    if (audio.loop) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    } else {
+      updatePlayStateUI(false);
+    }
+  });
 
   const positionPanel = () => {
     if (!button || !panel) return;
@@ -1058,127 +1242,20 @@ function setupSpotifyControl() {
     if (isPanelOpen) positionPanel();
   });
 
-  const updateUI = (data) => {
-    const badge = document.querySelector("#spotify-status-badge");
-    const body = document.querySelector("#spotify-island-body");
-
-    if (!badge || !body) return;
-
-    if (!data || data.connected === false) {
-      badge.textContent = "Disconnected";
-      badge.className = "spotify-badge badge-disconnected";
-      button.classList.remove("is-playing");
-
-      const authUrl = data?.authUrl || "/api/spotify-login";
-      body.innerHTML = `
-        <div class="spotify-empty-state">
-          <div class="spotify-empty-icon" aria-hidden="true">&#9835;</div>
-          <p class="spotify-empty-title">Connect Spotify</p>
-          <p class="spotify-empty-sub">Connect Spotify to see what you're listening to.</p>
-          <a href="${authUrl}" target="_blank" rel="noopener noreferrer" class="spotify-connect-action">
-            <span>Connect Spotify</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </a>
-        </div>
-      `;
-      return;
-    }
-
-    if (!data.title || !data.artist) {
-      badge.textContent = "Idle";
-      badge.className = "spotify-badge badge-idle";
-      button.classList.remove("is-playing");
-
-      body.innerHTML = `
-        <div class="spotify-empty-state">
-          <div class="spotify-empty-icon" aria-hidden="true">&#9834;</div>
-          <p class="spotify-empty-title">Nothing playing right now</p>
-          <p class="spotify-empty-sub">Sukrut isn't playing any track on Spotify at the moment.</p>
-          <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="spotify-open-link">
-            <span>Open Spotify</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </a>
-        </div>
-      `;
-      return;
-    }
-
-    const isPlaying = Boolean(data.isPlaying);
-    badge.textContent = isPlaying ? "● Playing" : "⏸ Paused";
-    badge.className = `spotify-badge ${isPlaying ? "badge-playing" : "badge-paused"}`;
-    button.classList.toggle("is-playing", isPlaying);
-
-    const artHtml = data.albumArt
-      ? `<img src="${data.albumArt}" alt="${escapeHtml(data.album || data.title)} album art" class="spotify-track-art" width="72" height="72" />`
-      : `<div class="spotify-track-art spotify-art-placeholder">&#9835;</div>`;
-
-    const openSpotifyLink = data.spotifyUrl
-      ? `<a href="${data.spotifyUrl}" target="_blank" rel="noopener noreferrer" class="spotify-track-link" aria-label="Open ${escapeHtml(data.title)} on Spotify">
-           <span>Open in Spotify</span>
-           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-         </a>`
-      : "";
-
-    body.innerHTML = `
-      <div class="spotify-track-layout">
-        <div class="spotify-art-wrap">
-          ${artHtml}
-        </div>
-        <div class="spotify-track-meta">
-          <p class="spotify-track-title" title="${escapeHtml(data.title)}">${escapeHtml(data.title)}</p>
-          <p class="spotify-track-artist" title="${escapeHtml(data.artist)}">${escapeHtml(data.artist)}</p>
-          ${data.album ? `<p class="spotify-track-album" title="${escapeHtml(data.album)}">${escapeHtml(data.album)}</p>` : ""}
-          <div class="spotify-track-footer">
-            <div class="spotify-footer-status">
-              <span class="spotify-indicator-dot ${isPlaying ? "live" : ""}"></span>
-              <span class="spotify-status-note">${isPlaying ? "Currently playing on Spotify" : "Paused on Spotify"}</span>
-            </div>
-            ${openSpotifyLink}
-          </div>
-        </div>
-      </div>
-    `;
-  };
-
-  const fetchStatus = async () => {
-    try {
-      const res = await fetch("/api/spotify");
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      const data = await res.json();
-      updateUI(data);
-    } catch (err) {
-      const badge = document.querySelector("#spotify-status-badge");
-      const body = document.querySelector("#spotify-island-body");
-      if (badge) {
-        badge.textContent = "Offline";
-        badge.className = "spotify-badge badge-idle";
-      }
-      if (body) {
-        body.innerHTML = `
-          <div class="spotify-empty-state">
-            <p class="spotify-empty-title">Connect Spotify</p>
-            <p class="spotify-empty-sub">Connect Spotify to see what you're listening to.</p>
-            <a href="/api/spotify-login" target="_blank" rel="noopener noreferrer" class="spotify-connect-action">
-              <span>Connect Spotify</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-            </a>
-          </div>
-        `;
-      }
-    }
-  };
-
   const openPanel = () => {
     positionPanel();
     isPanelOpen = true;
     panel.hidden = false;
     panel.classList.add("active");
     button.setAttribute("aria-expanded", "true");
-    fetchStatus();
-    if (pollInterval) clearInterval(pollInterval);
-    pollInterval = setInterval(fetchStatus, 10000);
+    updateProgress();
+
+    // User clicked the Spotify control: start playback of Timeless
+    if (audio.paused) {
+      audio.play().catch((err) => {
+        console.warn("Audio play prevented:", err);
+      });
+    }
   };
 
   const closePanel = () => {
@@ -1188,12 +1265,10 @@ function setupSpotifyControl() {
     setTimeout(() => {
       if (!isPanelOpen) panel.hidden = true;
     }, 220);
-    if (pollInterval) {
-      clearInterval(pollInterval);
-      pollInterval = null;
-    }
   };
 
+  // Button click in navbar:
+  // "when clicked, the track of that particular song plays"
   button.addEventListener("click", (e) => {
     e.stopPropagation();
     if (isPanelOpen) {
@@ -1203,7 +1278,88 @@ function setupSpotifyControl() {
     }
   });
 
-  panel.querySelector("#spotify-close-btn")?.addEventListener("click", (e) => {
+  // Play / Pause button inside panel
+  playBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (audio.paused) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  });
+
+  // Restart track (Prev / Next)
+  prevBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    audio.currentTime = 0;
+    if (audio.paused) audio.play().catch(() => {});
+    updateProgress();
+  });
+
+  nextBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    audio.currentTime = 0;
+    if (audio.paused) audio.play().catch(() => {});
+    updateProgress();
+  });
+
+  // Shuffle toggle
+  shuffleBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    shuffleBtn.classList.toggle("active");
+  });
+
+  // Repeat toggle
+  repeatBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    audio.loop = !audio.loop;
+    repeatBtn.classList.toggle("active", audio.loop);
+  });
+
+  // Scrubber click / drag seeking
+  let isSeeking = false;
+  const seekTo = (e) => {
+    if (!progressWrap) return;
+    const rect = progressWrap.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+    const dur = audio.duration || 256;
+    audio.currentTime = ratio * dur;
+    updateProgress();
+  };
+
+  progressWrap?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    seekTo(e);
+  });
+
+  progressWrap?.addEventListener("mousedown", (e) => {
+    isSeeking = true;
+    seekTo(e);
+    const onMouseMove = (moveEvent) => {
+      if (isSeeking) seekTo(moveEvent);
+    };
+    const onMouseUp = () => {
+      isSeeking = false;
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  });
+
+  // Keyboard seek on slider
+  progressWrap?.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      audio.currentTime = Math.max(0, audio.currentTime - 5);
+      updateProgress();
+    } else if (e.key === "ArrowRight") {
+      audio.currentTime = Math.min(audio.duration || 256, audio.currentTime + 5);
+      updateProgress();
+    }
+  });
+
+  closeBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
     closePanel();
     button.focus();
@@ -1222,8 +1378,17 @@ function setupSpotifyControl() {
     }
   });
 
-  // Initial status check
-  fetchStatus();
+  // Check if session was playing on previous page navigation
+  try {
+    const wasPlaying = sessionStorage.getItem("spotify_timeless_playing") === "true";
+    if (wasPlaying && audio.paused) {
+      audio.play().then(() => {
+        updatePlayStateUI(true);
+      }).catch(() => {
+        updatePlayStateUI(false);
+      });
+    }
+  } catch (_) {}
 }
 
 function setupImagePerformance() {
