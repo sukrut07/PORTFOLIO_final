@@ -205,16 +205,27 @@ button {
 }
 
 .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   min-height: 44px;
   border: 4px solid var(--black);
   border-radius: 9px;
   background: var(--pink);
   box-shadow: 5px 5px 0 var(--black);
+  color: var(--black);
   font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  display: block;
 }
 
 .dashboard {
@@ -2119,6 +2130,9 @@ body[data-page="about"] .mini-link:nth-child(6n) {
 }
 
 .comp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -2128,6 +2142,13 @@ body[data-page="about"] .mini-link:nth-child(6n) {
   border-radius: 5px;
   box-shadow: 2px 2px 0 var(--black);
   white-space: nowrap;
+}
+
+.comp-badge svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  flex-shrink: 0;
 }
 
 .comp-badge.win-badge {
@@ -2654,6 +2675,13 @@ body.dark .comp-pill {
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
+.theme-icon-badge svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  display: block;
+}
+
 .theme-icon-badge:hover {
   transform: rotate(-6deg) scale(1.08);
 }
@@ -2961,6 +2989,11 @@ body.dark .comp-pill {
   background: var(--white);
   box-shadow: 2px 2px 0 var(--black);
   color: var(--black);
+}
+
+.competency-pill svg {
+  flex-shrink: 0;
+  stroke: currentColor;
 }
 
 .exp-modal-footer {

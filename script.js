@@ -228,7 +228,7 @@ function openCaseStudyModal(project) {
     if (!project.githubUrl && !project.liveUrl) {
       actionButtons += `
         <span class="project-notice">
-          🏛️ Institutional Research Prototype • Team Agastya
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block; vertical-align:-2px; margin-right:6px;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Institutional Research Prototype • Team Agastya
         </span>
       `;
     }
@@ -527,6 +527,14 @@ function closeCertModal() {
   lastFocusedElement?.focus?.();
 }
 
+// Experience Icon SVGs matching Neo-Brutalist vector style
+const expSvgs = {
+  robot: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"></rect><path d="M12 8V4"></path><circle cx="12" cy="3" r="1" fill="currentColor"></circle><path d="M2 14h2"></path><path d="M20 14h2"></path><circle cx="9" cy="13" r="1" fill="currentColor"></circle><circle cx="15" cy="13" r="1" fill="currentColor"></circle><path d="M9 17h6"></path></svg>`,
+  globe: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
+  rocket: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 9V4s3.03.55 4 2c1.08 1.62 0 5 0 5"></path></svg>`,
+  zap: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`
+};
+
 // Experience Data Dictionary
 const experienceData = {
   "vicharanashala": {
@@ -537,6 +545,7 @@ const experienceData = {
     typeBadge: "Virtual Traineeship",
     badgeColor: "var(--lime)",
     iconEmoji: "🤖",
+    iconSvg: expSvgs.robot,
     iconBg: "var(--lime)",
     period: "June 2025 – August 2025",
     mode: "Remote • Engineering Mentorship",
@@ -559,6 +568,7 @@ const experienceData = {
     typeBadge: "Technical Training",
     badgeColor: "var(--cyan)",
     iconEmoji: "🌐",
+    iconSvg: expSvgs.globe,
     iconBg: "var(--cyan)",
     period: "2025 – 2026",
     mode: "Hybrid / Lab Training • MIT AOE",
@@ -581,6 +591,7 @@ const experienceData = {
     typeBadge: "Open Source",
     badgeColor: "var(--pink)",
     iconEmoji: "🚀",
+    iconSvg: expSvgs.rocket,
     iconBg: "var(--pink)",
     period: "Ongoing Contributor",
     mode: "GitHub Ecosystem • Public Repositories",
@@ -620,7 +631,7 @@ function openExperienceModal(expId) {
   const competenciesEl = experienceModal.querySelector("#exp-modal-competencies");
 
   if (iconEl) {
-    iconEl.textContent = data.iconEmoji;
+    iconEl.innerHTML = data.iconSvg || data.iconEmoji || "";
     iconEl.style.background = data.iconBg;
   }
   if (badgeEl) {
@@ -647,7 +658,7 @@ function openExperienceModal(expId) {
 
   if (competenciesEl) {
     competenciesEl.innerHTML = data.keyCompetencies
-      .map((comp) => `<span class="competency-pill">⚡ ${comp}</span>`)
+      .map((comp) => `<span class="competency-pill">${expSvgs.zap}<span>${comp}</span></span>`)
       .join("");
   }
 
@@ -867,8 +878,8 @@ function setupThemeToggle() {
     const isDark = theme === "dark";
     document.body.classList.toggle("dark", isDark);
     button.innerHTML = isDark
-      ? '<span aria-hidden="true">☀️</span>'
-      : '<span aria-hidden="true">🌙</span>';
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
     button.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
     button.setAttribute("title", isDark ? "Switch to light mode" : "Switch to dark mode");
     button.setAttribute("aria-pressed", String(isDark));
