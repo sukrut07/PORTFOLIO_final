@@ -1,52 +1,134 @@
 /**
  * Experience & Education Data Model — Sukrut Dusane
- * Structured, verifiable, outcome-oriented timeline records.
+ * Structured, verifiable, outcome-oriented timeline records directly synchronized with LinkedIn.
  * 
- * Sources:
- * - Technical Experience: Vicharanashala / IIT Ropar (Samagama Internship Program)
- * - Open Source: Verified GitHub contributions (github.com/sukrut07) & Open Source Connect India
- * - Technical Training: Cisco Networking Academy × MITAOE (Verified Credentials in Modern AI & Python)
- * - Formal Education: MIT Academy of Engineering (B.Tech CSE - AI/ML, 2025–2029)
+ * Verified LinkedIn Roles:
+ * 1. Founding Engineer — OBLIQ-in (Sep 2026 – Present)
+ * 2. Junior Animator — Vertex GDNA (Sep 2025 – Present)
+ * 3. Analyst — VANKADEL (Sep 2026 – Present)
+ * 4. Contributor - OSCI '26 — Open Source Connect (Sep 2026 – Present)
+ * 5. Management Team — E-Cell MITAOE (Sep 2025 – Present)
+ * 6. Summer Intern @VLED Labs — Vicharanashala (Lab for Education Design) (May 2026 – Jul 2026)
  */
 
 const experienceItems = [
   {
-    id: "internship-vicharanashala",
-    date: "2026",
-    type: "INTERNSHIP",
-    typeLabel: "Internship",
+    id: "founding-engineer",
+    date: "Sep 2026 – Present",
+    period: "Sep 2026 – Present · 2 mos",
+    mode: "Remote",
+    type: "FOUNDING ROLE",
+    typeLabel: "Founding Role",
     badgeColor: "var(--lime)",
-    title: "Software & Technical Intern",
-    organization: "Vicharanashala / IIT Ropar — Samagama Internship Program",
-    summary: "Worked on practical software development and introductory machine learning workflows under structured technical mentorship.",
+    title: "Founding Engineer",
+    organization: "OBLIQ-in · Internship",
+    summary: "Spearheading early-stage product engineering, architecture design, and open-source software workflows across distributed contributor teams.",
     bullets: [
-      "Developed Python-based data analysis and preprocessing workflows using Pandas and NumPy.",
-      "Implemented and tested REST API integrations using Node.js and Express.js.",
-      "Participated in weekly technical reviews, sprint milestones, and collaborative code walkthroughs."
+      "Driving project management, engineering roadmaps, and agile sprint delivery for early-stage software architecture.",
+      "Architecting modular, maintainable full-stack features and establishing collaborative open-source git workflows.",
+      "Leading technical code reviews, contributor onboarding, and system design discussions."
     ],
-    tags: ["Python", "Pandas", "NumPy", "Node.js", "Express.js", "REST APIs", "Git"],
+    tags: ["Project Management", "Open-Source Development", "System Design", "Full-Stack Development", "Git", "Agile Execution"],
     link: null
   },
   {
-    id: "opensource-contributor",
-    date: "2025 – 2026",
+    id: "junior-animator",
+    date: "Sep 2025 – Present",
+    period: "Sep 2025 – Present · 1 yr 2 mos",
+    mode: "On-site",
+    type: "ANIMATION & DESIGN",
+    typeLabel: "Full-time",
+    badgeColor: "var(--purple)",
+    title: "Junior Animator",
+    organization: "Vertex GDNA",
+    summary: "Producing high-impact 2D computer animations, graphic assets, motion sequences, and interactive visual narratives.",
+    bullets: [
+      "Developing 2D and computer animation sequences, timing curves, and digital asset libraries.",
+      "Collaborating on-site with creative directors and design teams to refine motion aesthetics and narrative impact.",
+      "Creating keyframes, character animation passes, and motion graphics for digital media productions."
+    ],
+    tags: ["2D Animation", "Computer Animation", "Motion Graphics", "Visual Storytelling", "Keyframing", "Digital Art"],
+    link: null
+  },
+  {
+    id: "analyst-vankadel",
+    date: "Sep 2026 – Present",
+    period: "Sep 2026 – Present · 2 mos",
+    mode: "Remote",
+    type: "ANALYST",
+    typeLabel: "Analyst",
+    badgeColor: "var(--cyan)",
+    title: "Analyst",
+    organization: "VANKADEL",
+    summary: "Conducting data analysis, technology evaluation, and quantitative research to support strategic decision-making and systems optimization.",
+    bullets: [
+      "Extracting quantitative insights and modeling metrics to evaluate system efficiency and platform performance.",
+      "Authoring structured technical briefs, risk evaluations, and process optimization strategies.",
+      "Building automated reporting workflows and exploratory data scripts using Python."
+    ],
+    tags: ["Data Analytics", "Systems Evaluation", "Quantitative Modeling", "Python", "Process Optimization", "Research"],
+    link: null
+  },
+  {
+    id: "contributor-osci",
+    date: "Sep 2026 – Present",
+    period: "Sep 2026 – Present · 2 mos",
+    mode: "Remote",
     type: "OPEN SOURCE",
     typeLabel: "Open Source",
     badgeColor: "var(--pink)",
-    title: "Open Source Contributor",
-    organization: "Open Source Connect India & Developer Repositories",
-    summary: "Contributed bug fixes, documentation, and feature enhancements across student developer tooling and open repositories.",
+    title: "Contributor - OSCI '26",
+    organization: "Open Source Connect",
+    summary: "Active contributor across Open Source Connect India (OSCI '26) initiatives, building developer tooling and community web utilities.",
     bullets: [
-      "Triaged repository issues and submitted pull requests adhering to project coding standards and commit conventions.",
-      "Collaborated with peers to debug and enhance student developer utilities and web portals.",
-      "Authored clean, maintainable technical documentation to improve onboarding for incoming contributors."
+      "Triaged repository issues, reproduced bugs, and submitted reviewed pull requests following strict upstream commit conventions.",
+      "Collaborated asynchronously with maintainers and student developers across India to build transparent developer utilities.",
+      "Authored clean setup documentation, architectural breakdowns, and unit tests to ensure high software quality."
     ],
-    tags: ["Git & GitHub", "Code Reviews", "Issue Triage", "Technical Documentation", "Open Source"],
+    tags: ["Open-Source Development", "Git & GitHub", "Code Reviews", "Issue Triage", "Technical Documentation", "CI/CD"],
     link: {
       url: "https://github.com/sukrut07",
       label: "GitHub Profile",
       external: true
     }
+  },
+  {
+    id: "management-ecell",
+    date: "Sep 2025 – Present",
+    period: "Sep 2025 – Present · 1 yr 2 mos",
+    mode: "On-site",
+    type: "LEADERSHIP & OPERATIONS",
+    typeLabel: "Management",
+    badgeColor: "var(--neon-orange)",
+    title: "Management Team",
+    organization: "E-Cell MITAOE",
+    summary: "Serving in the core Management Team at the Entrepreneurship Cell of MIT Academy of Engineering, driving campus innovation and venture building.",
+    bullets: [
+      "Coordinating campus entrepreneurship development initiatives, pitch competitions, and startup workshops.",
+      "Managing end-to-end event logistics, industry speaker relations, and cross-functional student operations teams.",
+      "Fostering collegiate founder networks and connecting aspiring student entrepreneurs with incubation resources."
+    ],
+    tags: ["Entrepreneurship", "Entrepreneurship Development", "Event Operations", "Leadership", "Stakeholder Management"],
+    link: null
+  },
+  {
+    id: "intern-vled-labs",
+    date: "May 2026 – Jul 2026",
+    period: "May 2026 – Jul 2026 · 3 mos",
+    mode: "Remote",
+    type: "INTERNSHIP",
+    typeLabel: "Research Intern",
+    badgeColor: "var(--electric-blue)",
+    title: "Summer Intern @VLED Labs",
+    organization: "Vicharanashala (Lab for Education Design)",
+    summary: "Engaged in hands-on research and technical development for AI-powered education design prototypes and open-source simulation modules.",
+    bullets: [
+      "Developed Python-based data processing routines and foundational machine learning workflows.",
+      "Engineered and validated REST API backend endpoints for interactive education design platforms.",
+      "Participated in weekly research walkthroughs, sprint milestones, and open-source codebase reviews."
+    ],
+    tags: ["Artificial Intelligence (AI)", "Open-Source Development", "Python", "Machine Learning", "REST APIs", "Git"],
+    link: null
   }
 ];
 

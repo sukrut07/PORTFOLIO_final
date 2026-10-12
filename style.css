@@ -3094,6 +3094,16 @@ body.dark .comp-pill {
   color: #111111;
 }
 
+.theme-icon-badge.bg-orange {
+  background: var(--neon-orange);
+  color: #111111;
+}
+
+.theme-icon-badge.bg-blue {
+  background: var(--electric-blue);
+  color: #111111;
+}
+
 .section-badge-pill {
   display: inline-flex;
   align-items: center;
@@ -4601,7 +4611,9 @@ body.dark .experience-card-cta .cta-arrow {
 body.dark .theme-icon-badge.bg-lime,
 body.dark .theme-icon-badge.bg-cyan,
 body.dark .theme-icon-badge.bg-pink,
-body.dark .theme-icon-badge.bg-purple {
+body.dark .theme-icon-badge.bg-purple,
+body.dark .theme-icon-badge.bg-orange,
+body.dark .theme-icon-badge.bg-blue {
   color: #111111;
 }
 

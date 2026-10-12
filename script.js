@@ -532,33 +532,147 @@ const expSvgs = {
   robot: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"></rect><path d="M12 8V4"></path><circle cx="12" cy="3" r="1" fill="currentColor"></circle><path d="M2 14h2"></path><path d="M20 14h2"></path><circle cx="9" cy="13" r="1" fill="currentColor"></circle><circle cx="15" cy="13" r="1" fill="currentColor"></circle><path d="M9 17h6"></path></svg>`,
   globe: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
   rocket: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 9V4s3.03.55 4 2c1.08 1.62 0 5 0 5"></path></svg>`,
+  terminal: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>`,
+  film: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>`,
+  chart: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>`,
+  branch: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>`,
+  users: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`,
   zap: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`
 };
 
-// Experience Data Dictionary
+// Experience Data Dictionary — Synchronized directly with LinkedIn
 const experienceData = {
-  "vicharanashala": {
-    id: "vicharanashala",
-    role: "Software & Technical Intern",
-    org: "Vicharanashala / IIT Ropar (Samagama Internship Program)",
-    program: "Applied Machine Learning & Backend Systems",
-    typeBadge: "Virtual Traineeship",
+  "founding-engineer": {
+    id: "founding-engineer",
+    role: "Founding Engineer",
+    org: "OBLIQ-in · Internship",
+    program: "Startup Engineering & Open-Source Ecosystems",
+    typeBadge: "Founding Role",
     badgeColor: "var(--lime)",
+    iconEmoji: "⚡",
+    iconSvg: expSvgs.terminal,
+    iconBg: "var(--lime)",
+    period: "Sep 2026 – Present · 2 mos",
+    mode: "Remote • Internship",
+    overview: "Spearheading early-stage technical engineering, architecture design, and open-source software workflows at OBLIQ-in under an internship engagement. Directing project management processes, scoping core feature backlogs, and collaborating across distributed engineering contributors to establish rigorous code review standards.",
+    deliverables: [
+      "Directed project management schedules, sprint milestones, and engineering deliverables across distributed developers.",
+      "Architected modular full-stack application modules and established open-source Git contribution standards.",
+      "Led code walkthroughs, pull request audits, and automated continuous integration checks for new feature sets.",
+      "Bridged product requirement definitions with concrete technical implementation plans and milestone goals."
+    ],
+    technologies: ["Project Management", "Open-Source Development", "System Architecture", "Full-Stack Development", "Git", "Agile Execution"],
+    keyCompetencies: ["Founding Engineering & Scoping", "Open-Source Workflow Design", "Agile Project Delivery", "Full-Stack Architecture"]
+  },
+  "junior-animator": {
+    id: "junior-animator",
+    role: "Junior Animator",
+    org: "Vertex GDNA",
+    program: "Digital Media Production & Computer Animation",
+    typeBadge: "Full-time",
+    badgeColor: "var(--purple)",
+    iconEmoji: "🎬",
+    iconSvg: expSvgs.film,
+    iconBg: "var(--purple)",
+    period: "Sep 2025 – Present · 1 yr 2 mos",
+    mode: "On-site • Full-time",
+    overview: "Working as a full-time Junior Animator at Vertex GDNA, crafting compelling 2D and computer animation sequences, stylized visual assets, and high-fidelity motion graphics. Collaborating on-site with creative leads to translate conceptual storyboards into dynamic visual narratives.",
+    deliverables: [
+      "Engineered 2D animation keyframes, in-betweens, and smooth motion timing curves for digital media productions.",
+      "Constructed complex computer animation sequences, asset rigs, and digital illustrations matching strict visual guidelines.",
+      "Collaborated on-site with creative directors and technical artists to iterate on animation polish and rendering output.",
+      "Applied dynamic motion graphics techniques to produce high-impact, engaging visual storytelling."
+    ],
+    technologies: ["2D Animation", "Computer Animation", "Motion Graphics", "Visual Storytelling", "Keyframing", "Digital Art", "Creative Direction"],
+    keyCompetencies: ["2D & Computer Animation", "Motion Aesthetics & Timing", "On-site Team Collaboration", "Visual Asset Production"]
+  },
+  "analyst-vankadel": {
+    id: "analyst-vankadel",
+    role: "Analyst",
+    org: "VANKADEL",
+    program: "Strategic Data Analytics & Systems Evaluation",
+    typeBadge: "Analyst",
+    badgeColor: "var(--cyan)",
+    iconEmoji: "📊",
+    iconSvg: expSvgs.chart,
+    iconBg: "var(--cyan)",
+    period: "Sep 2026 – Present · 2 mos",
+    mode: "Remote",
+    overview: "Conducting data analytics, technical research, and system evaluation at VANKADEL. Assessing operational workflows, modeling performance indicators, and formulating data-backed recommendations to guide strategic engineering and product decisions.",
+    deliverables: [
+      "Extracted, cleaned, and evaluated complex datasets to discover operational patterns and performance bottlenecks.",
+      "Developed Python data exploration routines and statistical models for predictive systems evaluation.",
+      "Synthesized analytical findings into actionable technical reports and executive summary dashboards.",
+      "Recommended data-driven workflow optimizations to streamline platform and system efficiencies."
+    ],
+    technologies: ["Data Analytics", "Systems Evaluation", "Quantitative Modeling", "Python", "Process Optimization", "Research & Reporting"],
+    keyCompetencies: ["Quantitative Data Analysis", "Platform Systems Evaluation", "Predictive Modeling", "Strategic Technical Reporting"]
+  },
+  "contributor-osci": {
+    id: "contributor-osci",
+    role: "Contributor - OSCI '26",
+    org: "Open Source Connect",
+    program: "Open Source Connect India (OSCI '26)",
+    typeBadge: "Open Source",
+    badgeColor: "var(--pink)",
+    iconEmoji: "🚀",
+    iconSvg: expSvgs.branch,
+    iconBg: "var(--pink)",
+    period: "Sep 2026 – Present · 2 mos",
+    mode: "Remote • Open Source",
+    overview: "Active open-source contributor participating in Open Source Connect India (OSCI '26) initiatives. Triaging repository issues, debugging software utilities, authoring documentation, and collaborating with developer teams to advance student developer tooling across the open-source ecosystem.",
+    deliverables: [
+      "Triaged community repository issues, resolved bugs, and submitted reviewed pull requests adhering to upstream coding conventions.",
+      "Collaborated asynchronously with maintainers and student engineers across India to enhance developer toolkits.",
+      "Authored clean setup documentation, architectural guides, and unit tests to simplify onboarding for new contributors.",
+      "Championed atomic git commit hygiene, thorough code reviews, and reproducible bug reports."
+    ],
+    technologies: ["Open-Source Development", "Git & GitHub", "Code Reviews", "Issue Triage", "Technical Documentation", "CI/CD Workflows"],
+    keyCompetencies: ["Open-Source Engineering", "Asynchronous Code Collaboration", "Technical Documentation", "GitHub Flow & CI/CD"]
+  },
+  "management-ecell": {
+    id: "management-ecell",
+    role: "Management Team",
+    org: "E-Cell MITAOE",
+    program: "Entrepreneurship & Innovation Cell",
+    typeBadge: "Management",
+    badgeColor: "var(--neon-orange)",
+    iconEmoji: "👥",
+    iconSvg: expSvgs.users,
+    iconBg: "var(--neon-orange)",
+    period: "Sep 2025 – Present · 1 yr 2 mos",
+    mode: "On-site • Leadership",
+    overview: "Serving in the core Management Team at the Entrepreneurship Cell (E-Cell) of MIT Academy of Engineering, Pune. Spearheading entrepreneurship development programs, startup pitch summits, venture incubators, and campus-wide innovation hackathons.",
+    deliverables: [
+      "Coordinated campus entrepreneurship initiatives, business plan competitions, and student founder masterclasses.",
+      "Managed end-to-end event logistics, corporate sponsor outreach, and cross-functional student operations teams.",
+      "Facilitated networking between early-stage student ventures and regional mentors, investors, and startup incubators.",
+      "Fostered an active collegiate entrepreneurship culture driving interdisciplinary venture ideas on campus."
+    ],
+    technologies: ["Entrepreneurship", "Entrepreneurship Development", "Event Operations", "Team Leadership", "Stakeholder Management", "Strategic Planning"],
+    keyCompetencies: ["Entrepreneurial Leadership", "Event Logistics & Operations", "Stakeholder & Sponsor Relations", "Ecosystem Building"]
+  },
+  "intern-vled-labs": {
+    id: "intern-vled-labs",
+    role: "Summer Intern @VLED Labs",
+    org: "Vicharanashala (Lab for Education Design)",
+    program: "Applied AI & Open-Source Education Systems",
+    typeBadge: "Research Intern",
+    badgeColor: "var(--electric-blue)",
     iconEmoji: "🤖",
     iconSvg: expSvgs.robot,
-    iconBg: "var(--lime)",
-    period: "June 2025 – August 2025",
-    mode: "Remote • Engineering Mentorship",
-    overview: "Engaged in structured software development and foundational machine learning modules under direct engineering mentorship at Vicharanashala in collaboration with IIT Ropar. Developed data preprocessing routines, explored predictive models, and integrated scalable REST endpoints for full-stack web applications following agile engineering cadences.",
+    iconBg: "var(--electric-blue)",
+    period: "May 2026 – Jul 2026 · 3 mos",
+    mode: "Remote • Internship",
+    overview: "Completed summer research and technical development internship at Vicharanashala (Lab for Education Design / VLED Labs). Developed AI-driven learning tools and open-source simulation modules in collaboration with technical mentors, focusing on interactive education design.",
     deliverables: [
-      "Implemented exploratory data analysis (EDA) scripts and robust dataset preprocessing routines in Python utilizing Pandas and NumPy.",
-      "Built and tested RESTful endpoint integrations for core web application modules using Node.js and Express.",
-      "Participated actively in weekly technical architecture reviews, milestone sprints, and peer code walkthroughs with engineering mentors.",
-      "Streamlined data transformation pipelines to ensure clean data ingestion, feature normalization, and deterministic testing routines.",
-      "Collaborated using Git version control with clean commit histories, branching workflows, and pull request code reviews."
+      "Implemented exploratory data analysis scripts and dataset preprocessing routines in Python with Pandas and NumPy.",
+      "Built and tested RESTful API integrations for interactive education design modules using Node.js and Express.",
+      "Integrated foundational machine learning algorithms to support personalized learning simulations.",
+      "Collaborated on open-source educational repositories with clean commits and thorough technical documentation."
     ],
-    technologies: ["Python", "Pandas", "NumPy", "Data Preprocessing", "Node.js", "Express.js", "REST APIs", "Git", "EDA"],
-    keyCompetencies: ["Data Engineering & EDA", "Backend API Integration", "Agile Sprint Delivery", "Collaborative Code Review"]
+    technologies: ["Artificial Intelligence (AI)", "Open-Source Development", "Python", "Machine Learning", "Data Preprocessing", "REST APIs", "Git"],
+    keyCompetencies: ["Applied AI & Data Preprocessing", "REST API Integration", "Open-Source Contribution", "Technical Research"]
   },
   "cisco-academy": {
     id: "cisco-academy",
@@ -577,40 +691,19 @@ const experienceData = {
       "Analyzed IP routing protocols, packet flows, subnet topologies, and client-server socket communication architectures in simulated network environments.",
       "Developed Python automation scripts for data parsing, network configuration validation, and system telemetry modeling.",
       "Earned verified credentials in Introduction to Modern AI, Python Essentials 1, and Python Essentials 2.",
-      "Conducted practical packet inspection labs using protocol analyzers to verify reliable, secure transmission workflows.",
-      "Engineered automated validation routines to parse JSON network payloads and test socket connections."
+      "Conducted practical packet inspection labs using protocol analyzers to verify reliable, secure transmission workflows."
     ],
     technologies: ["Computer Networks", "Python Scripting", "Modern AI", "Socket Programming", "Network Protocols", "TCP/IP", "Wireshark", "Automation"],
     keyCompetencies: ["Network Architecture & Protocols", "Python Systems Automation", "Socket Communication", "Verified Industry Certifications"]
-  },
-  "open-source": {
-    id: "open-source",
-    role: "Open Source Contributor",
-    org: "Open Source Connect India & Developer Repositories",
-    program: "Community Engineering & Student Tooling",
-    typeBadge: "Open Source",
-    badgeColor: "var(--pink)",
-    iconEmoji: "🚀",
-    iconSvg: expSvgs.rocket,
-    iconBg: "var(--pink)",
-    period: "Ongoing Contributor",
-    mode: "GitHub Ecosystem • Public Repositories",
-    overview: "Active contributor across student developer communities and public repositories under Open Source Connect India. Contributing code enhancements, triaging issues, refining documentation, and collaborating with developers across India to build transparent, accessible developer tooling.",
-    deliverables: [
-      "Triaged community repository issues, reproduced bugs, and submitted reviewed pull requests adhering to upstream coding standards.",
-      "Collaborated with peers and maintainers to debug and enhance student developer utilities and web portals.",
-      "Authored clean, maintainable technical documentation, setup guides, and architectural breakdowns to streamline onboarding for incoming contributors.",
-      "Practiced continuous integration (CI) workflows, atomic git commits, and responsive code review feedback cycles.",
-      "Maintained high standards for reproducible bug reporting and transparent open-source communication."
-    ],
-    technologies: ["Git & GitHub", "Code Reviews", "Issue Triage", "Technical Documentation", "Open Source Tooling", "Markdown", "CI/CD"],
-    keyCompetencies: ["Open Source Contribution", "Asynchronous Code Collaboration", "Technical Documentation", "GitHub Flow & CI/CD"]
   }
 };
 
-experienceData["internship-vicharanashala"] = experienceData["vicharanashala"];
+// Aliases for legacy IDs and routes
+experienceData["vicharanashala"] = experienceData["intern-vled-labs"];
+experienceData["internship-vicharanashala"] = experienceData["intern-vled-labs"];
 experienceData["training-cisco"] = experienceData["cisco-academy"];
-experienceData["opensource-contributor"] = experienceData["open-source"];
+experienceData["open-source"] = experienceData["contributor-osci"];
+experienceData["opensource-contributor"] = experienceData["contributor-osci"];
 
 function openExperienceModal(expId) {
   if (!experienceModal) return;
